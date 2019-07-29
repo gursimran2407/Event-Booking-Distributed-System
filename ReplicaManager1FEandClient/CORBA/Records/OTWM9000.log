@@ -1,0 +1,8 @@
+Jul 16, 2019 12:45:30 PM Client.Client managerAddEvent
+INFO: Manager: OTWM9000 adding a new Event with Event id: OTWA190619 ,Event Type: Conferences and Booking Capacity: 1
+Jul 16, 2019 12:45:30 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful!. Event Added in Ottawa Server for Event ID: OTWA190619 Event Type: Conferences Booking Capacity: 1
+Jul 16, 2019 12:45:58 PM Client.Client managerAddEvent
+INFO: Manager: OTWM9000 adding a new Event with Event id: OTWA250619 ,Event Type: Seminars and Booking Capacity: 1
+Jul 16, 2019 12:45:58 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful!. Event Added in Ottawa Server for Event ID: OTWA250619 Event Type: Seminars Booking Capacity: 1

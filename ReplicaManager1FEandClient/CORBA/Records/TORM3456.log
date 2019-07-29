@@ -1,0 +1,8 @@
+Jul 16, 2019 12:42:48 PM Client.Client managerAddEvent
+INFO: Manager: TORM3456 adding a new Event with Event id: TORE080619 ,Event Type: Conferences and Booking Capacity: 2
+Jul 16, 2019 12:42:48 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful!. Event Added in Toronto Server for Event ID: TORE080619 Event Type: Conferences Booking Capacity: 2
+Jul 16, 2019 12:43:20 PM Client.Client managerAddEvent
+INFO: Manager: TORM3456 adding a new Event with Event id: TORE110619 ,Event Type: Seminars and Booking Capacity: 1
+Jul 16, 2019 12:43:20 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful!. Event Added in Toronto Server for Event ID: TORE110619 Event Type: Seminars Booking Capacity: 1
