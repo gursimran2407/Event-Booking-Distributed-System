@@ -7,34 +7,15 @@
  */
 package Server;
 
-import EventManagementServerApp.ServerInterface;
-import EventManagementServerApp.ServerInterfaceHelper;
-import ServerImpl.MontrealServerImpl;
-import ServerImpl.OttawaServerImpl;
-import org.omg.CORBA.ORB;
-import org.omg.CORBA.ORBPackage.InvalidName;
-import org.omg.CosNaming.NameComponent;
-import org.omg.CosNaming.NamingContextExt;
-import org.omg.CosNaming.NamingContextExtHelper;
-import org.omg.CosNaming.NamingContextPackage.CannotProceed;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
-import org.omg.PortableServer.POA;
-import org.omg.PortableServer.POAHelper;
-import org.omg.PortableServer.POAManagerPackage.AdapterInactive;
-import org.omg.PortableServer.POAPackage.ServantNotActive;
-import org.omg.PortableServer.POAPackage.WrongPolicy;
-
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketException;
-import java.nio.charset.StandardCharsets;
-import java.rmi.AlreadyBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 
-import static CommonUtils.CommonUtils.*;
+import CommonUtils.CommonUtils;
+import Model.MessageData;
+import ServerImpl.OttawaServerImpl;
 
 /**
  *
@@ -44,143 +25,127 @@ public class OttawaServer {
 
     public static void main(String[] args)
     {
-        // TODO code application logic here
-        OttawaServerImpl ottawaServerStub = new OttawaServerImpl();
-        Runnable runnable = () ->
-        {
-            receiveRequestsFromOthers(ottawaServerStub);
-        };
 
-        Runnable task1 = () -> {
-            handleOttawaRequests(ottawaServerStub,args);
-        };
-        Thread thread = new Thread(runnable);
-        Thread thread1 = new Thread(task1);
-        thread.start();
-        thread1.start();
+    	OttawaServerImpl ottawaServerImpl = new OttawaServerImpl();
 
-//        Registry registry = LocateRegistry.createRegistry(OTTAWA_SERVER_PORT);
-//
-//        try
-//        {
-//            registry.bind(OTTAWA_SERVER_NAME, ottawaServerStub);
-//        }
-//        catch (RemoteException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        catch (AlreadyBoundException e)
-//        {
-//            e.printStackTrace();
-//        }
+		if(args.length > 0) {
+			Runnable dataConsistentImpl = () ->{
+				receiveDataConsistence(ottawaServerImpl);
+			};
+			new Thread(dataConsistentImpl).start();
+		}
 
+		Runnable libraryServerRunnable = () ->{
+			handlesRequestFromAnotherServers(ottawaServerImpl);
+		};
+		Runnable replicaManagerImpl = () ->{
+			handleReplicaRequests(ottawaServerImpl,args);
+		};
+
+		new Thread(replicaManagerImpl).start();
+		new Thread(libraryServerRunnable).start();
     }
+    
+    
 
-    private static void handleOttawaRequests(OttawaServerImpl ottawaServer, String[] args) {
-        ORB orb = ORB.init(args, null);
-        try {
-            POA rootPoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
-            rootPoa.the_POAManager().activate();
+    private static void handleReplicaRequests(OttawaServerImpl montrealLibraryImpl, String[] args) {
+		try(DatagramSocket socket = new DatagramSocket(CommonUtils.REPLICA_OTTAWA_SERVER_PORT)) {
+			System.out.println("Ottawa Server started...");
+			while(true) {
+				byte [] message = new byte[1024];
+				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
+				socket.receive(recievedDatagramPacket);
+				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
+				MessageData messageData = (MessageData) inputStream.readObject();
+				inputStream.close();
+				String response = replicaManagerImpl(messageData, montrealLibraryImpl);
+				DatagramPacket reply = new DatagramPacket(response.getBytes(), response.length(), recievedDatagramPacket.getAddress(),
+						recievedDatagramPacket.getPort());
+				socket.send(reply);
+			}
+		} catch (IOException | ClassNotFoundException e) {
+			System.out.println(e.getMessage());
+		}
+	}
 
-            ottawaServer.setOrb(orb);
+	public static String replicaManagerImpl(MessageData messageData, OttawaServerImpl montrealLibraryImpl) {
+		String response = "";
 
-            ServerInterface href = ServerInterfaceHelper.narrow(rootPoa.servant_to_reference(ottawaServer));
+		switch(messageData.getMethodName()) {
 
-            NamingContextExt namingContextReference = NamingContextExtHelper.narrow(orb.resolve_initial_references("NameService"));
-            NameComponent[] path = namingContextReference.to_name(OTTAWA_SERVER_NAME);
+		case CommonUtils.ADD_EVENT:
+			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+			break;
+		case CommonUtils.REMOVE_EVENT:
+			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
+			break;
+		case CommonUtils.LIST_EVENT:
+			response=montrealLibraryImpl.listEventAvailability(messageData.getEventType(), messageData.getManagerId());
+			break;
+		case CommonUtils.BOOK_EVENT:
+			response=montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
+			break;
+		case CommonUtils.GET_DATA:
+			response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
+			break;
+		case CommonUtils.CANCEL_EVENT:
+			response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
+			break;
+		case CommonUtils.NON_OriginCustomerBooking:
+			response=montrealLibraryImpl.nonOriginCustomerBooking(messageData.getCustomerId(), messageData.getEventId());
+			break;
+		case CommonUtils.SWAP_EVENT:
+			response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
+			break;
+		case CommonUtils.CRASHED:
+			response = CommonUtils.I_AM_ALIVE;
+			break;
+		case CommonUtils.eventAvailable:
+			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
+			break;
+		case CommonUtils.validateBooking:
+			response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
+		default: 
+			response="Invalid request!!!";
+		}
+		return response;
 
-            namingContextReference.rebind(path, href);
-            System.out.println("Ottawa Server is ready");
-            while(true) {
-                orb.run();
-            }
+	}
 
-        } catch (InvalidName | AdapterInactive | org.omg.CosNaming.NamingContextPackage.InvalidName | ServantNotActive | WrongPolicy | NotFound | CannotProceed e) {
-            System.out.println("Something went wrong in Ottawa server: "+e.getMessage());
-        }
+	private static void handlesRequestFromAnotherServers(OttawaServerImpl montrealLibraryImpl){
+		DatagramSocket socket = null;
+		try {
+			socket = new DatagramSocket(CommonUtils.OTTAWA_SERVER_PORT);
+			System.out.println("Ottawa Server started...");
+			while(true) {
+				byte [] message = new byte[1000];
+				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
+				socket.receive(recievedDatagramPacket);
+				String response = montrealLibraryImpl.handleRequestFromOtherServer(new String(recievedDatagramPacket.getData()));
+				DatagramPacket reply = new DatagramPacket(response.getBytes(), response.length(), recievedDatagramPacket.getAddress(),
+						recievedDatagramPacket.getPort());
+				socket.send(reply);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(socket != null)
+				socket.close();
+		}
+	}
 
-    }
-    private static void receiveRequestsFromOthers(OttawaServerImpl ottawaServer)
-    {
-        DatagramSocket aSocket = null;
-        try
-        {
-            aSocket = new DatagramSocket(OTTAWA_SERVER_PORT);
-            byte[] buffer = new byte[1500];
-            System.out.println("Ottawa server started.....");
-            //Server waits for the request
-            while (true)
-            {
-                DatagramPacket request = new DatagramPacket(buffer, buffer.length);
-                aSocket.receive(request);
-                String response = requestsFromOthers(new String(request.getData()), ottawaServer);
-                DatagramPacket reply = new DatagramPacket(response.getBytes(StandardCharsets.UTF_8), response.length(), request.getAddress(),
-                        request.getPort());
-                //reply sent
-                aSocket.send(reply);
-            }
-        }
-        catch (SocketException e)
-        {
-            System.out.println("Socket: " + e.getMessage());
-        }
-        catch (IOException e)
-        {
-            System.out.println("IO: " + e.getMessage());
-        }
-        finally
-        {
-            if (aSocket != null)
-            {
-                aSocket.close();
-            }
-        }
-    }
+	private static void receiveDataConsistence(OttawaServerImpl montrealLibraryImpl) {
+		try(DatagramSocket socket = new DatagramSocket(CommonUtils.RECEIVE_DATA_FROM_REPLICA_PORT)){
+			byte [] message = new byte[1024];
+			DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
+			socket.receive(recievedDatagramPacket);
+			ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
 
-    //clientudp
-    public static String requestsFromOthers(String data, OttawaServerImpl ottawaServer)
-    {
-        try
-        {
-            String[] receivedDataString = data.split(" ");
-            String userId = receivedDataString[0];
-            String eventID = receivedDataString[1];
-            String methodNumber = receivedDataString[2].trim();
-            String eventType = receivedDataString[3].trim();
-            String bookingCapacity = receivedDataString[4].trim();
-            String managerID = receivedDataString[5].trim();
-            String newEventID = receivedDataString[6].trim();
-            String newEventType = receivedDataString[7].trim();
-
-            switch (methodNumber)
-            {
-                case "1":
-                    return ottawaServer.addEvent(eventID, eventType, bookingCapacity, userId);
-                case "2":
-                    return ottawaServer.removeEvent(eventID, eventType, userId);
-                case "3":
-                    return ottawaServer.listEventAvailability(eventType, managerID);
-                case "4":
-                    return ottawaServer.bookEvent(userId, eventID, eventType, bookingCapacity);
-                case "5":
-                    return ottawaServer.getBookingSchedule(userId,managerID);
-                case "6":
-                    return ottawaServer.cancelEvent(userId, eventID, eventType);
-                case "7":
-                    return ottawaServer.nonOriginCustomerBooking(userId, eventID);
-                case "8":
-                    return ottawaServer.swapEvent(userId, newEventID, newEventType, eventID, eventType);
-                case "9":
-                    return ottawaServer.eventAvailable(newEventID, newEventType);
-                case "10":
-                    return ottawaServer.validateBooking(userId, eventID, eventType);
-            }
-        }
-        catch (Exception e)
-        {
-            
-        }
-        return "Incorrect";
-    }
-
+			inputStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+    
 }

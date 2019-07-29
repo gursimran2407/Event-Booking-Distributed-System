@@ -67,9 +67,6 @@ public class CommonUtils {
 	public static final int REPLICA_MONTREAL_SERVER_PORT = 2004;
 	public static final int REPLICA_TO_REPLICA_PORT = 2006;
 	
-	public static final String CONCORDIA_CODE = "CON";
-	public static final String MCGILL_CODE = "MCG";
-	public static final String MONTREAL_CODE = "MON";
 	public static final String I_AM_ALIVE = "I am Alive";
 	public static String USER_CODE = "U";
 	public static String MANAGER_CODE = "M";

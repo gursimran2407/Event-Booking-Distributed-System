@@ -7,29 +7,36 @@
  */
 package ServerImpl;
 
-import EventManagementServerApp.ServerInterfacePOA;
-
-import org.omg.CORBA.ORB;
+import static CommonUtils.CommonUtils.CONFERENCE;
+import static CommonUtils.CommonUtils.MONTREAL;
+import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
+import static CommonUtils.CommonUtils.MONTREAL_SERVER_PORT;
+import static CommonUtils.CommonUtils.OTTAWA;
+import static CommonUtils.CommonUtils.OTTAWA_SERVER_NAME;
+import static CommonUtils.CommonUtils.OTTAWA_SERVER_PORT;
+import static CommonUtils.CommonUtils.SEMINAR;
+import static CommonUtils.CommonUtils.TORONTO;
+import static CommonUtils.CommonUtils.TORONTO_SERVER_NAME;
+import static CommonUtils.CommonUtils.TORONTO_SERVER_PORT;
+import static CommonUtils.CommonUtils.TRADESHOW;
+import static CommonUtils.CommonUtils.addFileHandler;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static CommonUtils.CommonUtils.*;
+
 
 /**
  *
  * @author Gursimran Singh, Natheepan Ganeshamoorthy
  */
-public class MontrealServerImpl extends ServerInterfacePOA {
-
-    private ORB orb;
+public class MontrealServerImpl {
 
     private static HashMap<String, HashMap< String, String>> databaseMontreal = new HashMap<>();
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
@@ -73,14 +80,6 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         }
     }
 
-    public ORB getOrb() {
-        return orb;
-    }
-
-    public void setOrb(ORB orb) {
-        this.orb = orb;
-    }
-
     private static int serverPortSelection(String str)
     {
         str = str.substring(0, 3);
@@ -99,7 +98,6 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         return 0;
     }
 
-    @Override
     public synchronized String addEvent(String eventID, String eventType, String bookingCapacity, String managerID)
     {
         String message = null;
@@ -138,7 +136,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
 
     }
 
-    @Override
+    
     public synchronized String removeEvent(String eventID, String eventType, String managerID)
     {
         String message = null;
@@ -176,7 +174,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
 
     }
 
-    @Override
+    
     public synchronized String listEventAvailability(String eventType, String managerID)
     {
         //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
@@ -230,7 +228,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
 
     }
 
-    @Override
+    
     public synchronized String bookEvent(String customerID, String eventID, String eventType, String bookingAmount)
     {
         if (!customerID.substring(0, 3).equals(MONTREAL) && !customerID.substring(0, 3).equals(eventID.substring(0, 3)))
@@ -318,7 +316,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         return "";
     }
 
-    @Override
+    
     public synchronized String getBookingSchedule(String customerID, String managerID)
     {
         String returnMsg = "";
@@ -381,7 +379,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         return returnMsg;
     }
 
-    @Override
+    
     public synchronized String cancelEvent(String customerID, String eventID, String eventType)
     {
         switch (eventID.substring(0, 3))
@@ -429,7 +427,7 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         return null;
     }
 
-    @Override
+    
     public synchronized String nonOriginCustomerBooking(String customerID, String eventID)
     {
         int numberOfCustomerEvents = 0;
@@ -518,8 +516,46 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         }
         return response;
     }
+    
+	public String handleRequestFromOtherServer(String dataFromAnotherServer) throws SecurityException, IOException {
+		String[] receivedDataString = dataFromAnotherServer.split(" ");
+        String userId = receivedDataString[0];
+        String eventID = receivedDataString[1];
+        String methodNumber = receivedDataString[2].trim();
+        String eventType = receivedDataString[3].trim();
+        String bookingCapacity = receivedDataString[4].trim();
+        String managerID = receivedDataString[5].trim();
+        String newEventID = receivedDataString[6].trim();
+        String newEventType = receivedDataString[7].trim();
+        
+		switch(methodNumber) {
+		
+        case "1":
+            return this.addEvent(eventID, eventType, bookingCapacity, userId);
+        case "2":
+            return this.removeEvent(eventID, eventType, userId);
+        case "3":
+            return this.listEventAvailability(eventType, managerID);
+        case "4":
+            return this.bookEvent(userId, eventID, eventType, bookingCapacity);
+        case "5":
+            return this.getBookingSchedule(userId,managerID);
+        case "6":
+            return this.cancelEvent(userId, eventID, eventType);
+        case "7":
+            return this.nonOriginCustomerBooking(userId, eventID);
+        case "8":
+            return this.swapEvent(userId, newEventID, newEventType, eventID, eventType);
+        case "9":
+            return this.eventAvailable(newEventID, newEventType);
+        case "10":
+            return this.validateBooking(userId, eventID, eventType);
+    }
+		
+		return "Unknown request";
+	}
 
-    @Override
+    
     public synchronized String swapEvent(String customerID, String newEventID, String newEventType, String oldEventID, String oldEventType)
     {
         boolean isNewEventValid = false;
@@ -609,14 +645,14 @@ public class MontrealServerImpl extends ServerInterfacePOA {
         return "Operation Unsuccessful";
     }
 
-    @Override
+    
     public synchronized String eventAvailable(String eventID, String eventType)
     {
         eventType = eventType.substring(0,3).equalsIgnoreCase("CON")? CONFERENCE : eventType.substring(0,3).equalsIgnoreCase("SEM")? SEMINAR : TRADESHOW;
         return (databaseMontreal.containsKey(eventType) && databaseMontreal.get(eventType).containsKey(eventID) && Integer.parseInt(databaseMontreal.get(eventType).get(eventID)) > 0) ? "1" : "0";
     }
 
-    @Override
+    
     public synchronized String validateBooking(String customerID, String eventID, String eventType)
     {
         eventType = eventType.substring(0,3).equalsIgnoreCase("CON")? CONFERENCE : eventType.substring(0,3).equalsIgnoreCase("SEM")? SEMINAR : TRADESHOW;
