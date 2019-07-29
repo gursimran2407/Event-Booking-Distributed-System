@@ -62,8 +62,8 @@ public class CommonUtils {
 	public static final String FRONT_END = "FRONT_END";
 	public static final String THREE_CONSECUTIVE_ERRORS = "Three Consecutive Errors";
 	public static final String RESULT_ERROR = "Result Error";
-	public static final int REPLICA_CONCORDIA_SERVER_PORT = 2000;
-	public static final int REPLICA_MCGILL_SERVER_PORT = 2002;
+	public static final int REPLICA_OTTAWA_SERVER_PORT = 2000;
+	public static final int REPLICA_TORONTO_SERVER_PORT = 2002;
 	public static final int REPLICA_MONTREAL_SERVER_PORT = 2004;
 	public static final int REPLICA_TO_REPLICA_PORT = 2006;
 	
