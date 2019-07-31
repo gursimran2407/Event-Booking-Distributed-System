@@ -130,9 +130,9 @@ public class CommonUtils {
         fileHandler.setFormatter(new SimpleFormatter());
     }
 
-    public static boolean isInputValid(String id, CommonUtils.CommonUtils.InputType type)
+    public static boolean isInputValid(String id, CommonUtils.InputType type)
     {
-        if(type == CommonUtils.CommonUtils.InputType.CLIENT_ID)
+        if(type == CommonUtils.InputType.CLIENT_ID)
         {
             String serverId   = id.substring(0, 3);
             String clientType = id.substring(3, 4);
@@ -143,7 +143,7 @@ public class CommonUtils {
                     && (clientID.matches("^[0-9]+$"));
         }
 
-        if(type == CommonUtils.CommonUtils.InputType.EVENT_ID)
+        if(type == CommonUtils.InputType.EVENT_ID)
         {
             String serverId  = id.substring(0, 3);
             String eventType = id.substring(3, 4);
