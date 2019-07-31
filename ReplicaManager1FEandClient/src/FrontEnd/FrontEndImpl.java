@@ -64,7 +64,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	@Override
 	public String getBookingSchedule(String customerID, String managerID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setManagerId(managerID).setMethodName(CommonUtils.GET_DATA));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setManagerId(managerID).setMethodName(CommonUtils.GET_BOOKING_SCHEDULE));
 	}
 
 	@Override
