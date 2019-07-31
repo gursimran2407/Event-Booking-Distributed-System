@@ -659,6 +659,11 @@ public class OttawaServerImpl{
         databaseOttawa = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
+
+    public EventData getEventData(){
+        EventData eventData = new EventData(databaseOttawa,customerEventsMapping);
+        return eventData;
+    }
 }
 
 // MTLA090619 TORE050619 TORC1234

@@ -7,16 +7,15 @@
  */
 package Server;
 
+import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.util.List;
+
 import CommonUtils.CommonUtils;
 import Model.EventData;
 import Model.MessageData;
 import ServerImpl.MontrealServerImpl;
-
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 
 /**
  *
@@ -85,6 +84,17 @@ public class MontrealServer {
 		case CommonUtils.GET_BOOKING_SCHEDULE:
 			response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
 			break;
+		case CommonUtils.GET_DATA:
+			EventData eventData = montrealLibraryImpl.getEventData();
+			try {
+				ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+				ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
+				objectOutput.writeObject(eventData);
+				return byteStream.toByteArray();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+				break;
 		case CommonUtils.CANCEL_EVENT:
 			response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 			break;

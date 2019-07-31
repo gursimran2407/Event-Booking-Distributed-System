@@ -663,5 +663,9 @@ public class TorontoServerImpl {
         databaseToronto = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
+    public EventData getEventData(){
+        EventData eventData = new EventData(databaseToronto,customerEventsMapping);
+        return eventData;
+    }
 }
 

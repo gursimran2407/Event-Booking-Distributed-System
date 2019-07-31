@@ -9,6 +9,22 @@ package ServerImpl;
 
 import Model.EventData;
 
+import static CommonUtils.CommonUtils.CONFERENCE;
+import static CommonUtils.CommonUtils.MONTREAL;
+import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
+import static CommonUtils.CommonUtils.MONTREAL_SERVER_PORT;
+import static CommonUtils.CommonUtils.OTTAWA;
+import static CommonUtils.CommonUtils.OTTAWA_SERVER_NAME;
+import static CommonUtils.CommonUtils.OTTAWA_SERVER_PORT;
+import static CommonUtils.CommonUtils.SEMINAR;
+import static CommonUtils.CommonUtils.TORONTO;
+import static CommonUtils.CommonUtils.TORONTO_SERVER_NAME;
+import static CommonUtils.CommonUtils.TORONTO_SERVER_PORT;
+import static CommonUtils.CommonUtils.TRADESHOW;
+import static CommonUtils.CommonUtils.addFileHandler;
+
+//import ServerInterface.ServerInterface;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -17,10 +33,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import static CommonUtils.CommonUtils.*;
-
-//import ServerInterface.ServerInterface;
 
 /**
  *
@@ -646,6 +658,11 @@ public class OttawaServerImpl{
     public void parseEventnfo(EventData eventData){
         databaseOttawa = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
+    }
+
+    public EventData getEventData(){
+        EventData eventData = new EventData(databaseOttawa,customerEventsMapping);
+        return eventData;
     }
 }
 

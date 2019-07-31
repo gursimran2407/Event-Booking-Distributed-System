@@ -55,7 +55,8 @@ public class CommonUtils {
     public static final String CANCEL_EVENT = "CANCEL_EVENT";
     public static final String SWAP_EVENT = "SWAP_EVENT";
     public static final String NON_OriginCustomerBooking = "NON_ORIGIN_CUSTOMER_BOOKING";
-    public static final String GET_DATA = "GET_BOOKING_SCHEDULE";
+    public static final String GET_DATA = "GET_DATA";
+    public static final String GET_BOOKING_SCHEDULE = "GET_BOOKING_SCHEDULE";
 
 
     public static final String SOME_THING_WENT_WRONG = "Something went wrong. Please try again!";
