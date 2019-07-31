@@ -7,17 +7,12 @@
  */
 package ServerImpl;
 
-//import ServerInterface.ServerInterface;
-import EventManagementServerApp.ServerInterface;
-import EventManagementServerApp.ServerInterfacePOA;
-import org.omg.CORBA.ORB;
+import Model.EventData;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,13 +20,14 @@ import java.util.logging.Logger;
 
 import static CommonUtils.CommonUtils.*;
 
+//import ServerInterface.ServerInterface;
+
 /**
  *
  * @author Gursimran Singh, Natheepan Ganeshamoorthy
  */
-public class OttawaServerImpl extends ServerInterfacePOA {
+public class OttawaServerImpl{
 
-    private ORB orb;
     private static HashMap<String, HashMap< String, String>> databaseOttawa = new HashMap<>();
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
     private static Logger logger;
@@ -71,15 +67,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         }
     }
 
-    public ORB getOrb() {
-        return orb;
-    }
-
-    public void setOrb(ORB orb) {
-        this.orb = orb;
-    }
-
-    @Override
+    
     public synchronized String addEvent(String eventID, String eventType, String bookingCapacity, String managerID)
     {
         String message = null;
@@ -117,7 +105,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         }
     }
 
-    @Override
+    
     public synchronized String removeEvent(String eventID, String eventType, String managerID)
     {
         String message = null;
@@ -172,7 +160,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return 0;
     }
 
-    @Override
+    
     public synchronized String listEventAvailability(String eventType, String managerID)
     {
         //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
@@ -227,7 +215,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
 
     }
 
-    @Override
+    
     public synchronized String bookEvent(String customerID, String eventID, String eventType, String bookingAmount)
     {
         if (!customerID.substring(0, 3).equals(OTTAWA) && !customerID.substring(0, 3).equals(eventID.substring(0, 3)))
@@ -314,7 +302,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return "";
     }
 
-    @Override
+    
     public synchronized String nonOriginCustomerBooking(String customerID, String eventID)
     {
         int numberOfCustomerEvents = 0;
@@ -354,7 +342,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return "" + numberOfCustomerEvents;
     }
 
-    @Override
+    
     public synchronized String getBookingSchedule(String customerID, String managerID)
     {
         String returnMsg = "";
@@ -416,7 +404,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return returnMsg;
     }
 
-    @Override
+    
     public synchronized String cancelEvent(String customerID, String eventID, String eventType)
     {
         switch (eventID.substring(0, 3))
@@ -514,7 +502,7 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return response;
     }
 
-    @Override
+    
     public synchronized String swapEvent(String customerID, String newEventID, String newEventType, String oldEventID, String oldEventType)
     {
         boolean isNewEventValid = false;
@@ -604,18 +592,60 @@ public class OttawaServerImpl extends ServerInterfacePOA {
         return "Operation Unsuccessful";
     }
 
-    @Override
+    
     public synchronized String eventAvailable(String eventID, String eventType)
     {
         eventType = eventType.substring(0,3).equalsIgnoreCase("CON")? CONFERENCE : eventType.substring(0,3).equalsIgnoreCase("SEM")? SEMINAR : TRADESHOW;
         return (databaseOttawa.containsKey(eventType) && databaseOttawa.get(eventType).containsKey(eventID) && Integer.parseInt(databaseOttawa.get(eventType).get(eventID)) > 0) ? "1" : "0";
     }
 
-    @Override
+    
     public synchronized String validateBooking(String customerID, String eventID, String eventType)
     {
         eventType = eventType.substring(0,3).equalsIgnoreCase("CON")? CONFERENCE : eventType.substring(0,3).equalsIgnoreCase("SEM")? SEMINAR : TRADESHOW;
         return (customerEventsMapping.containsKey(customerID) && customerEventsMapping.get(customerID).containsKey(eventType)  && customerEventsMapping.get(customerID).get(eventType).containsKey(eventID)) ? "1" : "0";
+    }
+    public String handleRequestFromOtherServer(String dataFromAnotherServer) throws SecurityException, IOException {
+		String[] receivedDataString = dataFromAnotherServer.split(" ");
+        String userId = receivedDataString[0];
+        String eventID = receivedDataString[1];
+        String methodNumber = receivedDataString[2].trim();
+        String eventType = receivedDataString[3].trim();
+        String bookingCapacity = receivedDataString[4].trim();
+        String managerID = receivedDataString[5].trim();
+        String newEventID = receivedDataString[6].trim();
+        String newEventType = receivedDataString[7].trim();
+        
+		switch(methodNumber) {
+		
+        case "1":
+            return this.addEvent(eventID, eventType, bookingCapacity, userId);
+        case "2":
+            return this.removeEvent(eventID, eventType, userId);
+        case "3":
+            return this.listEventAvailability(eventType, managerID);
+        case "4":
+            return this.bookEvent(userId, eventID, eventType, bookingCapacity);
+        case "5":
+            return this.getBookingSchedule(userId,managerID);
+        case "6":
+            return this.cancelEvent(userId, eventID, eventType);
+        case "7":
+            return this.nonOriginCustomerBooking(userId, eventID);
+        case "8":
+            return this.swapEvent(userId, newEventID, newEventType, eventID, eventType);
+        case "9":
+            return this.eventAvailable(newEventID, newEventType);
+        case "10":
+            return this.validateBooking(userId, eventID, eventType);
+    }
+		
+		return "Unknown request";
+	}
+
+    public void parseEventnfo(EventData eventData){
+        databaseOttawa = eventData.getDatabase();
+        customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 }
 
