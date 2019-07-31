@@ -14,6 +14,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import CommonUtils.CommonUtils;
+import Model.EventData;
 import Model.MessageData;
 import ServerImpl.MontrealServerImpl;
 
@@ -54,8 +55,8 @@ public class MontrealServer {
 				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
 				MessageData messageData = (MessageData) inputStream.readObject();
 				inputStream.close();
-				String response = replicaManagerImpl(messageData, montrealLibraryImpl);
-				DatagramPacket reply = new DatagramPacket(response.getBytes(), response.length(), recievedDatagramPacket.getAddress(),
+				byte[] byteArray = replicaManagerImpl(messageData, montrealLibraryImpl);
+				DatagramPacket reply = new DatagramPacket(byteArray, byteArray.length, recievedDatagramPacket.getAddress(),
 						recievedDatagramPacket.getPort());
 				socket.send(reply);
 			}
@@ -64,7 +65,7 @@ public class MontrealServer {
 		}
 	}
 
-	public static String replicaManagerImpl(MessageData messageData, MontrealServerImpl montrealLibraryImpl) {
+	public static byte[] replicaManagerImpl(MessageData messageData, MontrealServerImpl montrealLibraryImpl) {
 		String response = "";
 
 		switch(messageData.getMethodName()) {
@@ -104,7 +105,7 @@ public class MontrealServer {
 		default: 
 			response="Invalid request!!!";
 		}
-		return response;
+		return response.getBytes();
 
 	}
 
@@ -136,9 +137,10 @@ public class MontrealServer {
 			DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 			socket.receive(recievedDatagramPacket);
 			ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
-
+			EventData eventData = (EventData) inputStream.readObject();
+			montrealLibraryImpl.parseEventnfo(eventData);
 			inputStream.close();
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

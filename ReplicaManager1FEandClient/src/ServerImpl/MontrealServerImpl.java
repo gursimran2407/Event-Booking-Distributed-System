@@ -7,6 +7,8 @@
  */
 package ServerImpl;
 
+import Model.EventData;
+
 import static CommonUtils.CommonUtils.CONFERENCE;
 import static CommonUtils.CommonUtils.MONTREAL;
 import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
@@ -657,5 +659,9 @@ public class MontrealServerImpl {
     {
         eventType = eventType.substring(0,3).equalsIgnoreCase("CON")? CONFERENCE : eventType.substring(0,3).equalsIgnoreCase("SEM")? SEMINAR : TRADESHOW;
         return (customerEventsMapping.containsKey(customerID) && customerEventsMapping.get(customerID).containsKey(eventType)  && customerEventsMapping.get(customerID).get(eventType).containsKey(eventID)) ? "1" : "0";
+    }
+    public void parseEventnfo(EventData eventData){
+        databaseMontreal = eventData.getDatabase();
+        customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 }

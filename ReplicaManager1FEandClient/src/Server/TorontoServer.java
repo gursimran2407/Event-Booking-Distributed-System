@@ -15,6 +15,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 import CommonUtils.CommonUtils;
+import Model.EventData;
 import Model.MessageData;
 import ServerImpl.TorontoServerImpl;
 
@@ -57,8 +58,8 @@ public class TorontoServer {
 				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
 				MessageData messageData = (MessageData) inputStream.readObject();
 				inputStream.close();
-				String response = replicaManagerImpl(messageData, montrealLibraryImpl);
-				DatagramPacket reply = new DatagramPacket(response.getBytes(), response.length(), recievedDatagramPacket.getAddress(),
+				byte[] byteArray = replicaManagerImpl(messageData, montrealLibraryImpl);
+				DatagramPacket reply = new DatagramPacket(byteArray, byteArray.length, recievedDatagramPacket.getAddress(),
 						recievedDatagramPacket.getPort());
 				socket.send(reply);
 			}
@@ -67,7 +68,7 @@ public class TorontoServer {
 		}
 	}
 
-	public static String replicaManagerImpl(MessageData messageData, TorontoServerImpl montrealLibraryImpl) {
+	public static byte[] replicaManagerImpl(MessageData messageData, TorontoServerImpl montrealLibraryImpl) {
 		String response = "";
 
 		switch(messageData.getMethodName()) {
@@ -107,7 +108,8 @@ public class TorontoServer {
 		default: 
 			response="Invalid request!!!";
 		}
-		return response;
+		return response.getBytes();
+
 
 	}
 
@@ -139,9 +141,10 @@ public class TorontoServer {
 			DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 			socket.receive(recievedDatagramPacket);
 			ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
-
+			EventData eventData = (EventData) inputStream.readObject();
+			montrealLibraryImpl.parseEventnfo(eventData);
 			inputStream.close();
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -7,7 +7,6 @@
  */
 package Client;
 
-import CommonUtils.CommonUtils;
 import EventManagementServerApp.ServerInterface;
 import EventManagementServerApp.ServerInterfaceHelper;
 import ServerImpl.MontrealServerImpl;
@@ -21,9 +20,6 @@ import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;

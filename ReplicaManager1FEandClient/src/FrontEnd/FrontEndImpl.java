@@ -31,7 +31,6 @@ public class FrontEndImpl extends FrontEndPOA {
 	static private long replicaOneTimer = 0;
 	static private long replicaTwoTimer = 0;
 	static private long replicaThreeTimer = 0;
-	static private long replicaFourTimer = 0;
 	static private int counter=0;
 
 	public void setOrb(ORB orb) {
@@ -104,15 +103,17 @@ public class FrontEndImpl extends FrontEndPOA {
 		orb.shutdown(false);
 	}
 
+	//Method to send message to the sequencer
 	private String sendMessageToSequencer(MessageData messageData) {
 		long startTime = System.currentTimeMillis();
 		try(DatagramSocket socket = new DatagramSocket()) {
 			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
+			ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.SEQUNECER_PORT);
 			socket.send(sendPacket);
+			//Waiting for the reply from the replicas after sending to the sequencers
 			return waitForReplyFromReplicas(startTime);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -121,14 +122,14 @@ public class FrontEndImpl extends FrontEndPOA {
 	}
 
 	private String waitForReplyFromReplicas(long startTime) {
-		List<ReceivedToFE> dataRecieved = new ArrayList<>();
+		List<ReceivedToFE> dataReceived = new ArrayList<>();
 		String messageToClient = CommonUtils.SOME_THING_WENT_WRONG;
 		try(DatagramSocket socket = new DatagramSocket(CommonUtils.FRONT_END_PORT)) {
 			while(true) {
-				System.out.println("Timers : "+replicaOneTimer+" "+replicaTwoTimer+" "+replicaThreeTimer+" "+replicaFourTimer);
+				System.out.println("Timers : "+replicaOneTimer+" "+replicaTwoTimer+" "+replicaThreeTimer+" ");
 				byte [] message = new byte[3072];
 				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
-				if(dataRecieved.size() >= 3) {
+				if(dataReceived.size() >= 2) {
 					socket.setSoTimeout(getTimeOutTimer());
 				}
 				socket.receive(recievedDatagramPacket);
@@ -137,10 +138,10 @@ public class FrontEndImpl extends FrontEndPOA {
 				inputStream.close();
 				System.out.println("Message Received From"+ messageData.getFromMessage()+" "+messageData.getMessage());
 				checkTheTimer(messageData, startTime);
-
-				dataRecieved.add(messageData);
+				//adding messages to the arraylist
+				dataReceived.add(messageData);
 				System.out.println(messageData.getFromMessage()+" "+messageData.getMessage());
-				messageToClient = this.checkMessagesToSendToClient(dataRecieved, startTime);
+				messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
 				if(Objects.nonNull(messageToClient)) {
 					return messageToClient;
 				}else {
@@ -148,7 +149,7 @@ public class FrontEndImpl extends FrontEndPOA {
 				}
 			}
 		}catch(SocketTimeoutException exception) {
-			messageToClient = this.checkMessagesToSendToClient(dataRecieved, startTime);
+			messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
 			if(Objects.nonNull(messageToClient)) {
 				return messageToClient;
 			}else {
@@ -163,7 +164,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	private int  getTimeOutTimer() {
 		int timerToSend;
 		long firstTimers = replicaOneTimer > replicaTwoTimer? replicaOneTimer: replicaTwoTimer;
-		long lastTimers = replicaThreeTimer > replicaFourTimer? replicaThreeTimer: replicaFourTimer;
+		long lastTimers = replicaTwoTimer > replicaThreeTimer? replicaTwoTimer: replicaThreeTimer;
 		long timer = firstTimers>lastTimers?firstTimers:lastTimers;
 		timerToSend = (int) (timer == 0? 11000: 3 * timer);
 		return timerToSend;
@@ -185,10 +186,6 @@ public class FrontEndImpl extends FrontEndPOA {
 			if(endTime > replicaThreeTimer)
 				replicaThreeTimer = endTime;
 			break;
-		case CommonUtils.REPLICA4_HOSTNAME:
-			if(endTime > replicaFourTimer)
-				replicaFourTimer = endTime;
-			break;
 
 		default:
 			break;
@@ -206,26 +203,33 @@ public class FrontEndImpl extends FrontEndPOA {
 			e.printStackTrace();
 		}
 	}
-
+	//Checking the message received by the FE that needs to be sent to the client
 	private String checkMessagesToSendToClient(List<ReceivedToFE> dataRecieved, long startTime) {
 		String response = null;
 		String [] replicasNames = {CommonUtils.REPLICA1_HOSTNAME, CommonUtils.REPLICA2_HOSTNAME, 
-				CommonUtils.REPLICA3_HOSTNAME, CommonUtils.REPLICA4_HOSTNAME};
+				CommonUtils.REPLICA3_HOSTNAME};
 		Map<String, ReceivedToFE> receivedMessages = dataRecieved.stream().map(data -> data)
 				.collect(Collectors.toMap(ReceivedToFE::getFromMessage, Function.identity()));
 		boolean hasToWait = true;
-		if(dataRecieved.size() >= 3) {
+		//if one crashed
+		if(dataRecieved.size() >= 2) {
 			boolean crashinform = false;
 			for(int index = 0; index < replicasNames.length; index++) {
+
+				//Basically checking if one of the repllica has not sent a message then
 				if(!receivedMessages.containsKey(replicasNames[index])) {
+					//start the waiting process and wait for a reply for some time
 					hasToWait  = checkWhetherToWaitForMessage(startTime, replicasNames[index]);
 					if(!hasToWait) {
+
+						//inform the replica about the crash after waiting
 						informReplicasAboutCrash(replicasNames[index]);
 						crashinform = true;
 					}
 				}
 			}
-			if(dataRecieved.size() >= 4 || (crashinform && dataRecieved.size() == 3)) {//replca count - 1
+			// if one is crashed and other 2 gave messages or all gave messages after waiting
+			if(dataRecieved.size() >= 3 || (crashinform && dataRecieved.size() == 2)) {//replca count - 1
 				Map<String, List<ReceivedToFE>> messagesReceived = dataRecieved.stream().collect(Collectors.groupingBy(ReceivedToFE::getMessage));
 				for (Entry<String, List<ReceivedToFE>> message : messagesReceived.entrySet()) {
 					System.out.println(message.getKey().trim()+" "+ message.getValue().size());
@@ -268,7 +272,6 @@ public class FrontEndImpl extends FrontEndPOA {
 		case CommonUtils.REPLICA1_HOSTNAME: return replicaOneTimer;
 		case CommonUtils.REPLICA2_HOSTNAME: return replicaTwoTimer;
 		case CommonUtils.REPLICA3_HOSTNAME: return replicaThreeTimer;
-		case CommonUtils.REPLICA4_HOSTNAME: return replicaFourTimer;
 		default:
 			break;
 		}

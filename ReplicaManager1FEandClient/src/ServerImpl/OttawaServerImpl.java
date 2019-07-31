@@ -7,6 +7,8 @@
  */
 package ServerImpl;
 
+import Model.EventData;
+
 import static CommonUtils.CommonUtils.CONFERENCE;
 import static CommonUtils.CommonUtils.MONTREAL;
 import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
@@ -652,6 +654,11 @@ public class OttawaServerImpl{
 		
 		return "Unknown request";
 	}
+
+    public void parseEventnfo(EventData eventData){
+        databaseOttawa = eventData.getDatabase();
+        customerEventsMapping = eventData.getCustomerEventsMapping();
+    }
 }
 
 // MTLA090619 TORE050619 TORC1234

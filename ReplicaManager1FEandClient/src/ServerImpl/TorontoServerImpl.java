@@ -7,6 +7,8 @@
  */
 package ServerImpl;
 
+import Model.EventData;
+
 import static CommonUtils.CommonUtils.CONFERENCE;
 import static CommonUtils.CommonUtils.MONTREAL;
 import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
@@ -656,5 +658,10 @@ public class TorontoServerImpl {
 		
 		return "Unknown request";
 	}
+
+    public void parseEventnfo(EventData eventData){
+        databaseToronto = eventData.getDatabase();
+        customerEventsMapping = eventData.getCustomerEventsMapping();
+    }
 }
 
