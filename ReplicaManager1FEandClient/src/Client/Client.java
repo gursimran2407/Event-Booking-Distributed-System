@@ -7,8 +7,9 @@
  */
 package Client;
 
-import EventManagementServerApp.ServerInterface;
-import EventManagementServerApp.ServerInterfaceHelper;
+import CommonUtils.CommonUtils;
+import FrontEndIdl.FrontEnd;
+import FrontEndIdl.FrontEndHelper;
 import ServerImpl.MontrealServerImpl;
 import ServerImpl.OttawaServerImpl;
 import ServerImpl.TorontoServerImpl;
@@ -35,30 +36,26 @@ public class Client {
     private static Logger LOGGER;
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         try {
             ORB orb = ORB.init(args, null);
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 
             String id = enterValidID(InputType.CLIENT_ID);
-            clientService(id.substring(0, 3), id.substring(4,8),id.substring(3, 4), ncRef);
+            clientService(id.substring(0, 3), id.substring(4, 8), id.substring(3, 4), ncRef);
 
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Hello Client exception: " + e);
             e.printStackTrace();
         }
-        
 
     }
-    
 
     private static void clientService(String serverId, String clientID, String clientType, NamingContextExt ncRef)
     {
-        ServerInterface server;
+        FrontEnd server;
         try
         {
             String customerID = capitalize(serverId + clientType + clientID);
@@ -66,7 +63,7 @@ public class Client {
             addFileHandler(LOGGER, customerID);
 
 
-            server = (ServerInterface) ServerInterfaceHelper.narrow(ncRef.resolve_str(getServerName(serverId)));
+            server = FrontEndHelper.narrow(ncRef.resolve_str(CommonUtils.FRONT_END));
             if (clientType.equals(CUSTOMER_ClientType))
             {
                 System.out.println("Welcome Customer " + customerID);
@@ -90,7 +87,7 @@ public class Client {
         }
     }
 
-    private static void runCustomerMenu(ServerInterface server, String customerID)
+    private static void runCustomerMenu(FrontEnd server, String customerID)
     {
         String itemNum = "";
         while (!itemNum.equals("0"))
@@ -152,7 +149,7 @@ public class Client {
         scanner.close();
     }
 
-    private static void runManagerMenu(ServerInterface server, String managerID)
+    private static void runManagerMenu(FrontEnd server, String managerID)
     {
         String itemNum = "";
         while (!itemNum.equals("0"))
@@ -166,11 +163,13 @@ public class Client {
             System.out.println("4: Book Event");
             System.out.println("5: Get Booking Schedule");
             System.out.println("6: Cancel Event");
+            System.out.println("7: Swap Event");
+
             System.out.println("============================");
 
             itemNum = scanner.next().trim();
 
-            if (itemNum.matches("^[0-6]$"))
+            if (itemNum.matches("^[0-7]$"))
             {
                 switch (itemNum)
                 {
@@ -206,6 +205,18 @@ public class Client {
                         String response = server.cancelEvent(customerID, eventID, eventType);
                         System.out.println("Response from server: " + response);
                         break;
+                    case "7":
+                        System.out.println("Enter new Event Type of The Event to Replace? (Available Options: A: CONFERENCE, B: TRADESHOW, C: SEMINAR)");
+                        String newEventType = getEventType();
+                        String newEventID = enterValidID(InputType.EVENT_ID);
+                        System.out.println("Enter old Event Type of The Event to Remove? (Available Options: A: CONFERENCE, B: TRADESHOW, C: SEMINAR)");
+                        String oldEventType = getEventType();
+                        String oldEventID = enterValidID(InputType.EVENT_ID);
+                        String custID = enterValidID(InputType.CLIENT_ID);
+                        String swap = server.swapEvent(custID, newEventID, newEventType, oldEventID, oldEventType);
+                        System.out.println("Response from server: " + swap);
+                        LOGGER.log(Level.INFO, "Response of server: {0}", swap);
+                        break;
                     default:
                         System.out.println("Invalid Choice !!!");
                         break;
@@ -219,7 +230,7 @@ public class Client {
         scanner.close();
     }
 
-    private static void managerAddEvent(ServerInterface server, String managerID)
+    private static void managerAddEvent(FrontEnd server, String managerID)
     {
         try
         {
@@ -247,7 +258,7 @@ public class Client {
         }
     }
 
-    private static void managerRemoveEvent(ServerInterface server, String managerID)
+    private static void managerRemoveEvent(FrontEnd server, String managerID)
     {
         String eventID;
         String eventType;
@@ -272,7 +283,7 @@ public class Client {
         }
     }
 
-    private static void managerListEvents(ServerInterface server, String customerID)
+    private static void managerListEvents(FrontEnd server, String customerID)
     {
         try
         {
@@ -287,7 +298,7 @@ public class Client {
         }
     }
 
-    private static void runBookEvent(ServerInterface server, String customerID)
+    private static void runBookEvent(FrontEnd server, String customerID)
     {
         System.out.println("What type of event do you wish to book? (Available Options: A: CONFERENCE, B: TRADESHOW, C: SEMINAR)");
         String eventType = getEventType();
@@ -301,7 +312,7 @@ public class Client {
         System.out.println(msg);
     }
 
-    private static void runBookingSchedule(ServerInterface server, String customerID, String managerId)
+    private static void runBookingSchedule(FrontEnd server, String customerID, String managerId)
     {
         LOGGER.log(Level.INFO, "Booking Schedule Requested by {0}", customerID);
         System.out.println(customerID + "'s Bookings Schedule");

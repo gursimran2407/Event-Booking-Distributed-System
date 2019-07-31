@@ -72,7 +72,7 @@ public class CommonUtils {
     public static final int REPLICA_TO_REPLICA_PORT = 2006;
 
     public static final String I_AM_ALIVE = "I am Alive";
-    public static String USER_CODE = "U";
+    public static String USER_CODE = "C";
     public static String MANAGER_CODE = "M";
     public static String LOGGER_FOLDER="/logs";
     public static String CONCORDIA_INITAL_LOAD_FILE = "/resources/ConcordiaLibrary.txt";
@@ -125,7 +125,7 @@ public class CommonUtils {
     public static void addFileHandler(Logger log, String fileName) throws SecurityException, IOException
     {
         log.setUseParentHandlers(false);
-        FileHandler fileHandler = new FileHandler(System.getProperty("user.dir") + "/CORBA/Records/" + fileName + ".log", true);
+        FileHandler fileHandler = new FileHandler(System.getProperty("user.dir") + "/ReplicaManager1FEandClient/Records/" + fileName + ".log", true);
         log.addHandler(fileHandler);
         fileHandler.setFormatter(new SimpleFormatter());
     }
