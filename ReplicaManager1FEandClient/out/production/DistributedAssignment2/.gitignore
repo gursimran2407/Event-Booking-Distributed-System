@@ -1,7 +1,9 @@
-/Model/
-/FrontEnd/
+/Client/
 /CommonUtils/
+/FrontEnd.idl
+/FrontEnd/
+/FrontEndIdl/
+/Model/
+/ReplicaManager/
 /Server/
 /ServerImpl/
-/Client/
-/ReplicaManager/

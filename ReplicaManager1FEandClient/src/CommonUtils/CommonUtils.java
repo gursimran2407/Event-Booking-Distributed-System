@@ -125,7 +125,7 @@ public class CommonUtils {
     public static void addFileHandler(Logger log, String fileName) throws SecurityException, IOException
     {
         log.setUseParentHandlers(false);
-        FileHandler fileHandler = new FileHandler(System.getProperty("user.dir") + "/ReplicaManager1FEandClient/Records/" + fileName + ".log", true);
+        FileHandler fileHandler = new FileHandler(System.getProperty("user.dir") + "/Records/" + fileName + ".log", true);
         log.addHandler(fileHandler);
         fileHandler.setFormatter(new SimpleFormatter());
     }

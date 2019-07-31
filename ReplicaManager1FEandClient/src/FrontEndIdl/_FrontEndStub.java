@@ -100,13 +100,18 @@ public class _FrontEndStub extends org.omg.CORBA.portable.ObjectImpl implements 
             }
   } // bookEvent
 
+  @Override
   public String getBookingSchedule (String customerID, String managerID)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
                 org.omg.CORBA.portable.OutputStream $out = _request ("getBookingSchedule", true);
                 $out.write_string (customerID);
-                $out.write_string (managerID);
+               if (managerID == null) {
+				$out.write_string("null");
+			}
+               else 
+            	$out.write_string(managerID);
                 $in = _invoke ($out);
                 String $result = $in.read_string ();
                 return $result;
