@@ -125,7 +125,7 @@ public class TorontoServer {
 	private static void handlesRequestFromAnotherServers(TorontoServerImpl montrealLibraryImpl){
 		DatagramSocket socket = null;
 		try {
-			socket = new DatagramSocket(CommonUtils.MONTREAL_SERVER_PORT);
+			socket = new DatagramSocket(CommonUtils.TORONTO_SERVER_PORT);
 			System.out.println("Toronto Server started...");
 			while(true) {
 				byte [] message = new byte[1000];
