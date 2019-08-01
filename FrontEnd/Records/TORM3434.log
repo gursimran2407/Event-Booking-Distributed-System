@@ -1,0 +1,4 @@
+Aug 01, 2019 5:13:17 PM Client.Client managerAddEvent
+INFO: Manager: TORM3434 adding a new Event with Event id: TORM071123 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 01, 2019 5:13:20 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORM071123 Event Type  TradeShows Booking Capacity  2

@@ -1,0 +1,4 @@
+Aug 01, 2019 5:13:17 PM ServerImpl.TorontoServerImpl addEvent
+INFO: Received request to add an event with event id TORM071123 , Event TypeTradeShows & Booking Capacity 2
+Aug 01, 2019 5:13:17 PM ServerImpl.TorontoServerImpl addEvent
+INFO: Operations Successful!. Event Added in Toronto Server for Event ID: TORM071123 Event Type: TradeShows Booking Capacity: 2

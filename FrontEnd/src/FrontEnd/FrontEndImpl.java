@@ -46,7 +46,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	@Override
 	public String removeEvent(String eventID, String eventType, String managerID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setEventId(eventID).setManagerId(managerID).setMethodName(CommonUtils.REMOVE_EVENT));
+		return sendMessageToSequencer(new MessageData().setEventId(eventID).setManagerId(managerID).setMethodName(CommonUtils.REMOVE_EVENT).setEventType(eventType));
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	@Override
 	public String bookEvent(String customerID, String eventID, String eventType, String bookingAmount) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType).setBookingCap(bookingAmount).setMethodName(CommonUtils.BOOK_EVENT));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType).setBookingCap(bookingAmount).setMethodName(CommonUtils.BOOK_EVENT).setEventId(eventID));
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	@Override
 	public String cancelEvent(String customerID, String eventID, String eventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventType).setMethodName(CommonUtils.CANCEL_EVENT));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventType).setMethodName(CommonUtils.CANCEL_EVENT).setEventId(eventID));
 	}
 
 	@Override
