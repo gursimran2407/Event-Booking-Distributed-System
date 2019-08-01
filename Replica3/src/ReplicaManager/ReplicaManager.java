@@ -66,7 +66,7 @@ public class ReplicaManager {
 				if(!responseFromServer.trim().equals("Message Not received")) {
 					receievdToFE.setMessage(responseFromServer);
 					receievdToFE.setSequencerCounter(Integer.toString(messageData.getSequenceCounter()));
-					receievdToFE.setFromMessage(CommonUtils.REPLICA2_HOSTNAME);
+					receievdToFE.setFromMessage(CommonUtils.SEQUENCER_HOSTNAME);
 					int portNumber = CommonUtils.FRONT_END_PORT;
 
 					sendToFrontEnd(receievdToFE, portNumber);
@@ -93,7 +93,7 @@ public class ReplicaManager {
 		String response = CommonUtils.SOME_THING_WENT_WRONG;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);
-			InetAddress host = InetAddress.getByName(CommonUtils.REPLICA2_HOSTNAME);
+			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
 			objectOutput.writeObject(messageData);
@@ -178,7 +178,7 @@ public class ReplicaManager {
 				}else if(receivedData.trim().contains(CommonUtils.CRASHED)){
 					String [] crashedReplica = receivedData.split(",");
 					String replicaName = crashedReplica[1].trim();
-					if(replicaName.equals(CommonUtils.REPLICA2_HOSTNAME)) {//change according to replica
+					if(replicaName.equals(CommonUtils.SEQUENCER_HOSTNAME)) {//change according to replica
 						checkTheReplicasAndStart();
 					}
 				}
@@ -207,7 +207,7 @@ public class ReplicaManager {
 
 	private static void sentToDataConsistencePort(EventData eventData, String serverCode) {
 		try(DatagramSocket socket = new DatagramSocket()){
-			InetAddress host = InetAddress.getByName(CommonUtils.REPLICA2_HOSTNAME);
+			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
 			objectOutput.writeObject(eventData);
@@ -223,7 +223,7 @@ public class ReplicaManager {
 	private static EventData sendToReplica(String serverCode) {
 		EventData messageData = null;
 		try (DatagramSocket socket = new DatagramSocket()){
-			InetAddress host = InetAddress.getByName(CommonUtils.REPLICA2_HOSTNAME);
+			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			DatagramPacket sendPacket = new DatagramPacket(serverCode.getBytes(), serverCode.getBytes().length, host, CommonUtils.REPLICA_TO_REPLICA_PORT);
 			socket.send(sendPacket);
 			byte [] buffer = new byte[5000];

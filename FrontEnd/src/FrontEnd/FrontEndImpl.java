@@ -174,11 +174,11 @@ public class FrontEndImpl extends FrontEndPOA {
 		long endTime = System.currentTimeMillis() - startTime;
 		System.out.println("Check Timer "+messageData.getFromMessage()+" "+counter++);
 		switch (messageData.getFromMessage().toUpperCase()) {
-		case CommonUtils.REPLICA1_HOSTNAME:
+		case CommonUtils.FRONT_END_HOSTNAME:
 			if(endTime > replicaOneTimer)
 				replicaOneTimer = endTime;
 			break;
-		case CommonUtils.REPLICA2_HOSTNAME:
+		case CommonUtils.SEQUENCER_HOSTNAME:
 			if(endTime > replicaTwoTimer)
 				replicaTwoTimer = endTime;
 			break;
@@ -206,7 +206,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	//Checking the message received by the FE that needs to be sent to the client
 	private String checkMessagesToSendToClient(List<ReceivedToFE> dataRecieved, long startTime) {
 		String response = null;
-		String [] replicasNames = {CommonUtils.REPLICA1_HOSTNAME, CommonUtils.REPLICA2_HOSTNAME, 
+		String [] replicasNames = {CommonUtils.FRONT_END_HOSTNAME, CommonUtils.SEQUENCER_HOSTNAME, 
 				CommonUtils.REPLICA3_HOSTNAME};
 		Map<String, ReceivedToFE> receivedMessages = dataRecieved.stream().map(data -> data)
 				.collect(Collectors.toMap(ReceivedToFE::getFromMessage, Function.identity()));
@@ -269,8 +269,8 @@ public class FrontEndImpl extends FrontEndPOA {
 
 	private long getReplicaTimer(String replicasName) {
 		switch (replicasName) {
-		case CommonUtils.REPLICA1_HOSTNAME: return replicaOneTimer;
-		case CommonUtils.REPLICA2_HOSTNAME: return replicaTwoTimer;
+		case CommonUtils.FRONT_END_HOSTNAME: return replicaOneTimer;
+		case CommonUtils.SEQUENCER_HOSTNAME: return replicaTwoTimer;
 		case CommonUtils.REPLICA3_HOSTNAME: return replicaThreeTimer;
 		default:
 			break;
