@@ -10,7 +10,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class CommonUtils {
 
-    public static final String FRONT_END_HOSTNAME = "HNG";
+    public static final String FRONT_END_HOSTNAME = "HG";
     public static final String REPLICA3_HOSTNAME = "GUINEA";
     public static final String SEQUENCER_HOSTNAME = "ND";
 
