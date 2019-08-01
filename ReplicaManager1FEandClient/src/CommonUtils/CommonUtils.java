@@ -23,17 +23,17 @@ import java.util.logging.SimpleFormatter;
 public class CommonUtils {
 
     //CONSTANTS
-    public static final String REPLICA1_HOSTNAME="SENEGAL";//
-    public static final String REPLICA2_HOSTNAME="GHANA"; //
-    public static final String FRONT_END_HOSTNAME="GHANA"; //
+    public static final String REPLICA1_HOSTNAME="BURSTYN";//
+    public static final String REPLICA2_HOSTNAME="BRYNNER"; //
+    public static final String FRONT_END_HOSTNAME="BURSTYN"; //
     public static final String REPLICA3_HOSTNAME="GUINEA";//
-    public static final String SEQUENCER_HOSTNAME="GUINEA";//
+    public static final String SEQUENCER_HOSTNAME="BRYNNER";//
 
 
-//	public static final String REPLICA1_IPADDRESS="132.205.4.148";
+	public static final String REPLICA1_IPADDRESS="132.205.4.27";
 //	public static final String REPLICA2_IPADDRESS="132.205.4.149";
 //	public static final String REPLICA3_IPADDRESS="132.205.4.152";
-//	public static final String SEQUENCER_IPADDRESS="132.205.4.152";
+	public static final String SEQUENCER_IPADDRESS="132.205.4.26";
 //	public static final String REPLICA4_IPADDRESS="";
 
     public static final int TO_REPLICA_STRING_PORT = 1212;

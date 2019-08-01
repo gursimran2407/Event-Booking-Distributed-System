@@ -1,14 +1,22 @@
 package ReplicaManager;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+
+import CommonUtils.CommonUtils;
 import Model.EventData;
 import Model.MessageData;
 import Model.ReceivedToFE;
-
-import java.io.*;
-import java.net.*;
-import java.util.ArrayList;
-import java.util.List;
-import CommonUtils.CommonUtils;
 import Server.MontrealServer;
 import Server.OttawaServer;
 import Server.TorontoServer;
@@ -35,7 +43,17 @@ public class ReplicaManager {
 				messageData.setErrorCounter(errorCounter);
 				inputStream.close();
 				System.out.println(messageData);
-				String userID = !messageData.getCustomerId().isEmpty()? messageData.getCustomerId(): messageData.getManagerId();
+				String userID ="";
+				try {
+					if (messageData.getCustomerId()!=null) {
+						userID = messageData.getCustomerId().trim();
+					}
+					else 
+						userID = messageData.getManagerId().trim();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}				
 
 				if(userID.substring(0,3).equalsIgnoreCase(CommonUtils.MONTREAL)) {
 					responseFromServer = new String(sendToServer(messageData, CommonUtils.MONTREAL));
