@@ -107,7 +107,7 @@ public class TorontoServer {
 			response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
 			break;
 		case CommonUtils.CRASHED:
-			response = CommonUtils.I_AM_ALIVE;
+			response = CommonUtils.ALIVE;
 			break;
 		case CommonUtils.eventAvailable:
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());

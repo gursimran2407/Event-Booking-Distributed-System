@@ -1,13 +1,4 @@
 package CommonUtils;
-
-/**
- * @author gursimransingh
- */
-/**
- * CONCORDIA UNIVERSITY DEPARTMENT OF COMPUTER SCIENCE AND SOFTWARE ENGINEERING
- * COMP 6231, Summer 2019 Instructor: Sukhjinder K. Narula ASSIGNMENT 1 Issued:
- * May 14, 2019 Due: Jun 3, 2019
- */
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -27,25 +18,25 @@ public class CommonUtils {
     public static final String SEQUENCER_IPADDRESS = "132.205.64.60";
     public static final String REPLICA3IPADDRESS = "132.205.4.152";
 
-    public static final int TO_REPLICA_STRING_PORT = 1212;
-    public static final int SEQUNECER_PORT = 1218;
-    public static final int MULTICAST_PORT = 1219;
-    public static final int FRONT_END_PORT = 1220;
-    public static final int RECEIVE_DATA_FROM_REPLICA_PORT = 2010;
+    public static final int TO_REPLICA_STRING_PORT = 1000;
+    public static final int SEQUNECER_PORT = 1001;
+    public static final int MULTICAST_PORT = 1002;
+    public static final int FRONT_END_PORT = 1003;
+    public static final int RECEIVE_DATA_FROM_REPLICA_PORT = 1004;
+    public static final int REPLICA_OTTAWA_SERVER_PORT = 1005;
+    public static final int REPLICA_TORONTO_SERVER_PORT = 1006;
+    public static final int REPLICA_MONTREAL_SERVER_PORT = 1007;
+    public static final int REPLICA_TO_REPLICA_PORT = 1008;
 
     public final static String INET_ADDR = "224.0.0.3";
     public final static int PORT = 8888;
 
-    public static final String SOME_THING_WENT_WRONG = "Something went wrong. Please try again!";
-
+    public static final String ALIVE = "Yes, I'm Alive";
+    public static final String EXCEPTION = "Unknown Error. Please try again!";
     public static final String CRASHED = "CRASHED";
-    public static final String FRONT_END = "FRONT_END";
+    public static final String FRONT_END = "FRONT END";
     public static final String THREE_CONSECUTIVE_ERRORS = "Three Consecutive Errors";
     public static final String RESULT_ERROR = "Result Error";
-    public static final int REPLICA_OTTAWA_SERVER_PORT = 2000;
-    public static final int REPLICA_TORONTO_SERVER_PORT = 2002;
-    public static final int REPLICA_MONTREAL_SERVER_PORT = 2004;
-    public static final int REPLICA_TO_REPLICA_PORT = 2006;
     
     public static final String ADD_EVENT = "ADD_EVENT";
     public static final String REMOVE_EVENT = "REMOVE_EVENT";
@@ -58,9 +49,7 @@ public class CommonUtils {
     public static final String NON_OriginCustomerBooking = "NON_ORIGIN_CUSTOMER_BOOKING";
     public static final String GET_DATA = "GET_DATA";
     public static final String GET_BOOKING_SCHEDULE = "GET_BOOKING_SCHEDULE";
-
-    public static final String I_AM_ALIVE = "I am Alive";
-
+    
     public static final String CUSTOMER_ClientType = "C";
     public static final String EVENT_MANAGER_ClientType = "M";
 

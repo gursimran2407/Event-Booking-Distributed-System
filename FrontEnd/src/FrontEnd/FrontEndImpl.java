@@ -118,12 +118,12 @@ public class FrontEndImpl extends FrontEndPOA {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return CommonUtils.SOME_THING_WENT_WRONG;
+		return CommonUtils.EXCEPTION;
 	}
 
 	private String waitForReplyFromReplicas(long startTime) {
 		List<ReceivedToFE> dataReceived = new ArrayList<>();
-		String messageToClient = CommonUtils.SOME_THING_WENT_WRONG;
+		String messageToClient = CommonUtils.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket(CommonUtils.FRONT_END_PORT)) {
 			while(true) {
 				System.out.println("Timers : "+replicaOneTimer+" "+replicaTwoTimer+" "+replicaThreeTimer+" ");
@@ -145,7 +145,7 @@ public class FrontEndImpl extends FrontEndPOA {
 				if(Objects.nonNull(messageToClient)) {
 					return messageToClient;
 				}else {
-					messageToClient = CommonUtils.SOME_THING_WENT_WRONG;
+					messageToClient = CommonUtils.EXCEPTION;
 				}
 			}
 		}catch(SocketTimeoutException exception) {
@@ -153,7 +153,7 @@ public class FrontEndImpl extends FrontEndPOA {
 			if(Objects.nonNull(messageToClient)) {
 				return messageToClient;
 			}else {
-				messageToClient = CommonUtils.SOME_THING_WENT_WRONG;
+				messageToClient = CommonUtils.EXCEPTION;
 			}
 		}catch (IOException | ClassNotFoundException exception) {
 			exception.printStackTrace();

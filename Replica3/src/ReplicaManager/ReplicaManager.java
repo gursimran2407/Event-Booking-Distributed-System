@@ -90,7 +90,7 @@ public class ReplicaManager {
 	}
 
 	private static byte[] sendToServer(MessageData messageData, String serverCode) {
-		String response = CommonUtils.SOME_THING_WENT_WRONG;
+		String response = CommonUtils.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);
 			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
@@ -194,7 +194,7 @@ public class ReplicaManager {
 			MessageData messageData = new MessageData();
 			messageData.setMethodName(CommonUtils.CRASHED);
 			String response = new String(sendToServer(messageData, serverCode));
-			if(!response.equals(CommonUtils.I_AM_ALIVE)) {
+			if(!response.equals(CommonUtils.ALIVE)) {
 				MessageData data = new MessageData();
 				data.setMethodName(CommonUtils.GET_DATA);
 				EventData eventData = sendToReplica(serverCode);
