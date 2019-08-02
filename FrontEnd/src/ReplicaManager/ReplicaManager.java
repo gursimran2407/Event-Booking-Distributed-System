@@ -25,7 +25,7 @@ public class ReplicaManager {
 	static int errorCounter = 0;
 
 	public static void receiveFromSequencer() throws ClassNotFoundException {
-		System.out.println("Getting the request from Sequencer\nReplica Manager is running on FE");
+		System.out.println("Getting the request from Sequencer");
 		String responseFromServer = "";
 		InetAddress address = null;
 
@@ -93,7 +93,7 @@ public class ReplicaManager {
 		String response = CommonUtils.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);
-			InetAddress host = InetAddress.getByName(CommonUtils.FRONT_END_HOSTNAME);
+			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
 			objectOutput.writeObject(messageData);
