@@ -9,7 +9,6 @@ public class MessageData implements Serializable {
 	private String eventTypeName;
 	private String eventIDName;
 	private String bookingCap;
-	private String managerID;
 	private  String new_EventID;
 	private  String old_EventID;
 	
@@ -123,7 +122,7 @@ public class MessageData implements Serializable {
 	}
 
 	public MessageData setEventType(String itemName) {
-		this.eventIDName = itemName;
+		this.eventTypeName = itemName;
 		return this;
 	}
 
@@ -145,7 +144,6 @@ public class MessageData implements Serializable {
 				", eventTypeName='" + eventTypeName + '\'' +
 				", eventIDName='" + eventIDName + '\'' +
 				", bookingCap='" + bookingCap + '\'' +
-				", managerID='" + managerID + '\'' +
 				", new_EventID='" + new_EventID + '\'' +
 				", old_EventID='" + old_EventID + '\'' +
 				", old_EventType='" + old_EventType + '\'' +
