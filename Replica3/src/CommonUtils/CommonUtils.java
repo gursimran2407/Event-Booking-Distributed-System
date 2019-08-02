@@ -10,7 +10,7 @@ import java.util.logging.SimpleFormatter;
  */
 public class CommonUtils {
 
-   public static final String FRONT_END_HOSTNAME = "BRYNNER";
+    public static final String FRONT_END_HOSTNAME = "BRYNNER";
     public static final String REPLICA3_HOSTNAME = "CAGE";
     public static final String SEQUENCER_HOSTNAME = "BURSTYN";
 
@@ -19,14 +19,14 @@ public class CommonUtils {
     public static final String REPLICA3IPADDRESS = "132.205.4.152";
 
     public static final int TO_REPLICA_STRING_PORT = 1000;
-    public static final int SEQUNECER_PORT = 1001;
-    public static final int MULTICAST_PORT = 1002;
-    public static final int FRONT_END_PORT = 1003;
-    public static final int RECEIVE_DATA_FROM_REPLICA_PORT = 1004;
-    public static final int REPLICA_OTTAWA_SERVER_PORT = 1005;
-    public static final int REPLICA_TORONTO_SERVER_PORT = 1006;
-    public static final int REPLICA_MONTREAL_SERVER_PORT = 1007;
-    public static final int REPLICA_TO_REPLICA_PORT = 1008;
+    public static final int SEQUNECER_PORT = 1564;
+    public static final int MULTICAST_PORT = 8945;
+    public static final int FRONT_END_PORT = 3647;
+    public static final int RECEIVE_DATA_FROM_REPLICA_PORT = 1547;
+    public static final int REPLICA_OTTAWA_SERVER_PORT = 6547;
+    public static final int REPLICA_TORONTO_SERVER_PORT = 7575;
+    public static final int REPLICA_MONTREAL_SERVER_PORT = 1452;
+    public static final int REPLICA_TO_REPLICA_PORT = 1425;
 
     public final static String INET_ADDR = "224.0.0.3";
     public final static int PORT = 8888;
@@ -65,9 +65,9 @@ public class CommonUtils {
     public static final String MONTREAL_SERVER_NAME = "MONTREAL";
     public static final String OTTAWA_SERVER_NAME = "OTTAWA";
 
-    public static final int TORONTO_SERVER_PORT = 1111;
-    public static final int MONTREAL_SERVER_PORT = 2222;
-    public static final int OTTAWA_SERVER_PORT = 3333;
+    public static final int TORONTO_SERVER_PORT = 7845;
+    public static final int MONTREAL_SERVER_PORT = 3254;
+    public static final int OTTAWA_SERVER_PORT = 6587;
 
     public static final String CONFERENCE = "Conferences";
     public static final String SEMINAR = "Seminars";
