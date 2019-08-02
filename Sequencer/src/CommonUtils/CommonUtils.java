@@ -18,7 +18,7 @@ public class CommonUtils {
     public static final String SEQUENCER_IPADDRESS = "132.205.64.60";
     public static final String REPLICA3IPADDRESS = "132.205.4.152";
 
-    public static final int TO_REPLICA_STRING_PORT = 1000;
+    public static final int TO_REPLICA_STRING_PORT = 5746;
     public static final int SEQUNECER_PORT = 1564;
     public static final int MULTICAST_PORT = 8945;
     public static final int FRONT_END_PORT = 3647;
