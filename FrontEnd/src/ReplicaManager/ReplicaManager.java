@@ -25,7 +25,7 @@ public class ReplicaManager {
 	static int errorCounter = 0;
 
 	public static void receiveFromSequencer() throws ClassNotFoundException {
-		System.out.println("Getting the request from Sequencer");
+		System.out.println("Getting the request from Sequencer\nReplica Manager is running on FE");
 		String responseFromServer = "";
 		InetAddress address = null;
 

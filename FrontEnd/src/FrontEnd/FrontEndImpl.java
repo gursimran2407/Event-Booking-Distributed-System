@@ -113,6 +113,7 @@ public class FrontEndImpl extends FrontEndPOA {
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.SEQUNECER_PORT);
 			socket.send(sendPacket);
+                        System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer()");
 			//Waiting for the reply from the replicas after sending to the sequencers
 			return waitForReplyFromReplicas(startTime);
 		} catch (IOException e) {
