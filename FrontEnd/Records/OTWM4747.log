@@ -1,0 +1,14 @@
+Aug 01, 2019 5:25:59 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM051022  Booking Capacity 70 EventID  TORE999999  Booking Capacity 999 EventID  TORA070724  Booking Capacity 80 EventID  TORM051020  Booking Capacity 70 EventID  TORM051021  Booking Capacity 70
+Aug 01, 2019 5:43:30 PM Client.Client managerAddEvent
+INFO: Manager: OTWM4747 adding a new Event with Event id: OTWE041234 ,Event Type: Seminars and Booking Capacity: 3
+Aug 01, 2019 5:43:30 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Ottawa Server for Event ID  OTWE041234 Event Type  Seminars Booking Capacity  3
+Aug 01, 2019 5:49:33 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC3737 for Event Type Seminars with Event ID OTWE041234 has been booked
+Aug 01, 2019 5:50:18 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by TORC3737
+Aug 01, 2019 5:50:18 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for TORC3737 have been found
+Aug 01, 2019 5:50:18 PM Client.Client runBookingSchedule
+INFO: 
