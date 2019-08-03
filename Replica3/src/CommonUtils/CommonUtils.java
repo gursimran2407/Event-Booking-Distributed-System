@@ -12,7 +12,7 @@ public class CommonUtils {
 
     public static final String FRONT_END_HOSTNAME = "BRYNNER";
     public static final String REPLICA3_HOSTNAME = "CAGE";
-    public static final String SEQUENCER_HOSTNAME = "BURSTYN";
+    public static final String SEQUENCER_HOSTNAME = "BRODY";
 
     public static final String FRONT_END_IPADDRESS = "132.205.64.80";
     public static final String SEQUENCER_IPADDRESS = "132.205.64.60";
