@@ -99,6 +99,7 @@ public class ReplicaManager {
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, getServerPort(serverCode));
 			socket.send(sendPacket);
+                        System.out.print("Replica "+CommonUtils.SEQUENCER_HOSTNAME+" sending request "+messageData.getMethodName()+" to the local server "+ serverCode);
 			byte [] buffer = new byte[1024];
 			DatagramPacket receivedDatagram = new DatagramPacket(buffer, buffer.length);
 			socket.receive(receivedDatagram);

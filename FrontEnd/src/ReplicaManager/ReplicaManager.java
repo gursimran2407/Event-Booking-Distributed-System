@@ -93,12 +93,13 @@ public class ReplicaManager {
 		String response = CommonUtils.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);
-			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
+			InetAddress host = InetAddress.getByName(CommonUtils.FRONT_END_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, getServerPort(serverCode));
 			socket.send(sendPacket);
+                           System.out.print("Replica "+CommonUtils.FRONT_END_HOSTNAME+" sending request "+messageData.getMethodName()+" to the local server "+ serverCode);
 			byte [] buffer = new byte[1024];
 			DatagramPacket receivedDatagram = new DatagramPacket(buffer, buffer.length);
 			socket.receive(receivedDatagram);
