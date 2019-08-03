@@ -137,13 +137,13 @@ public class FrontEndImpl extends FrontEndPOA {
 				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
 				ReceivedToFE messageData = (ReceivedToFE) inputStream.readObject();
 				inputStream.close();
-				System.out.println("Message Received From: "+ messageData.getFromMessage()+" "+messageData.getMessage());
+				System.out.println("######MESSAGE RECEIVED FROM########: "+ messageData.getFromMessage()+" "+messageData.getMessage());
 				checkTheTimer(messageData, startTime);
 				//adding messages to the arraylist
 				dataReceived.add(messageData);
 				System.out.println(messageData.getFromMessage()+" "+messageData.getMessage());
-                               // messageToClient = messageData.getMessage();
-				messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+                                messageToClient = messageData.getMessage();
+				//messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
                                 System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: "+messageToClient);
 				if(Objects.nonNull(messageToClient)) {
 					return messageToClient;
@@ -211,6 +211,7 @@ public class FrontEndImpl extends FrontEndPOA {
 		String response = null;
 		String [] replicasNames = {CommonUtils.FRONT_END_HOSTNAME, CommonUtils.SEQUENCER_HOSTNAME, 
 				CommonUtils.REPLICA3_HOSTNAME};
+                
 		Map<String, ReceivedToFE> receivedMessages = dataRecieved.stream().map(data -> data)
 				.collect(Collectors.toMap(ReceivedToFE::getFromMessage, Function.identity()));
                 
@@ -257,7 +258,7 @@ public class FrontEndImpl extends FrontEndPOA {
                                 List<ReceivedToFE> value = entry.getValue();
                                     System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
                                     System.out.println("key: "+key);
-                                    System.out.println("key: "+value);
+                                    System.out.println("Value: "+value);
                             }
 			}
 			if(Objects.nonNull(response))
