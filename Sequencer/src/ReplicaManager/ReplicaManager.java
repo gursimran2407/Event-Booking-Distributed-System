@@ -122,6 +122,7 @@ public class ReplicaManager {
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length,
 					host, CommonUtils.FRONT_END_PORT);
 			socket.send(sendPacket);
+                          System.out.println("The response from the servers is sent to the FE "+"Message: "+receivedToFE.getMessage()+"From: "+receivedToFE.getFromMessage());
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}

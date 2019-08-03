@@ -30,4 +30,11 @@ public class ReceivedToFE implements Serializable{
 	public void setSequencerCounter(String sequencerCounter) {
 		this.sequencerCounter = sequencerCounter;
 	}
+
+    @Override
+    public String toString() {
+        return "ReceivedToFE{" + "fromMessage=" + fromMessage + ", message=" + message + ", sequencerCounter=" + sequencerCounter + ", errorCount=" + errorCount + '}';
+    }
+        
+        
 }

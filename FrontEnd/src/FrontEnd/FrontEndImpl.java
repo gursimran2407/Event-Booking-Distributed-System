@@ -113,7 +113,7 @@ public class FrontEndImpl extends FrontEndPOA {
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.SEQUNECER_PORT);
 			socket.send(sendPacket);
-                        System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer()");
+                        System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer() from the front the FrontEnd.");
 			//Waiting for the reply from the replicas after sending to the sequencers
 			return waitForReplyFromReplicas(startTime);
 		} catch (IOException e) {
@@ -137,12 +137,14 @@ public class FrontEndImpl extends FrontEndPOA {
 				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
 				ReceivedToFE messageData = (ReceivedToFE) inputStream.readObject();
 				inputStream.close();
-				System.out.println("Message Received From"+ messageData.getFromMessage()+" "+messageData.getMessage());
+				System.out.println("Message Received From: "+ messageData.getFromMessage()+" "+messageData.getMessage());
 				checkTheTimer(messageData, startTime);
 				//adding messages to the arraylist
 				dataReceived.add(messageData);
 				System.out.println(messageData.getFromMessage()+" "+messageData.getMessage());
+                               // messageToClient = messageData.getMessage();
 				messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+                                System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: "+messageToClient);
 				if(Objects.nonNull(messageToClient)) {
 					return messageToClient;
 				}else {
@@ -211,6 +213,16 @@ public class FrontEndImpl extends FrontEndPOA {
 				CommonUtils.REPLICA3_HOSTNAME};
 		Map<String, ReceivedToFE> receivedMessages = dataRecieved.stream().map(data -> data)
 				.collect(Collectors.toMap(ReceivedToFE::getFromMessage, Function.identity()));
+                
+                for (Entry<String, ReceivedToFE> entry : receivedMessages.entrySet()) {
+                String key = entry.getKey();
+                ReceivedToFE value = entry.getValue();
+                
+                    System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
+                    System.out.println("Sender Name: "+key);
+                      System.out.println("Value: "+value);
+                
+            }
 		boolean hasToWait = true;
 		//if one crashed
 		if(dataRecieved.size() >= 2) {
@@ -221,7 +233,7 @@ public class FrontEndImpl extends FrontEndPOA {
 				if(!receivedMessages.containsKey(replicasNames[index])) {
 					//start the waiting process and wait for a reply for some time
 					hasToWait  = checkWhetherToWaitForMessage(startTime, replicasNames[index]);
-					if(!hasToWait) {
+					if(!hasToWait) { //if you dont need to wait example a timeout has occured
 
 						//inform the replica about the crash after waiting
 						informReplicasAboutCrash(replicasNames[index]);
@@ -234,12 +246,19 @@ public class FrontEndImpl extends FrontEndPOA {
 				Map<String, List<ReceivedToFE>> messagesReceived = dataRecieved.stream().collect(Collectors.groupingBy(ReceivedToFE::getMessage));
 				for (Entry<String, List<ReceivedToFE>> message : messagesReceived.entrySet()) {
 					System.out.println(message.getKey().trim()+" "+ message.getValue().size());
-					if(message.getValue().size() >= 2) {// replicas count - 2
+					if(message.getValue().size() >= 1) {// replicas count - 2
 						response = message.getKey();
 					}else {
 						informSoftwareBug(message.getValue().get(0));
 					}
 				}
+                                for (Entry<String, List<ReceivedToFE>> entry : messagesReceived.entrySet()) {
+                                String key = entry.getKey();
+                                List<ReceivedToFE> value = entry.getValue();
+                                    System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
+                                    System.out.println("key: "+key);
+                                    System.out.println("key: "+value);
+                            }
 			}
 			if(Objects.nonNull(response))
 				response = response.trim();
