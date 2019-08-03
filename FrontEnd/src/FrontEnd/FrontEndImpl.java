@@ -70,7 +70,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	@Override
 	public String cancelEvent(String customerID, String eventID, String eventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventType).setMethodName(CommonUtils.CANCEL_EVENT).setEventId(eventID));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType).setMethodName(CommonUtils.CANCEL_EVENT).setEventId(eventID));
 	}
 
 	@Override

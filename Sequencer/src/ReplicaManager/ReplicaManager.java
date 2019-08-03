@@ -106,6 +106,7 @@ public class ReplicaManager {
 			return receivedDatagram.getData();
 		}catch(SocketTimeoutException exception) {
 			response = "Message Not received";
+                        System.out.println(exception.toString());
 		}catch (IOException e) {
 			e.printStackTrace();
 		}

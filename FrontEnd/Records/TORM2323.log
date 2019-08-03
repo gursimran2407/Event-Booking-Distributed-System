@@ -1,0 +1,6 @@
+Aug 03, 2019 7:24:12 PM Client.Client managerAddEvent
+INFO: Manager: TORM2323 adding a new Event with Event id: TORM121225 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 03, 2019 7:24:12 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORM121225 Event Type  TradeShows Booking Capacity  2
+Aug 03, 2019 7:25:35 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC3434 for Event Type TradeShows with Event ID TORM121225 has been booked
