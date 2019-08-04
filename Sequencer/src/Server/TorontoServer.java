@@ -22,7 +22,7 @@ import ServerImpl.TorontoServerImpl;
  * @author Gursimran Singh
  */
 public class TorontoServer {
-
+   static boolean isFT = false;
     public static void main(String[] args)
     {
     	TorontoServerImpl torontoServerImpl = new TorontoServerImpl();
@@ -68,12 +68,23 @@ public class TorontoServer {
 
 	public static byte[] replicaManagerImpl(MessageData messageData, TorontoServerImpl montrealLibraryImpl) {
 		String response = "";
-
+                
+                if (messageData.getAction().equals("FT")) {
+                isFT = true;
+                }
+                if (messageData.getAction().equals("NORMAL")) {
+                isFT = false;
+                }
+                
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
+                    if (isFT) {
+                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    }else{
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-			break;
+                    }
+                        break;
 		case CommonUtils.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
 			break;
@@ -84,18 +95,18 @@ public class TorontoServer {
 			response=montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
 			break;
 		case CommonUtils.GET_BOOKING_SCHEDULE:
-				response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
-				break;
+			response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
+			break;
 		case CommonUtils.GET_DATA:
-				EventData eventData = montrealLibraryImpl.getEventData();
-				try {
-					ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-					ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
-					objectOutput.writeObject(eventData);
-					return byteStream.toByteArray();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			EventData eventData = montrealLibraryImpl.getEventData();
+			try {
+				ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+				ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
+				objectOutput.writeObject(eventData);
+				return byteStream.toByteArray();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 				break;
 		case CommonUtils.CANCEL_EVENT:
 			response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
@@ -112,14 +123,24 @@ public class TorontoServer {
 		case CommonUtils.eventAvailable:
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
+                case "FT":
+			response = "FT";
+			break; 
+                        
+                case "HA":
+			response = "HA";
+			break;   
+                        
+                case "NORMAL":
+			response = "NORMAL";
+			break;    
+                        
 		case CommonUtils.validateBooking:
 			response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 		default: 
-			response="Invalid request!!!";
+			response=" Invalid Request.";
 		}
 		return response.getBytes();
-
-
 	}
 
 	private static void handlesRequestFromAnotherServers(TorontoServerImpl montrealLibraryImpl){

@@ -26,6 +26,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static CommonUtils.CommonUtils.*;
+import Model.MessageData;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 /**
  *
@@ -43,7 +50,7 @@ public class Client {
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 
             String id = enterValidID(InputType.CLIENT_ID);
-            clientService(id.substring(0, 3), id.substring(4, 8), id.substring(3, 4), ncRef);
+            startMenu(id.substring(0, 3), id.substring(4, 8), id.substring(3, 4), ncRef);
 
 
         } catch (Exception e) {
@@ -52,6 +59,101 @@ public class Client {
         }
 
     }
+    
+    static void startMenu(String serverId, String clientID, String clientType, NamingContextExt ncRef){
+        
+        
+        String itemNum = "";
+        while (!itemNum.equals("0"))
+        {
+            System.out.println("============================");
+            System.out.println(" Menu");
+            System.out.println("1: Fault Tolerance");
+            System.out.println("2: Highly Available");
+            System.out.println("3: Normal");
+            System.out.println("============================");
+
+            itemNum = scanner.next().trim();
+            
+            if (itemNum.matches("^[1-3]$"))
+            {
+                switch (itemNum)
+                {
+                    case "1":
+                        MessageData messageData = new MessageData().setAction("FT").setMethodName("FT");
+                                
+                         if (clientType.equals(CUSTOMER_ClientType))
+                        {
+                             messageData.setCustomerId(clientID);
+                        }
+                        if (clientType.equals(EVENT_MANAGER_ClientType))
+                        {
+                             messageData.setManagerId(clientID);
+                        }
+                        sendMessageToSequencer(messageData);
+                        clientService(serverId, clientID, clientType, ncRef);
+                             
+                        break;
+                    case "2":
+                         MessageData messageData2 = new MessageData().setAction("HA").setMethodName("HA");;
+                                
+                         if (clientType.equals(CUSTOMER_ClientType))
+                        {
+                             messageData2.setCustomerId(clientID);
+                        }
+                        if (clientType.equals(EVENT_MANAGER_ClientType))
+                        {
+                             messageData2.setManagerId(clientID);
+                        }
+                        sendMessageToSequencer(messageData2);
+                        clientService(serverId, clientID, clientType, ncRef);
+                        break;
+                    case "3":
+                          MessageData messageData3 = new MessageData().setAction("NORMAL").setMethodName("NORMAL");;
+                                
+                         if (clientType.equals(CUSTOMER_ClientType))
+                        {
+                             messageData3.setCustomerId(clientID);
+                        }
+                        if (clientType.equals(EVENT_MANAGER_ClientType))
+                        {
+                             messageData3.setManagerId(clientID);
+                        }
+                        sendMessageToSequencer(messageData3);
+                        clientService(serverId, clientID, clientType, ncRef);
+                        break;
+
+                    default:
+                        System.out.println("Invalid Choice !!!");
+                        break;
+                }
+            }
+            else
+            {
+                System.out.println("Please select a valid choice!");
+            }
+        }
+        scanner.close();
+    }
+    
+    //Method to send message to the sequencer
+	private static void sendMessageToSequencer(MessageData messageData) {
+		long startTime = System.currentTimeMillis();
+		try(DatagramSocket socket = new DatagramSocket()) {
+			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
+			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+			ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
+			objectOutput.writeObject(messageData);
+			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.SEQUNECER_PORT);
+			socket.send(sendPacket);
+                        System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer() from the front the FrontEnd.");
+			//Waiting for the reply from the replicas after sending to the sequencers
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//return CommonUtils.EXCEPTION;
+	}
 
     private static void clientService(String serverId, String clientID, String clientType, NamingContextExt ncRef)
     {

@@ -21,7 +21,7 @@ import ServerImpl.OttawaServerImpl;
  * @author Gursimran Singh
  */
 public class OttawaServer {
-
+    static boolean isFT = false;
 	public static void main(String[] args) {
 
 		OttawaServerImpl ottawaServerImpl = new OttawaServerImpl();
@@ -67,57 +67,79 @@ public class OttawaServer {
 
 	public static byte[] replicaManagerImpl(MessageData messageData, OttawaServerImpl montrealLibraryImpl) {
 		String response = "";
+                
+                if (messageData.getAction().equals("FT")) {
+                isFT = true;
+                }
+                if (messageData.getAction().equals("NORMAL")) {
+                isFT = false;
+                }
+                
+		switch(messageData.getMethodName()) {
 
-		switch (messageData.getMethodName()) {
-
-			case CommonUtils.ADD_EVENT:
-				response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+		case CommonUtils.ADD_EVENT:
+                    if (isFT) {
+                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    }else{
+			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    }
+                        break;
+		case CommonUtils.REMOVE_EVENT:
+			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
+			break;
+		case CommonUtils.LIST_EVENT:
+			response=montrealLibraryImpl.listEventAvailability(messageData.getEventType(), messageData.getManagerId());
+			break;
+		case CommonUtils.BOOK_EVENT:
+			response=montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
+			break;
+		case CommonUtils.GET_BOOKING_SCHEDULE:
+			response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
+			break;
+		case CommonUtils.GET_DATA:
+			EventData eventData = montrealLibraryImpl.getEventData();
+			try {
+				ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+				ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
+				objectOutput.writeObject(eventData);
+				return byteStream.toByteArray();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 				break;
-			case CommonUtils.REMOVE_EVENT:
-				response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
-				break;
-			case CommonUtils.LIST_EVENT:
-				response = montrealLibraryImpl.listEventAvailability(messageData.getEventType(), messageData.getManagerId());
-				break;
-			case CommonUtils.BOOK_EVENT:
-				response = montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
-				break;
-			case CommonUtils.GET_BOOKING_SCHEDULE:
-				response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
-				break;
-			case CommonUtils.GET_DATA:
-				EventData eventData = montrealLibraryImpl.getEventData();
-				try {
-					ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-					ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
-					objectOutput.writeObject(eventData);
-					return byteStream.toByteArray();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				break;
-			case CommonUtils.CANCEL_EVENT:
-				response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
-				break;
-			case CommonUtils.NON_OriginCustomerBooking:
-				response = montrealLibraryImpl.nonOriginCustomerBooking(messageData.getCustomerId(), messageData.getEventId());
-				break;
-			case CommonUtils.SWAP_EVENT:
-				response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
-				break;
-			case CommonUtils.CRASHED:
-				response = CommonUtils.ALIVE;
-				break;
-			case CommonUtils.eventAvailable:
-				response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
-				break;
-			case CommonUtils.validateBooking:
-				response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
-			default:
-				response = "Invalid request!!!";
+		case CommonUtils.CANCEL_EVENT:
+			response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
+			break;
+		case CommonUtils.NON_OriginCustomerBooking:
+			response=montrealLibraryImpl.nonOriginCustomerBooking(messageData.getCustomerId(), messageData.getEventId());
+			break;
+		case CommonUtils.SWAP_EVENT:
+			response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
+			break;
+		case CommonUtils.CRASHED:
+			response = CommonUtils.ALIVE;
+			break;
+		case CommonUtils.eventAvailable:
+			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
+			break;
+                case "FT":
+			response = "FT";
+			break; 
+                        
+                case "HA":
+			response = "HA";
+			break;   
+                        
+                case "NORMAL":
+			response = "NORMAL";
+			break;    
+                        
+		case CommonUtils.validateBooking:
+			response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
+		default: 
+			response=" Invalid Request.";
 		}
 		return response.getBytes();
-
 	}
 
 	private static void handlesRequestFromAnotherServers(OttawaServerImpl montrealLibraryImpl) {

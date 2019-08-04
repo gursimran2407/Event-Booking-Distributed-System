@@ -22,7 +22,7 @@ import ServerImpl.MontrealServerImpl;
  * @author Gursimran Singh
  */
 public class MontrealServer {
-
+    static boolean isFT = false;
     public static void main(String[] args)
     {
     	MontrealServerImpl montrealLibraryImpl = new MontrealServerImpl();
@@ -66,12 +66,23 @@ public class MontrealServer {
 
 	public static byte[] replicaManagerImpl(MessageData messageData, MontrealServerImpl montrealLibraryImpl) {
 		String response = "";
-
+                
+                if (messageData.getAction().equals("FT")) {
+                isFT = true;
+                }
+                if (messageData.getAction().equals("NORMAL")) {
+                isFT = false;
+                }
+                
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
+                    if (isFT) {
+                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    }else{
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-			break;
+                    }
+                        break;
 		case CommonUtils.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
 			break;
@@ -110,10 +121,22 @@ public class MontrealServer {
 		case CommonUtils.eventAvailable:
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
+                case "FT":
+			response = "FT";
+			break; 
+                        
+                case "HA":
+			response = "HA";
+			break;   
+                        
+                case "NORMAL":
+			response = "NORMAL";
+			break;    
+                        
 		case CommonUtils.validateBooking:
 			response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 		default: 
-			response="Invalid request!!!";
+			response=" Invalid Request.";
 		}
 		return response.getBytes();
 

@@ -11,6 +11,7 @@ public class MessageData implements Serializable {
 	private String bookingCap;
 	private  String new_EventID;
 	private  String old_EventID;
+        String action;
 	
 	
 	public String getOld_EventID() {
@@ -135,6 +136,16 @@ public class MessageData implements Serializable {
 		this.methodName = methodName;
 		return this;
 	}
+
+    public String getAction() {
+        return action;
+    }
+
+    public MessageData setAction(String action) {
+        this.action = action;
+        return this;
+    }
+        
 
 	@Override
 	public String toString() {

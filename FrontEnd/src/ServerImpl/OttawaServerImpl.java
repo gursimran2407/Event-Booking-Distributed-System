@@ -105,6 +105,13 @@ public class OttawaServerImpl {
             return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
     }
+    
+        public synchronized String addEventWrong(String eventID, String eventType, String bookingCapacity, String managerID) {
+        String message = "UNSUCCESSFULL ";
+        return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
+        
+     
+     }
 
     
     public synchronized String removeEvent(String eventID, String eventType, String managerID) {
