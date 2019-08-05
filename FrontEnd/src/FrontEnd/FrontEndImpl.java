@@ -24,6 +24,8 @@ import CommonUtils.CommonUtils;
 import FrontEndIdl.FrontEndPOA;
 import Model.MessageData;
 import Model.ReceivedToFE;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class FrontEndImpl extends FrontEndPOA {
 
@@ -141,8 +143,9 @@ public class FrontEndImpl extends FrontEndPOA {
 				checkTheTimer(messageData, startTime);
 				//adding messages to the arraylist
 				dataReceived.add(messageData);
-				System.out.println(messageData.getFromMessage()+" "+messageData.getMessage());
-                                messageToClient = messageData.getMessage();
+                                
+                                 HashMap<ReceivedToFE,Integer> hm = new HashMap<>();
+                                messageToClient = investigateMessagefromReplicas(dataReceived,startTime, hm);
 				//messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
                                 System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: "+messageToClient);
 				if(Objects.nonNull(messageToClient)) {
@@ -163,6 +166,56 @@ public class FrontEndImpl extends FrontEndPOA {
 		}
 		return messageToClient;
 	}
+        
+        private String investigateMessagefromReplicas(List<ReceivedToFE> dataRecieved, long startTime, HashMap<ReceivedToFE,Integer> hm){
+           ArrayList<ReceivedToFE> arraylist = new ArrayList<>();
+            if (dataRecieved.size()>=2) {
+                 for (Iterator<ReceivedToFE> iterator = dataRecieved.iterator(); iterator.hasNext();) {
+                ReceivedToFE next = iterator.next();
+                if (!hm.containsKey(next)) {
+                    if(next.getMessage().equals("UNSUCCESSFULL")){
+                    hm.put(next, 1);
+                }
+                }
+                else{
+                    Integer count = hm.get(next);
+                    hm.replace(next, count++);
+                }
+                    //checking for success
+                     if (!next.getMessage().equals("UNSUCCESSFULL")) {
+                         arraylist.add(next);
+                     }
+            }
+                if (arraylist.size()>=1) {// change it to 2 after adding the replica
+                    String message = null;
+                    int count = 0;
+                    message = arraylist.get(0).getMessage();
+                    for (Iterator<ReceivedToFE> iterator = arraylist.iterator(); iterator.hasNext();) {
+                    ReceivedToFE next = iterator.next();
+                        if (message.equals(next.getMessage())) {
+                            count++;
+                        }
+                        if(count>=2){
+                        return message;}
+                }
+                }
+                 
+            for (Entry<ReceivedToFE, Integer> entry : hm.entrySet()) {
+                ReceivedToFE key = entry.getKey();
+                Integer value = entry.getValue();
+                if (value.equals(3)) {
+                    informSoftwareBug(key);
+                }
+                
+            }
+            }
+            
+            
+           return "OHO!!";
+            
+            
+            
+        }
 
 	private int  getTimeOutTimer() {
 		int timerToSend;
