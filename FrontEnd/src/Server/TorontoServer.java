@@ -69,12 +69,15 @@ public class TorontoServer {
 	public static byte[] replicaManagerImpl(MessageData messageData, TorontoServerImpl montrealLibraryImpl) {
 		String response = "";
                 
-                if (messageData.getAction().equals("FT")) {
+               if (messageData.getAction()!=null) {
+                  if (messageData.getAction().equals("FT")) {
                 isFT = true;
                 }
-                if (messageData.getAction().equals("NORMAL")) {
+                  
+                  if (messageData.getAction().equals("NORMAL")) {
                 isFT = false;
                 }
+            }
                 
 		switch(messageData.getMethodName()) {
 
