@@ -1,0 +1,4 @@
+Aug 04, 2019 8:05:58 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3478 adding a new Event with Event id: MTLE011234 ,Event Type: Conferences and Booking Capacity: 2
+Aug 04, 2019 8:05:58 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE011234 Event Type  Conferences Booking Capacity  2

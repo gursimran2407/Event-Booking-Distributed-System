@@ -56,9 +56,12 @@ public class OttawaServer {
 				MessageData messageData = (MessageData) inputStream.readObject();
 				inputStream.close();
 				byte[] byteArray = replicaManagerImpl(messageData, montrealLibraryImpl);
-				DatagramPacket reply = new DatagramPacket(byteArray, byteArray.length, recievedDatagramPacket.getAddress(),
+				 byte[] byteArray2 = new String("FT").getBytes();
+                                if (!byteArray.equals(byteArray2)) {
+                                DatagramPacket reply = new DatagramPacket(byteArray, byteArray.length, recievedDatagramPacket.getAddress(),
 						recievedDatagramPacket.getPort());
 				socket.send(reply);
+                            }
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println(e.getMessage());
@@ -68,15 +71,7 @@ public class OttawaServer {
 	public static byte[] replicaManagerImpl(MessageData messageData, OttawaServerImpl montrealLibraryImpl) {
 		String response = "";
                 
-               if (messageData.getAction()!=null) {
-                  if (messageData.getAction().equals("FT")) {
-                isFT = true;
-                }
-                  
-                  if (messageData.getAction().equals("NORMAL")) {
-                isFT = false;
-                }
-            }
+        
                 
 		switch(messageData.getMethodName()) {
 
@@ -126,15 +121,16 @@ public class OttawaServer {
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
                 case "FT":
+                       isFT = true;
 			response = "FT";
 			break; 
                         
                 case "HA":
-			response = "HA";
+			response = "FT";
 			break;   
                         
                 case "NORMAL":
-			response = "NORMAL";
+			response = "FT";
 			break;    
                         
 		case CommonUtils.validateBooking:

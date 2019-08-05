@@ -141,28 +141,16 @@ public class MessageData implements Serializable {
         return action;
     }
 
-public MessageData setAction(String action) {
+    public MessageData setAction(String action) {
         this.action = action;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "MessageData{" + "customerIDName=" + customerIDName + ", managerIDName=" + managerIDName + ", eventTypeName=" + eventTypeName + ", eventIDName=" + eventIDName + ", bookingCap=" + bookingCap + ", new_EventID=" + new_EventID + ", old_EventID=" + old_EventID + ", action=" + action + ", old_EventType=" + old_EventType + ", new_EventType=" + new_EventType + ", methodName=" + methodName + ", isFromOtherServer=" + isFromOtherServer + ", sequenceCounter=" + sequenceCounter + ", errorCounter=" + errorCounter + '}';
+    }
         
 
-	@Override
-	public String toString() {
-		return "MessageData{" +
-				"customerIDName='" + customerIDName + '\'' +
-				", managerIDName='" + managerIDName + '\'' +
-				", eventTypeName='" + eventTypeName + '\'' +
-				", eventIDName='" + eventIDName + '\'' +
-				", bookingCap='" + bookingCap + '\'' +
-				", new_EventID='" + new_EventID + '\'' +
-				", old_EventID='" + old_EventID + '\'' +
-				", old_EventType='" + old_EventType + '\'' +
-				", new_EventType='" + new_EventType + '\'' +
-				", methodName='" + methodName + '\'' +
-				", isFromOtherServer=" + isFromOtherServer +
-				", sequenceCounter=" + sequenceCounter +
-				", errorCounter=" + errorCounter +
-				'}';
-	}
+	
 }
