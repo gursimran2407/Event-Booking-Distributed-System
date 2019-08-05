@@ -69,18 +69,13 @@ public class MontrealServer {
 
 	public static byte[] replicaManagerImpl(MessageData messageData, MontrealServerImpl montrealLibraryImpl) {
 		String response = "";
-           
-              
-                
-                
+                    System.out.println("Server.MontrealServer.replicaManagerImpl()"+"calling "+messageData.getMethodName());
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
-                    if (isFT) {
-                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }else{
+                  
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }
+                    
                         break;
 		case CommonUtils.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
@@ -120,8 +115,9 @@ public class MontrealServer {
 		case CommonUtils.eventAvailable:
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
-                case "FT":
+                case CommonUtils.FT:
                         isFT = true;
+                        System.out.println("Server.MontrealServer.replicaManagerImpl()"+isFT+ "isFT");
 			response = "FT";
 			break; 
                         

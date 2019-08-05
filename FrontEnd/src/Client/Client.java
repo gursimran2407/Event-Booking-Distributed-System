@@ -50,7 +50,7 @@ public class Client {
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 
             String id = enterValidID(InputType.CLIENT_ID);
-            startMenu(id.substring(0, 3), id.substring(4, 8), id.substring(3, 4), ncRef);
+            startMenu(id.substring(0, 3), id.substring(4, 8), id.substring(3, 4), ncRef, id);
 
 
         } catch (Exception e) {
@@ -60,7 +60,7 @@ public class Client {
 
     }
     
-    static void startMenu(String serverId, String clientID, String clientType, NamingContextExt ncRef){
+    static void startMenu(String serverId, String clientID, String clientType, NamingContextExt ncRef, String id){
         
         
         String itemNum = "";
@@ -80,15 +80,15 @@ public class Client {
                 switch (itemNum)
                 {
                     case "1":
-                        MessageData messageData = new MessageData().setAction("FT").setMethodName("FT");
+                        MessageData messageData = new MessageData().setAction("FT").setMethodName(CommonUtils.FT);
                                 
                          if (clientType.equals(CUSTOMER_ClientType))
                         {
-                             messageData.setCustomerId(clientID);
+                             messageData.setCustomerId(id);
                         }
                         if (clientType.equals(EVENT_MANAGER_ClientType))
                         {
-                             messageData.setManagerId(clientID);
+                             messageData.setManagerId(id);
                         }
                         sendMessageToSequencer(messageData);
                         clientService(serverId, clientID, clientType, ncRef);
@@ -99,11 +99,11 @@ public class Client {
                                 
                          if (clientType.equals(CUSTOMER_ClientType))
                         {
-                             messageData2.setCustomerId(clientID);
+                             messageData2.setCustomerId(id);
                         }
                         if (clientType.equals(EVENT_MANAGER_ClientType))
                         {
-                             messageData2.setManagerId(clientID);
+                             messageData2.setManagerId(id);
                         }
                         sendMessageToSequencer(messageData2);
                         clientService(serverId, clientID, clientType, ncRef);
@@ -113,11 +113,11 @@ public class Client {
                                 
                          if (clientType.equals(CUSTOMER_ClientType))
                         {
-                             messageData3.setCustomerId(clientID);
+                             messageData3.setCustomerId(id);
                         }
                         if (clientType.equals(EVENT_MANAGER_ClientType))
                         {
-                             messageData3.setManagerId(clientID);
+                             messageData3.setManagerId(id);
                         }
                         sendMessageToSequencer(messageData3);
                         clientService(serverId, clientID, clientType, ncRef);

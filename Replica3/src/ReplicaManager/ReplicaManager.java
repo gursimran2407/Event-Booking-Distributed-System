@@ -90,6 +90,7 @@ public class ReplicaManager {
 	}
 
 	private static byte[] sendToServer(MessageData messageData, String serverCode) {
+                System.out.println("ReplicaManager.ReplicaManager.sendToServer()"+messageData.getMethodName());
 		String response = CommonUtils.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);

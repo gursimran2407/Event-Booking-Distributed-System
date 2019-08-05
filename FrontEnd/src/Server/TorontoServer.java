@@ -76,11 +76,9 @@ public class TorontoServer {
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
-                    if (isFT) {
-                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }else{
+                    
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }
+                    
                         break;
 		case CommonUtils.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
