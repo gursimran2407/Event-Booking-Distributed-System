@@ -169,7 +169,7 @@ public class FrontEndImpl extends FrontEndPOA {
         
         private String investigateMessagefromReplicas(List<ReceivedToFE> dataRecieved, long startTime, HashMap<ReceivedToFE,Integer> hm){
            ArrayList<ReceivedToFE> arraylist = new ArrayList<>();
-            if (dataRecieved.size()>=2) {
+            if (dataRecieved.size()>=2) { //if we receive more at least 2 messages than add all unsuccseccfull messages to the hashmap.
                  for (Iterator<ReceivedToFE> iterator = dataRecieved.iterator(); iterator.hasNext();) {
                 ReceivedToFE next = iterator.next();
                 if (!hm.containsKey(next)) {
