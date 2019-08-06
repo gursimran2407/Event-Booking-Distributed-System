@@ -78,7 +78,8 @@ public class MontrealServerImpl {
     
     public synchronized String addEvent(String eventID, String eventType, String bookingCapacity, String managerID) {
         String message = null;
-
+        System.out.println("ADD EVENT CALLED!!!!!!!!");
+        System.out.println("VALUE OF isFT: " + CommonUtils.CommonUtils.isFT);
         if (!eventID.substring(0, 3).equals(MONTREAL)) {
             message = "Operations Unsuccessful!. Event Not Added in Montreal Server "
                     + "for Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID + ""
@@ -109,8 +110,10 @@ public class MontrealServerImpl {
     }
     
      public synchronized String addEventWrong(String eventID, String eventType, String bookingCapacity, String managerID) {
-        String message = "UNSUCCESSFULL ";
-        return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
+    	 
+         System.out.println("TTTTTTTTTTTT!");
+    	 String message = "UNSUCCESSFULL ";
+         return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
         
      
      }

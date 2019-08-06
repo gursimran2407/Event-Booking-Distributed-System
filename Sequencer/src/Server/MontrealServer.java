@@ -22,7 +22,7 @@ import ServerImpl.MontrealServerImpl;
  * @author Gursimran Singh
  */
 public class MontrealServer {
-    static boolean isFT = false;
+    //public static boolean isFT = false;
     public static void main(String[] args)
     {
     	MontrealServerImpl montrealLibraryImpl = new MontrealServerImpl();
@@ -75,9 +75,9 @@ public class MontrealServer {
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
-                    if (isFT) {
+                    if (CommonUtils.isFT == true) {
                         response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }else{
+                    }if(CommonUtils.isFT == false){
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
                     }
                         break;
@@ -120,7 +120,8 @@ public class MontrealServer {
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
                 case "FT":
-                       isFT = true;
+                       CommonUtils.isFT = true;
+                       System.out.println("Server.MontrealServer.replicaManagerImpl() CommonUtils.isFT set to::"+CommonUtils.isFT);
 			response = "FT";
 			break; 
                         

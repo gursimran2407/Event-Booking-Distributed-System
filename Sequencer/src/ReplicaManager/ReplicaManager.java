@@ -144,14 +144,29 @@ public class ReplicaManager {
 	}
 
 	private static void handleStringMessages() {
+		
 		try(DatagramSocket socket = new DatagramSocket(CommonUtils.TO_REPLICA_STRING_PORT)) { 
 			while(true) {
 				byte [] message = new byte[1000];
 				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 				socket.receive(recievedDatagramPacket);
+				
 				String receivedData = new String(recievedDatagramPacket.getData());
+				System.out.println("RECEIVED A STRING!!!!@#@$#@$%$#@^$#^" + receivedData);
+                                System.out.println("CommonUtils.isFT = \"false\":|||| VALUEInitial" + CommonUtils.isFT);
 				if(receivedData.trim().equals(CommonUtils.RESULT_ERROR)) {
+                                     System.out.println("CommonUtils.isFT = \"false\":|||| VALUECHANGED" + CommonUtils.isFT+"Error counter increased!!!");
 					errorCounter++;
+                                        if (CommonUtils.isFT ==true) {
+                                        CommonUtils.isFT = false;
+                                        System.out.println("CommonUtils.isFT = \"false\":|||| VALUECHANGED" + CommonUtils.isFT);
+
+                                    }
+                                        
+					
+					OttawaServer.isFT = false;
+					TorontoServer.isFT = false;
+		
 				}else if(receivedData.trim().contains(CommonUtils.CRASHED)){
 					String [] crashedReplica = receivedData.split(",");
 					String replicaName = crashedReplica[1].trim();

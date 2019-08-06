@@ -8,11 +8,12 @@ import java.util.logging.SimpleFormatter;
  *
  * @author Natheepan Ganeshamoorthy
  */
-public class CommonUtils {
+public final class CommonUtils {
 
-    public static final String FRONT_END_HOSTNAME = "FUSILLI";
-    public static final String REPLICA3_HOSTNAME = "MANICOTTI";
-    public static final String SEQUENCER_HOSTNAME = "CAPELLINI";
+    public static boolean isFT = false;
+    public static final String FRONT_END_HOSTNAME = "BURSTYN";
+    public static final String REPLICA3_HOSTNAME = "CAGE";
+    public static final String SEQUENCER_HOSTNAME = "BRYNNER";
 
     public static final String FRONT_END_IPADDRESS = "132.205.64.80";
     public static final String SEQUENCER_IPADDRESS = "132.205.64.60";
