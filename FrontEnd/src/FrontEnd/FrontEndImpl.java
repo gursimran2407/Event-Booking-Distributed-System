@@ -1,4 +1,4 @@
- package FrontEnd;
+package FrontEnd;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,7 +33,7 @@ public class FrontEndImpl extends FrontEndPOA {
 	static private long replicaOneTimer = 0;
 	static private long replicaTwoTimer = 0;
 	static private long replicaThreeTimer = 0;
-	static private int counter=0;
+	static private int counter = 0;
 
 	public void setOrb(ORB orb) {
 		this.orb = orb;
@@ -41,82 +41,96 @@ public class FrontEndImpl extends FrontEndPOA {
 
 	@Override
 	public String addEvent(String eventID, String eventType, String bookingCapacity, String managerID) {
-		return sendMessageToSequencer(new MessageData().setManagerId(managerID).setEventId(eventID).setEventType(eventType).setBookingCap(bookingCapacity).setMethodName(CommonUtils.ADD_EVENT));
-		
+		return sendMessageToSequencer(new MessageData().setManagerId(managerID).setEventId(eventID)
+				.setEventType(eventType).setBookingCap(bookingCapacity).setMethodName(CommonUtils.ADD_EVENT));
+
 	}
 
 	@Override
 	public String removeEvent(String eventID, String eventType, String managerID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setEventId(eventID).setManagerId(managerID).setMethodName(CommonUtils.REMOVE_EVENT).setEventType(eventType));
+		return sendMessageToSequencer(new MessageData().setEventId(eventID).setManagerId(managerID)
+				.setMethodName(CommonUtils.REMOVE_EVENT).setEventType(eventType));
 	}
 
 	@Override
 	public String listEventAvailability(String eventType, String managerID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setEventType(eventType).setManagerId(managerID).setMethodName(CommonUtils.LIST_EVENT));
+		return sendMessageToSequencer(new MessageData().setEventType(eventType).setManagerId(managerID)
+				.setMethodName(CommonUtils.LIST_EVENT));
 	}
 
 	@Override
 	public String bookEvent(String customerID, String eventID, String eventType, String bookingAmount) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType).setBookingCap(bookingAmount).setMethodName(CommonUtils.BOOK_EVENT).setEventId(eventID));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType)
+				.setBookingCap(bookingAmount).setMethodName(CommonUtils.BOOK_EVENT).setEventId(eventID));
 	}
 
 	@Override
 	public String getBookingSchedule(String customerID, String managerID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setManagerId(managerID).setMethodName(CommonUtils.GET_BOOKING_SCHEDULE));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setManagerId(managerID)
+				.setMethodName(CommonUtils.GET_BOOKING_SCHEDULE));
 	}
 
 	@Override
 	public String cancelEvent(String customerID, String eventID, String eventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType).setMethodName(CommonUtils.CANCEL_EVENT).setEventId(eventID));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventType(eventType)
+				.setMethodName(CommonUtils.CANCEL_EVENT).setEventId(eventID));
 	}
 
 	@Override
 	public String nonOriginCustomerBooking(String customerID, String eventID) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventID).setMethodName(CommonUtils.NON_OriginCustomerBooking));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventID)
+				.setMethodName(CommonUtils.NON_OriginCustomerBooking));
 	}
 
 	@Override
 	public String swapEvent(String customerID, String newEventID, String newEventType, String oldEventID,
 			String oldEventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setNewEventId(newEventID).setNewEventType(newEventType).setOld_EventID(oldEventID).setOld_EventType(oldEventType).setMethodName(CommonUtils.SWAP_EVENT));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setNewEventId(newEventID)
+				.setNewEventType(newEventType).setOld_EventID(oldEventID).setOld_EventType(oldEventType)
+				.setMethodName(CommonUtils.SWAP_EVENT));
 	}
 
 	@Override
 	public String eventAvailable(String eventID, String eventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setEventId(eventID).setEventType(eventType).setMethodName(CommonUtils.eventAvailable));
+		return sendMessageToSequencer(new MessageData().setEventId(eventID).setEventType(eventType)
+				.setMethodName(CommonUtils.eventAvailable));
 	}
 
 	@Override
 	public String validateBooking(String customerID, String eventID, String eventType) {
 		// TODO Auto-generated method stub
-		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventID).setEventType(eventType).setMethodName(CommonUtils.validateBooking));
+		return sendMessageToSequencer(new MessageData().setCustomerId(customerID).setEventId(eventID)
+				.setEventType(eventType).setMethodName(CommonUtils.validateBooking));
 	}
-	
+
 	@Override
 	public void shutdown() {
 		orb.shutdown(false);
 	}
 
-	//Method to send message to the sequencer
+	HashMap<String, Integer> hm = new HashMap<>();
+
+	// Method to send message to the sequencer
 	private String sendMessageToSequencer(MessageData messageData) {
 		long startTime = System.currentTimeMillis();
-		try(DatagramSocket socket = new DatagramSocket()) {
+		try (DatagramSocket socket = new DatagramSocket()) {
 			InetAddress host = InetAddress.getByName(CommonUtils.SEQUENCER_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
 			objectOutput.writeObject(messageData);
-			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.SEQUNECER_PORT);
+			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length,
+					host, CommonUtils.SEQUNECER_PORT);
 			socket.send(sendPacket);
-                        System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer() from the front the FrontEnd.");
-			//Waiting for the reply from the replicas after sending to the sequencers
+			System.out.println("FrontEnd.FrontEndImpl.sendMessageToSequencer() from the front the FrontEnd.");
+			// Waiting for the reply from the replicas after sending to the sequencers
 			return waitForReplyFromReplicas(startTime);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -127,119 +141,124 @@ public class FrontEndImpl extends FrontEndPOA {
 	private String waitForReplyFromReplicas(long startTime) {
 		List<ReceivedToFE> dataReceived = new ArrayList<>();
 		String messageToClient = CommonUtils.EXCEPTION;
-		try(DatagramSocket socket = new DatagramSocket(CommonUtils.FRONT_END_PORT)) {
-			while(true) {
-				System.out.println("Timers : "+replicaOneTimer+" "+replicaTwoTimer+" "+replicaThreeTimer+" ");
-				byte [] message = new byte[3072];
+		try (DatagramSocket socket = new DatagramSocket(CommonUtils.FRONT_END_PORT)) {
+			while (true) {
+				System.out
+						.println("Timers : " + replicaOneTimer + " " + replicaTwoTimer + " " + replicaThreeTimer + " ");
+				byte[] message = new byte[3072];
 				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
-				if(dataReceived.size() >= 2) {
+				if (dataReceived.size() >= 2) {
 					socket.setSoTimeout(getTimeOutTimer());
 				}
 				socket.receive(recievedDatagramPacket);
-				ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
+				ObjectInputStream inputStream = new ObjectInputStream(
+						new ByteArrayInputStream(recievedDatagramPacket.getData()));
 				ReceivedToFE messageData = (ReceivedToFE) inputStream.readObject();
 				inputStream.close();
-				System.out.println("######MESSAGE RECEIVED FROM########: "+ messageData.getFromMessage()+" "+messageData.getMessage());
+				System.out.println("######MESSAGE RECEIVED FROM########: " + messageData.getFromMessage() + " "
+						+ messageData.getMessage());
 				checkTheTimer(messageData, startTime);
-				//adding messages to the arraylist
+				// adding messages to the arraylist
 				dataReceived.add(messageData);
-                                
-                                 HashMap<ReceivedToFE,Integer> hm = new HashMap<>();
-                                messageToClient = investigateMessagefromReplicas(dataReceived,startTime, hm);
-				//messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
-                                System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: "+messageToClient);
-				if(Objects.nonNull(messageToClient)) {
+
+				messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
+				// messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+				System.out.println(
+						"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
+				if (Objects.nonNull(messageToClient)) {
 					return messageToClient;
-				}else {
+				} else {
 					messageToClient = CommonUtils.EXCEPTION;
 				}
 			}
-		}catch(SocketTimeoutException exception) {
+		} catch (SocketTimeoutException exception) {
 			messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
-			if(Objects.nonNull(messageToClient)) {
+			if (Objects.nonNull(messageToClient)) {
 				return messageToClient;
-			}else {
+			} else {
 				messageToClient = CommonUtils.EXCEPTION;
 			}
-		}catch (IOException | ClassNotFoundException exception) {
+		} catch (IOException | ClassNotFoundException exception) {
 			exception.printStackTrace();
 		}
 		return messageToClient;
 	}
-        
-        private String investigateMessagefromReplicas(List<ReceivedToFE> dataRecieved, long startTime, HashMap<ReceivedToFE,Integer> hm){
-           ArrayList<ReceivedToFE> arraylist = new ArrayList<>();
-            if (dataRecieved.size()>=2) { //if we receive more at least 2 messages than add all unsuccseccfull messages to the hashmap.
-                 for (Iterator<ReceivedToFE> iterator = dataRecieved.iterator(); iterator.hasNext();) {
-                ReceivedToFE next = iterator.next();
-                if (!hm.containsKey(next)) {
-                    if(next.getMessage().equals("UNSUCCESSFULL")){
-                    hm.put(next, 1);
-                }
-                }
-                else{
-                    Integer count = hm.get(next);
-                    hm.replace(next, count++);
-                }
-                    //checking for success
-                     if (!next.getMessage().equals("UNSUCCESSFULL")) {
-                         arraylist.add(next);
-                     }
-            }
-                if (arraylist.size()>=1) {// change it to 2 after adding the replica
-                    String message = null;
-                    int count = 0;
-                    message = arraylist.get(0).getMessage();
-                    for (Iterator<ReceivedToFE> iterator = arraylist.iterator(); iterator.hasNext();) {
-                    ReceivedToFE next = iterator.next();
-                        if (message.equals(next.getMessage())) {
-                            count++;
-                        }
-                        if(count>=2){
-                        return message;}
-                }
-                }
-                 
-            for (Entry<ReceivedToFE, Integer> entry : hm.entrySet()) {
-                ReceivedToFE key = entry.getKey();
-                Integer value = entry.getValue();
-                if (value.equals(3)) {
-                    informSoftwareBug(key);
-                }
-                
-            }
-            }
-            
-            
-           return "OHO!!";
-            
-            
-            
-        }
 
-	private int  getTimeOutTimer() {
+	private String investigateMessagefromReplicas(List<ReceivedToFE> dataRecieved, long startTime) {
+		ArrayList<ReceivedToFE> arraylist = new ArrayList<>();
+		String response= null;
+		if (dataRecieved.size() >= 2) { // if we receive more at least 2 messages than add all unsuccseccfull messages
+										// to the hashmap.
+			for (Iterator<ReceivedToFE> iterator = dataRecieved.iterator(); iterator.hasNext();) {
+				ReceivedToFE next = iterator.next();
+				String sender = next.getFromMessage();
+				if (!hm.containsKey(sender) && next.getMessage().equals("UNSUCCESSFULL")) {
+					hm.put(sender, 1);
+				}
+
+				if (hm.containsKey(sender)) {
+					Integer count = hm.get(sender);
+					int new_count = count+1;
+					hm.replace(sender, new_count);
+				}
+				// checking for success
+				if (!next.getMessage().equals("UNSUCCESSFULL")) {
+					arraylist.add(next);
+				}
+			}
+			if (arraylist.size() >= 1) {// change it to 2 after adding the replica
+				String message = null;
+				int count = 0;
+				message = arraylist.get(0).getMessage();
+				for (Iterator<ReceivedToFE> iterator = arraylist.iterator(); iterator.hasNext();) {
+					ReceivedToFE next = iterator.next();
+					if (message.equals(next.getMessage())) {
+						count++;
+					}
+					if (count >= 1) {
+						response =  message;
+					}
+				}
+			}
+
+			for (Entry<String, Integer> entry : hm.entrySet()) {
+				String key = entry.getKey();
+				Integer value = entry.getValue();
+				if (value == 2) {
+					informSoftwareBug(key);
+					hm.clear();
+				}
+			}
+		}
+		
+		System.out.println("#################HM####################"+hm);
+		return response;
+
+	}
+
+	private int getTimeOutTimer() {
 		int timerToSend;
-		long firstTimers = replicaOneTimer > replicaTwoTimer? replicaOneTimer: replicaTwoTimer;
-		long lastTimers = replicaTwoTimer > replicaThreeTimer? replicaTwoTimer: replicaThreeTimer;
-		long timer = firstTimers>lastTimers?firstTimers:lastTimers;
-		timerToSend = (int) (timer == 0? 11000: 3 * timer);
+		long firstTimers = replicaOneTimer > replicaTwoTimer ? replicaOneTimer : replicaTwoTimer;
+		long lastTimers = replicaTwoTimer > replicaThreeTimer ? replicaTwoTimer : replicaThreeTimer;
+		long timer = firstTimers > lastTimers ? firstTimers : lastTimers;
+		timerToSend = (int) (timer == 0 ? 11000 : 3 * timer);
 		return timerToSend;
 	}
 
 	private void checkTheTimer(ReceivedToFE messageData, long startTime) {
 		long endTime = System.currentTimeMillis() - startTime;
-		System.out.println("Check Timer "+messageData.getFromMessage()+" "+counter++);
+		System.out.println("Check Timer " + messageData.getFromMessage() + " " + counter++);
 		switch (messageData.getFromMessage().toUpperCase()) {
 		case CommonUtils.FRONT_END_HOSTNAME:
-			if(endTime > replicaOneTimer)
+			if (endTime > replicaOneTimer)
 				replicaOneTimer = endTime;
 			break;
 		case CommonUtils.SEQUENCER_HOSTNAME:
-			if(endTime > replicaTwoTimer)
+			if (endTime > replicaTwoTimer)
 				replicaTwoTimer = endTime;
 			break;
 		case CommonUtils.REPLICA3_HOSTNAME:
-			if(endTime > replicaThreeTimer)
+			if (endTime > replicaThreeTimer)
 				replicaThreeTimer = endTime;
 			break;
 
@@ -248,84 +267,89 @@ public class FrontEndImpl extends FrontEndPOA {
 		}
 	}
 
-	private void informSoftwareBug(ReceivedToFE receivedToFE) {
+	private void informSoftwareBug(String receivedToFE) {
 		String sendMessage = CommonUtils.RESULT_ERROR;
-		System.out.println("Informing software bug to "+ receivedToFE.getFromMessage());
-		try (DatagramSocket socket = new DatagramSocket()){
-			InetAddress host = InetAddress.getByName(receivedToFE.getFromMessage().toUpperCase());
-			DatagramPacket sendPacket = new DatagramPacket(sendMessage.getBytes(), sendMessage.getBytes().length, host, CommonUtils.TO_REPLICA_STRING_PORT);
+		System.out.println("Informing software bug to " + receivedToFE);
+		try (DatagramSocket socket = new DatagramSocket()) {
+			InetAddress host = InetAddress.getByName(receivedToFE.toUpperCase());
+			DatagramPacket sendPacket = new DatagramPacket(sendMessage.getBytes(), sendMessage.getBytes().length, host,
+					CommonUtils.TO_REPLICA_STRING_PORT);
 			socket.send(sendPacket);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	//Checking the message received by the FE that needs to be sent to the client
+
+	// Checking the message received by the FE that needs to be sent to the client
 	private String checkMessagesToSendToClient(List<ReceivedToFE> dataRecieved, long startTime) {
 		String response = null;
-		String [] replicasNames = {CommonUtils.FRONT_END_HOSTNAME, CommonUtils.SEQUENCER_HOSTNAME, 
-				CommonUtils.REPLICA3_HOSTNAME};
-                
+		String[] replicasNames = { CommonUtils.FRONT_END_HOSTNAME, CommonUtils.SEQUENCER_HOSTNAME,
+				CommonUtils.REPLICA3_HOSTNAME };
+
 		Map<String, ReceivedToFE> receivedMessages = dataRecieved.stream().map(data -> data)
 				.collect(Collectors.toMap(ReceivedToFE::getFromMessage, Function.identity()));
-                
-                for (Entry<String, ReceivedToFE> entry : receivedMessages.entrySet()) {
-                String key = entry.getKey();
-                ReceivedToFE value = entry.getValue();
-                
-                    System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
-                    System.out.println("Sender Name: "+key);
-                      System.out.println("Value: "+value);
-                
-            }
+
+		for (Entry<String, ReceivedToFE> entry : receivedMessages.entrySet()) {
+			String key = entry.getKey();
+			ReceivedToFE value = entry.getValue();
+
+			System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
+			System.out.println("Sender Name: " + key);
+			System.out.println("Value: " + value);
+
+		}
 		boolean hasToWait = true;
-		//if one crashed
-		if(dataRecieved.size() >= 2) {
+		// if one crashed
+		if (dataRecieved.size() >= 2) {
 			boolean crashinform = false;
-			for(int index = 0; index < replicasNames.length; index++) {
+			for (int index = 0; index < replicasNames.length; index++) {
 
-				//Basically checking if one of the repllica has not sent a message then
-				if(!receivedMessages.containsKey(replicasNames[index])) {
-					//start the waiting process and wait for a reply for some time
-					hasToWait  = checkWhetherToWaitForMessage(startTime, replicasNames[index]);
-					if(!hasToWait) { //if you dont need to wait example a timeout has occured
+				// Basically checking if one of the repllica has not sent a message then
+				if (!receivedMessages.containsKey(replicasNames[index])) {
+					// start the waiting process and wait for a reply for some time
+					hasToWait = checkWhetherToWaitForMessage(startTime, replicasNames[index]);
+					if (!hasToWait) { // if you dont need to wait example a timeout has occured
 
-						//inform the replica about the crash after waiting
+						// inform the replica about the crash after waiting
 						informReplicasAboutCrash(replicasNames[index]);
 						crashinform = true;
 					}
 				}
 			}
-			// if one is crashed and other 2 gave messages or all gave messages after waiting
-			if(dataRecieved.size() >= 3 || (crashinform && dataRecieved.size() == 2)) {//replca count - 1
-				Map<String, List<ReceivedToFE>> messagesReceived = dataRecieved.stream().collect(Collectors.groupingBy(ReceivedToFE::getMessage));
+			// if one is crashed and other 2 gave messages or all gave messages after
+			// waiting
+			if (dataRecieved.size() >= 3 || (crashinform && dataRecieved.size() == 2)) {// replca count - 1
+				Map<String, List<ReceivedToFE>> messagesReceived = dataRecieved.stream()
+						.collect(Collectors.groupingBy(ReceivedToFE::getMessage));
 				for (Entry<String, List<ReceivedToFE>> message : messagesReceived.entrySet()) {
-					System.out.println(message.getKey().trim()+" "+ message.getValue().size());
-					if(message.getValue().size() >= 1) {// replicas count - 2
+					System.out.println(message.getKey().trim() + " " + message.getValue().size());
+					if (message.getValue().size() >= 1) {// replicas count - 2
 						response = message.getKey();
-					}else {
-						informSoftwareBug(message.getValue().get(0));
+					} else {
+						//(message.getValue().get(0));
 					}
 				}
-                                for (Entry<String, List<ReceivedToFE>> entry : messagesReceived.entrySet()) {
-                                String key = entry.getKey();
-                                List<ReceivedToFE> value = entry.getValue();
-                                    System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
-                                    System.out.println("key: "+key);
-                                    System.out.println("Value: "+value);
-                            }
+				for (Entry<String, List<ReceivedToFE>> entry : messagesReceived.entrySet()) {
+					String key = entry.getKey();
+					List<ReceivedToFE> value = entry.getValue();
+					System.out.println("FrontEnd.FrontEndImpl.checkMessagesToSendToClient()");
+					System.out.println("key: " + key);
+					System.out.println("Value: " + value);
+				}
 			}
-			if(Objects.nonNull(response))
+			if (Objects.nonNull(response))
 				response = response.trim();
 		}
 		return response;
 	}
 
 	private void informReplicasAboutCrash(String replicasName) {
-		System.out.println("Informing crash to replica "+ replicasName);
+		System.out.println("Informing crash to replica " + replicasName);
 		String sendMessage = CommonUtils.CRASHED.concat(",").concat(replicasName);
-		try(DatagramSocket socket = new DatagramSocket()) {
+		try (DatagramSocket socket = new DatagramSocket()) {
 			InetAddress host = InetAddress.getByName(replicasName);
-			DatagramPacket sendPacket = new DatagramPacket(sendMessage.getBytes(), sendMessage.getBytes().length, host, CommonUtils.TO_REPLICA_STRING_PORT);
+			DatagramPacket sendPacket = new DatagramPacket(sendMessage.getBytes(), sendMessage.getBytes().length, host,
+					CommonUtils.TO_REPLICA_STRING_PORT);
 			socket.send(sendPacket);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -334,24 +358,25 @@ public class FrontEndImpl extends FrontEndPOA {
 
 	private boolean checkWhetherToWaitForMessage(long startTime, String replicasName) {
 		long timeDifference = System.currentTimeMillis() - startTime;
-		System.out.println(replicasName+" "+timeDifference);
+		System.out.println(replicasName + " " + timeDifference);
 		long timer = getReplicaTimer(replicasName);
-		if((timer != 0 && timeDifference > 2 * timer) || (timer == 0 && timeDifference > getTimeOutTimer()))
+		if ((timer != 0 && timeDifference > 2 * timer) || (timer == 0 && timeDifference > getTimeOutTimer()))
 			return false;
 		return true;
 	}
 
 	private long getReplicaTimer(String replicasName) {
 		switch (replicasName) {
-		case CommonUtils.FRONT_END_HOSTNAME: return replicaOneTimer;
-		case CommonUtils.SEQUENCER_HOSTNAME: return replicaTwoTimer;
-		case CommonUtils.REPLICA3_HOSTNAME: return replicaThreeTimer;
+		case CommonUtils.FRONT_END_HOSTNAME:
+			return replicaOneTimer;
+		case CommonUtils.SEQUENCER_HOSTNAME:
+			return replicaTwoTimer;
+		case CommonUtils.REPLICA3_HOSTNAME:
+			return replicaThreeTimer;
 		default:
 			break;
 		}
 		return 0;
 	}
-
-	
 
 }
