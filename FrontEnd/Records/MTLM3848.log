@@ -1,0 +1,26 @@
+Aug 07, 2019 3:45:34 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3848 adding a new Event with Event id: MTLM111045 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 3:45:35 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLM111045 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 3:45:54 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3848 adding a new Event with Event id: TORM110945 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 3:45:54 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Unsuccessful   Event Not Added in Montreal Server for Event ID  TORM110945 Event Type  Conferences because the Event ID  TORM110945 is not of Montreal format  MTL
+Aug 07, 2019 3:47:59 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3848 adding a new Event with Event id: MTLE011245 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 3:47:59 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE011245 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 3:48:22 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3848 adding a new Event with Event id: MTLM121145 ,Event Type: Seminars and Booking Capacity: 2
+Aug 07, 2019 3:48:22 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLM121145 Event Type  Seminars Booking Capacity  2
+Aug 07, 2019 3:49:10 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM111045  Booking Capacity 2EventID  MTLM130722  Booking Capacity 60EventID  MTLE011245  Booking Capacity 2EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLE121219  Booking Capacity 60
+Aug 07, 2019 3:50:06 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORA999999  Booking Capacity 999EventID  TORM241026  Booking Capacity 60EventID  TORE061123  Booking Capacity 90   EventID  OTWA999999  Booking Capacity 999EventID  OTWM070728  Booking Capacity 50EventID  OTWE210322  Booking Capacity 40   EventID  MTLA999999  Booking Capacity 999EventID  MTLM190124  Booking Capacity 50EventID  MTLE201123  Booking Capacity 40
+Aug 07, 2019 3:50:10 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM051022  Booking Capacity 70EventID  TORE999999  Booking Capacity 999EventID  TORA070724  Booking Capacity 80EventID  TORM051020  Booking Capacity 70EventID  TORM051021  Booking Capacity 70   EventID  OTWM140147  Booking Capacity 50EventID  OTWE999999  Booking Capacity 999EventID  OTWA260939  Booking Capacity 90   EventID  MTLM121145  Booking Capacity 2EventID  MTLE999999  Booking Capacity 999EventID  MTLA201121  Booking Capacity 50EventID  MTLM310522  Booking Capacity 20
+Aug 07, 2019 3:50:46 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC8486 for Event Type Conferences with Event ID MTLE011245 has been booked
+Aug 07, 2019 3:50:55 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC8486

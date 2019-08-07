@@ -289,19 +289,19 @@ public class MontrealServerImpl {
             HashMap< String, Integer> customerTradeshowEventID = customerEvents.get(TRADESHOW);
 
             if (customerConferenceEventID != null && !customerConferenceEventID.isEmpty()) {
-                returnMsg += "\nFor Conference Events in Montreal: ".trim();
+                returnMsg += "\nFor Conference Events in Montreal: ";
                 for (String event : customerConferenceEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerConferenceEventID.get(event)+"".trim();
                 }
             }
             if (customerSeminarEventID != null && !customerSeminarEventID.isEmpty()) {
-                returnMsg += "\nFor Seminar Events in Montreal: ".trim();
+                returnMsg += "\nFor Seminar Events in Montreal: ";
                 for (String event : customerSeminarEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerSeminarEventID.get(event)+"".trim();
                 }
             }
             if (customerTradeshowEventID != null && !customerTradeshowEventID.isEmpty()) {
-                returnMsg += "\nFor Tradeshow Events in Montreal: ".trim();
+                returnMsg += "\nFor Tradeshow Events in Montreal: ";
                 for (String event : customerTradeshowEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerTradeshowEventID.get(event)+"".trim();
                 }
@@ -313,7 +313,7 @@ public class MontrealServerImpl {
         if (returnMsg.trim().equals("")) {
             logger.log(Level.INFO, "Records for {0} do not exist.", customerID);
             if ((customerID.substring(0, 3).equals(MONTREAL) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(MONTREAL))) {
-                returnMsg += "\nRecords for " + customerID + " do not exist.".trim();
+                returnMsg += "\nRecords for " + customerID + " do not exist.";
             }
         }
 

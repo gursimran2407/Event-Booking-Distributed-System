@@ -263,7 +263,8 @@ public class OttawaServerImpl {
     }
 
     
-    public synchronized String getBookingSchedule(String customerID, String managerID) { String returnMsg = "";
+    public synchronized String getBookingSchedule(String customerID, String managerID) {
+        String returnMsg = "";
         if (managerID == null || managerID.equalsIgnoreCase("Default")) {
             managerID = "null";
         }
@@ -274,9 +275,9 @@ public class OttawaServerImpl {
         }
         HashMap<String, HashMap< String, Integer>> customerEvents = customerEventsMapping.get(customerID);
 
-        if ((customerID.substring(0, 3).equals(MONTREAL) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(MONTREAL))) {
+        if ((customerID.substring(0, 3).equals(OTTAWA) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(OTTAWA))) {
             returnMsg += requestToOtherServers(customerID, null, null, 5, null, TORONTO_SERVER_PORT, "null", null, null).trim();
-            returnMsg += requestToOtherServers(customerID, null, null, 5, null, OTTAWA_SERVER_PORT, "null", null, null).trim();
+            returnMsg += requestToOtherServers(customerID, null, null, 5, null, MONTREAL_SERVER_PORT, "null", null, null).trim();
         }
         if (customerEvents != null && !customerEvents.isEmpty()) {
             HashMap< String, Integer> customerConferenceEventID = customerEvents.get(CONFERENCE);
@@ -284,19 +285,19 @@ public class OttawaServerImpl {
             HashMap< String, Integer> customerTradeshowEventID = customerEvents.get(TRADESHOW);
 
             if (customerConferenceEventID != null && !customerConferenceEventID.isEmpty()) {
-                returnMsg += "\nFor Conference Events in Montreal: ".trim();
+                returnMsg += "\nFor Conference Events in Ottawa: ".trim();
                 for (String event : customerConferenceEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerConferenceEventID.get(event)+"".trim();
                 }
             }
             if (customerSeminarEventID != null && !customerSeminarEventID.isEmpty()) {
-                returnMsg += "\nFor Seminar Events in Montreal: ".trim();
+                returnMsg += "\nFor Seminar Events in Ottawa: ";
                 for (String event : customerSeminarEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerSeminarEventID.get(event)+"".trim();
                 }
             }
             if (customerTradeshowEventID != null && !customerTradeshowEventID.isEmpty()) {
-                returnMsg += "\nFor Tradeshow Events in Montreal: ".trim();
+                returnMsg += "\nFor Tradeshow Events in Ottawa: ";
                 for (String event : customerTradeshowEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerTradeshowEventID.get(event)+"".trim();
                 }
@@ -307,13 +308,13 @@ public class OttawaServerImpl {
         }
         if (returnMsg.trim().equals("")) {
             logger.log(Level.INFO, "Records for {0} do not exist.", customerID);
-            if ((customerID.substring(0, 3).equals(MONTREAL) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(MONTREAL))) {
+            if ((customerID.substring(0, 3).equals(OTTAWA) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(OTTAWA))) {
                 returnMsg += "\nRecords for " + customerID + " do not exist.".trim();
             }
         }
-
         return returnMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
     }
+
 
     
     public synchronized String cancelEvent(String customerID, String eventID, String eventType) {
