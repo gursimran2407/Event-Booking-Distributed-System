@@ -193,7 +193,7 @@ public class FrontEndImpl extends FrontEndPOA {
 				ReceivedToFE next = iterator.next();
 				String sender = next.getFromMessage();
 				if (!hm.containsKey(sender) && next.getMessage().equals("UNSUCCESSFULL")) {
-					hm.put(sender, 1);
+					hm.put(sender, 0);
 				}
 
 				if (hm.containsKey(sender)) {
@@ -206,7 +206,7 @@ public class FrontEndImpl extends FrontEndPOA {
 					arraylist.add(next);
 				}
 			}
-			if (arraylist.size() >= 1) {// change it to 2 after adding the replica
+			if (arraylist.size() >= 2) {// change it to 2 after adding the replica
 				String message = null;
 				int count = 0;
 				message = arraylist.get(0).getMessage();
@@ -215,7 +215,7 @@ public class FrontEndImpl extends FrontEndPOA {
 					if (message.equals(next.getMessage())) {
 						count++;
 					}
-					if (count >= 1) {
+					if (count >= 2) {
 						response =  message;
 					}
 				}
@@ -224,9 +224,9 @@ public class FrontEndImpl extends FrontEndPOA {
 			for (Entry<String, Integer> entry : hm.entrySet()) {
 				String key = entry.getKey();
 				Integer value = entry.getValue();
-				if (value == 2) {
+				if (value == 3) {
 					informSoftwareBug(key);
-					hm.clear();
+					hm.remove(key);
 				}
 			}
 		}
@@ -235,7 +235,6 @@ public class FrontEndImpl extends FrontEndPOA {
 		return response;
 
 	}
-
 	private int getTimeOutTimer() {
 		int timerToSend;
 		long firstTimers = replicaOneTimer > replicaTwoTimer ? replicaOneTimer : replicaTwoTimer;

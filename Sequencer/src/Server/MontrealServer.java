@@ -80,7 +80,7 @@ public class MontrealServer {
                     	
                         response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
                         i++;
-                        if(i >= 2) {
+                        if(i >= 3) {
                         	
                             CommonUtils.isFT = false;
                         }

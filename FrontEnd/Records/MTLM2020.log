@@ -1,0 +1,112 @@
+Aug 06, 2019 4:13:45 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 3
+Aug 06, 2019 4:13:45 PM Client.Client managerAddEvent
+INFO: Response of server: Unknown Error. Please try again!
+Aug 06, 2019 4:23:09 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 3
+Aug 06, 2019 4:23:09 PM Client.Client managerAddEvent
+INFO: Response of server: Unknown Error. Please try again!
+Aug 06, 2019 4:24:57 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 3
+Aug 06, 2019 4:31:56 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 2
+Aug 06, 2019 4:31:56 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 4:34:47 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 3
+Aug 06, 2019 4:34:47 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 4:36:14 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: Seminars and Booking Capacity: 4
+Aug 06, 2019 4:36:14 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 4:53:25 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 2
+Aug 06, 2019 4:53:25 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 4:55:47 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: Seminars and Booking Capacity: 3
+Aug 06, 2019 4:55:47 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  Seminars Booking Capacity  3
+Aug 06, 2019 4:57:06 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: Conferences and Booking Capacity: 4
+Aug 06, 2019 4:57:06 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 5:04:29 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Seminars and Booking Capacity: 1
+Aug 06, 2019 5:04:29 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 5:04:45 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: Conferences and Booking Capacity: 2
+Aug 06, 2019 5:04:45 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 5:05:02 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: TradeShows and Booking Capacity: 3
+Aug 06, 2019 5:05:02 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 5:09:19 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 5:09:19 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 5:09:30 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: Seminars and Booking Capacity: 2
+Aug 06, 2019 5:09:30 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  Seminars Booking Capacity  2
+Aug 06, 2019 5:10:48 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: TradeShows and Booking Capacity: 3
+Aug 06, 2019 5:10:48 PM Client.Client managerAddEvent
+INFO: Response of server: UNSUCCESSFULL
+Aug 06, 2019 6:13:46 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 6:16:01 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 6:16:01 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120819 Event Type  Conferences Booking Capacity  1
+Aug 06, 2019 6:16:40 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: Conferences and Booking Capacity: 2
+Aug 06, 2019 6:16:40 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  Conferences Booking Capacity  2
+Aug 06, 2019 7:34:09 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 7:34:09 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120819 Event Type  Conferences Booking Capacity  1
+Aug 06, 2019 7:34:26 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 06, 2019 7:34:26 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  TradeShows Booking Capacity  2
+Aug 06, 2019 7:34:39 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: Seminars and Booking Capacity: 3
+Aug 06, 2019 7:34:39 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120830 Event Type  Seminars Booking Capacity  3
+Aug 06, 2019 7:36:36 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120844 ,Event Type: Conferences and Booking Capacity: 4
+Aug 06, 2019 7:36:36 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120844 Event Type  Conferences Booking Capacity  4
+Aug 06, 2019 7:47:19 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 7:47:19 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120819 Event Type  Conferences Booking Capacity  1
+Aug 06, 2019 7:47:28 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 06, 2019 7:47:28 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  TradeShows Booking Capacity  2
+Aug 06, 2019 7:48:02 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: Conferences and Booking Capacity: 4
+Aug 06, 2019 7:48:02 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120830 Event Type  Conferences Booking Capacity  4
+Aug 06, 2019 7:58:58 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120819 ,Event Type: Conferences and Booking Capacity: 1
+Aug 06, 2019 7:58:58 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120819 Event Type  Conferences Booking Capacity  1
+Aug 06, 2019 7:59:08 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120820 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 06, 2019 7:59:08 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120820 Event Type  TradeShows Booking Capacity  2
+Aug 06, 2019 7:59:29 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: MTLA120830 ,Event Type: Seminars and Booking Capacity: 3
+Aug 06, 2019 7:59:29 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA120830 Event Type  Seminars Booking Capacity  3
+Aug 06, 2019 8:04:47 PM Client.Client managerAddEvent
+INFO: Manager: MTLM2020 adding a new Event with Event id: TORE121196 ,Event Type: Conferences and Booking Capacity: 2
+Aug 06, 2019 8:04:47 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Unsuccessful   Event Not Added in Montreal Server for Event ID  TORE121196 Event Type  Conferences because the Event ID  TORE121196 is not of Montreal format  MTL

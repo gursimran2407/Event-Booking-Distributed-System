@@ -22,7 +22,7 @@ import ServerImpl.MontrealServerImpl;
  * @author Gursimran Singh
  */
 public class MontrealServer {
-    static boolean isFT = false;
+    public static boolean isFT = false;
     public static void main(String[] args)
     {
     	MontrealServerImpl montrealLibraryImpl = new MontrealServerImpl();
