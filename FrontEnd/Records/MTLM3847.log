@@ -1,0 +1,8 @@
+Aug 07, 2019 5:22:20 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3847 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:22:20 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:26:55 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3847 adding a new Event with Event id: MTLA080689 ,Event Type: Conferences and Booking Capacity: 4
+Aug 07, 2019 5:26:56 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080689 Event Type  Conferences Booking Capacity  4

@@ -1,0 +1,48 @@
+Aug 07, 2019 5:02:47 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:02:47 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Unsuccessful   Event Not Added in Toronto Server for Event ID  MTLA090619 Event Type  Conferences because the Event ID  MTLA090619 is not of Toronto format  TOR
+Aug 07, 2019 5:03:07 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORE050619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:03:07 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORE050619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:03:32 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORE080619 ,Event Type: TradeShows and Booking Capacity: 3
+Aug 07, 2019 5:03:32 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORE080619 Event Type  TradeShows Booking Capacity  3
+Aug 07, 2019 5:03:44 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORE110619 ,Event Type: Seminars and Booking Capacity: 3
+Aug 07, 2019 5:03:44 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORE110619 Event Type  Seminars Booking Capacity  3
+Aug 07, 2019 5:03:58 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLE121219  Booking Capacity 60   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999EventID  TORE050619  Booking Capacity 2
+Aug 07, 2019 5:04:48 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  MTLE999999  Booking Capacity 999EventID  MTLA201121  Booking Capacity 50EventID  MTLM310522  Booking Capacity 20   EventID  OTWM140147  Booking Capacity 50EventID  OTWE999999  Booking Capacity 999EventID  OTWA260939  Booking Capacity 90   EventID  TORE110619  Booking Capacity 3EventID  TORM051022  Booking Capacity 70EventID  TORE999999  Booking Capacity 999EventID  TORA070724  Booking Capacity 80EventID  TORM051020  Booking Capacity 70EventID  TORM051021  Booking Capacity 70
+Aug 07, 2019 5:06:02 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORA090619 ,Event Type: TradeShows and Booking Capacity: 2
+Aug 07, 2019 5:06:02 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORA090619 Event Type  TradeShows Booking Capacity  2
+Aug 07, 2019 5:07:19 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORE230719 ,Event Type: Conferences and Booking Capacity: 3
+Aug 07, 2019 5:07:19 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORE230719 Event Type  Conferences Booking Capacity  3
+Aug 07, 2019 5:07:52 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC3465
+Aug 07, 2019 5:07:52 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for MTLC3465 have been found
+Aug 07, 2019 5:07:52 PM Client.Client runBookingSchedule
+INFO: 
+Aug 07, 2019 5:08:40 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC8888 for Event Type Conferences with Event ID TORE230719 has been booked
+Aug 07, 2019 5:08:46 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC8888
+Aug 07, 2019 5:08:46 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for MTLC8888 have been found
+Aug 07, 2019 5:08:46 PM Client.Client runBookingSchedule
+INFO: 
+Aug 07, 2019 5:09:48 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  MTLE999999  Booking Capacity 999EventID  MTLA201121  Booking Capacity 50EventID  MTLM310522  Booking Capacity 20   EventID  OTWM140147  Booking Capacity 50EventID  OTWE999999  Booking Capacity 999EventID  OTWA260939  Booking Capacity 90   EventID  TORE110619  Booking Capacity 3EventID  TORM051022  Booking Capacity 70EventID  TORE999999  Booking Capacity 999EventID  TORA070724  Booking Capacity 80EventID  TORM051020  Booking Capacity 70EventID  TORM051021  Booking Capacity 70
+Aug 07, 2019 5:11:09 PM Client.Client managerAddEvent
+INFO: Manager: TORM3847 adding a new Event with Event id: TORE230719 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:11:09 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Toronto Server for Event ID  TORE230719 Event Type  Conferences Booking Capacity  2

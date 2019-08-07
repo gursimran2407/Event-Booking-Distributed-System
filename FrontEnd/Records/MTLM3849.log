@@ -1,0 +1,12 @@
+Aug 07, 2019 4:07:12 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3849 adding a new Event with Event id: MTLM111046 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 4:07:12 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLM111046 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 4:07:25 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3849 adding a new Event with Event id: MTLE100645 ,Event Type: Seminars and Booking Capacity: 3
+Aug 07, 2019 4:07:25 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE100645 Event Type  Seminars Booking Capacity  3
+Aug 07, 2019 4:07:31 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM111046  Booking Capacity 2EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLE121219  Booking Capacity 60
+Aug 07, 2019 4:07:51 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC1122 for Event Type Conferences with Event ID TORE121219 has been booked

@@ -1,0 +1,8 @@
+Aug 07, 2019 4:28:10 PM Client.Client managerAddEvent
+INFO: Manager: OTWM2030 adding a new Event with Event id: OTWM110919 ,Event Type: Conferences and Booking Capacity: 3
+Aug 07, 2019 4:28:10 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Ottawa Server for Event ID  OTWM110919 Event Type  Conferences Booking Capacity  3
+Aug 07, 2019 4:28:44 PM Client.Client managerAddEvent
+INFO: Manager: OTWM2030 adding a new Event with Event id: OTWE190919 ,Event Type: TradeShows and Booking Capacity: 5
+Aug 07, 2019 4:28:45 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Ottawa Server for Event ID  OTWE190919 Event Type  TradeShows Booking Capacity  5

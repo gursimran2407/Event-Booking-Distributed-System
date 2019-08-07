@@ -1,0 +1,22 @@
+Aug 07, 2019 5:30:37 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:30:38 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:30:45 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA080619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:30:45 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:30:53 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA080619 ,Event Type: Seminars and Booking Capacity: 3
+Aug 07, 2019 5:30:53 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080619 Event Type  Seminars Booking Capacity  3
+Aug 07, 2019 5:31:08 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC1111 for Event Type Conferences with Event ID MTLA090619 has been booked
+Aug 07, 2019 5:31:54 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC1111 for Event Type Conferences with Event ID MTLA080619 has been booked
+Aug 07, 2019 5:32:17 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLA080619  Booking Capacity 1EventID  MTLE121219  Booking Capacity 60EventID  MTLA090619  Booking Capacity 1
+Aug 07, 2019 5:33:05 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLE120634 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:33:05 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE120634 Event Type  Conferences Booking Capacity  2

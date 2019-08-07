@@ -1,0 +1,10 @@
+Aug 07, 2019 4:51:35 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC1234 for Event Type Conferences with Event ID MTLA090619 has been booked
+Aug 07, 2019 4:51:51 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by TORC1234 for Event Type TradeShows with Event ID MTLA080619 has been booked
+Aug 07, 2019 4:54:11 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by TORC1234
+Aug 07, 2019 4:54:11 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for TORC1234 have been found
+Aug 07, 2019 4:54:11 PM Client.Client runBookingSchedule
+INFO: For Conference Events in Montreal   Event ID  MTLA090619 Booking for 1 For Tradeshow Events in Montreal   Event ID  MTLA080619 Booking for 1

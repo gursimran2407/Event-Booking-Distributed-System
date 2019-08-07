@@ -161,8 +161,8 @@ public class FrontEndImpl extends FrontEndPOA {
 				// adding messages to the arraylist
 				dataReceived.add(messageData);
 
-				messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
-				// messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+				//messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
+				 messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
 			//	System.out.println(
 			//			"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
 				if (Objects.nonNull(messageToClient)) {
