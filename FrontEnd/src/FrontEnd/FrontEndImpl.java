@@ -163,8 +163,8 @@ public class FrontEndImpl extends FrontEndPOA {
 
 				messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
 				// messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
-				System.out.println(
-						"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
+			//	System.out.println(
+			//			"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
 				if (Objects.nonNull(messageToClient)) {
 					return messageToClient;
 				} else {
@@ -224,7 +224,7 @@ public class FrontEndImpl extends FrontEndPOA {
 			for (Entry<String, Integer> entry : hm.entrySet()) {
 				String key = entry.getKey();
 				Integer value = entry.getValue();
-				if (value == 3) {
+				if (value > 3) {
 					informSoftwareBug(key);
 					hm.remove(key);
 				}
