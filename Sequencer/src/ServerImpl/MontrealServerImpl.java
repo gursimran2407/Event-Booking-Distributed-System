@@ -111,9 +111,36 @@ public class MontrealServerImpl {
     
      public synchronized String addEventWrong(String eventID, String eventType, String bookingCapacity, String managerID) {
     	 
-         System.out.println("TTTTTTTTTTTT!");
-    	 String message = "UNSUCCESSFULL ";
-         return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
+    	  String message = null;
+          System.out.println("ADD EVENT CALLED!!!!!!!!");
+          System.out.println("VALUE OF isFT: " + CommonUtils.CommonUtils.isFT);
+          if (!eventID.substring(0, 3).equals(MONTREAL)) {
+              message = "Operations Unsuccessful!. Event Not Added in Montreal Server "
+                      + "for Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID + ""
+                      + " is not of Montreal format (MTL)";
+              logger.info(message);
+
+              return "UNSUCCESSFULL".replaceAll("[^a-zA-Z0-9]", " ");
+          }
+
+          logger.info("Received request to add an event with event id " + eventID + " , Event Type" + eventType
+                  + " & Booking Capacity " + bookingCapacity);
+          if (!databaseMontreal.get(eventType).containsKey(eventID)) {
+              databaseMontreal.get(eventType).put(eventID, bookingCapacity);
+              message = "Operations Successful!. Event Added in Montreal Server for Event ID: "
+                      + eventID + " Event Type: " + eventType + " Booking Capacity: " + bookingCapacity;
+              logger.info(message);
+
+              return "UNSUCCESSFULL".replaceAll("[^a-zA-Z0-9]", " ");
+          } else {
+              databaseMontreal.get(eventType).replace(eventID, bookingCapacity);
+              message = "Operations Unsuccessful!. Event Not Added in Montreal Server "
+                      + "for Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID + ""
+                      + " is already added for the Event Type: " + eventType + ". But, the Booking Capacity is updated to " + bookingCapacity;
+              logger.info(message);
+
+              return "UNSUCCESSFULL".replaceAll("[^a-zA-Z0-9]", " ");
+          }
         
      
      }

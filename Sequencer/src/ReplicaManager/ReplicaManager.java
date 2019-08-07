@@ -155,9 +155,9 @@ public class ReplicaManager {
 				System.out.println("RECEIVED A STRING!!!!@#@$#@$%$#@^$#^" + receivedData);
                                 System.out.println("CommonUtils.isFT = \"false\":|||| VALUEInitial" + CommonUtils.isFT);
 				if(receivedData.trim().equals(CommonUtils.RESULT_ERROR)) {
-                                     System.out.println("CommonUtils.isFT = \"false\":|||| VALUECHANGED" + CommonUtils.isFT+"Error counter increased!!!");
+                                     System.out.println("CommonUtils.isFT = \"false\":|||| VALUENOTYETCHANGED" + CommonUtils.isFT+"Error counter increased!!!");
 					errorCounter++;
-                                        if (CommonUtils.isFT ==true) {
+                                        if (CommonUtils.isFT == true) {
                                         CommonUtils.isFT = false;
                                         System.out.println("CommonUtils.isFT = \"false\":|||| VALUECHANGED" + CommonUtils.isFT);
 
