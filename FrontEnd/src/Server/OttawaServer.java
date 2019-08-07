@@ -21,7 +21,7 @@ import ServerImpl.OttawaServerImpl;
  * @author Gursimran Singh
  */
 public class OttawaServer {
-    public static boolean isFT = false;
+    static boolean isFT = false;
 	public static void main(String[] args) {
 
 		OttawaServerImpl ottawaServerImpl = new OttawaServerImpl();

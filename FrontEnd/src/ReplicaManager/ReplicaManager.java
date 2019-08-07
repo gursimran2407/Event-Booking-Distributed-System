@@ -172,9 +172,6 @@ public class ReplicaManager {
 				String receivedData = new String(recievedDatagramPacket.getData());
 				if(receivedData.trim().equals(CommonUtils.RESULT_ERROR)) {
 					errorCounter++;
-					MontrealServer.isFT = true;
-					OttawaServer.isFT = true;
-					TorontoServer.isFT = true;
 				}else if(receivedData.trim().contains(CommonUtils.CRASHED)){
 					String [] crashedReplica = receivedData.split(",");
 					String replicaName = crashedReplica[1].trim();

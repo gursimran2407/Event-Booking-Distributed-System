@@ -163,8 +163,8 @@ public class FrontEndImpl extends FrontEndPOA {
 
 				messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
 				// messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
-			//	System.out.println(
-			//			"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
+				System.out.println(
+						"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
 				if (Objects.nonNull(messageToClient)) {
 					return messageToClient;
 				} else {
@@ -193,7 +193,7 @@ public class FrontEndImpl extends FrontEndPOA {
 				ReceivedToFE next = iterator.next();
 				String sender = next.getFromMessage();
 				if (!hm.containsKey(sender) && next.getMessage().equals("UNSUCCESSFULL")) {
-					hm.put(sender, 0);
+					hm.put(sender, 1);
 				}
 
 				if (hm.containsKey(sender)) {
@@ -206,7 +206,7 @@ public class FrontEndImpl extends FrontEndPOA {
 					arraylist.add(next);
 				}
 			}
-			if (arraylist.size() >= 2) {// change it to 2 after adding the replica
+			if (arraylist.size() >= 1) {// change it to 2 after adding the replica
 				String message = null;
 				int count = 0;
 				message = arraylist.get(0).getMessage();
@@ -215,7 +215,7 @@ public class FrontEndImpl extends FrontEndPOA {
 					if (message.equals(next.getMessage())) {
 						count++;
 					}
-					if (count >= 2) {
+					if (count >= 1) {
 						response =  message;
 					}
 				}
@@ -224,9 +224,9 @@ public class FrontEndImpl extends FrontEndPOA {
 			for (Entry<String, Integer> entry : hm.entrySet()) {
 				String key = entry.getKey();
 				Integer value = entry.getValue();
-				if (value > 3) {
+				if (value == 2) {
 					informSoftwareBug(key);
-					hm.remove(key);
+					hm.clear();
 				}
 			}
 		}
@@ -235,6 +235,7 @@ public class FrontEndImpl extends FrontEndPOA {
 		return response;
 
 	}
+
 	private int getTimeOutTimer() {
 		int timerToSend;
 		long firstTimers = replicaOneTimer > replicaTwoTimer ? replicaOneTimer : replicaTwoTimer;
