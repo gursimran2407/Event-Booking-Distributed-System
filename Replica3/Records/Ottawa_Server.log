@@ -1,0 +1,8 @@
+Aug 07, 2019 5:37:17 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
+Aug 07, 2019 5:37:45 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
+Aug 07, 2019 5:40:37 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
+Aug 07, 2019 5:42:54 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Seminars by Manager: Defaultin server

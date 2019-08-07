@@ -170,6 +170,7 @@ public class ReplicaManager {
 
     private static void checkAndStartTheReplicas() 
     {
+        System.out.println("checkAndStartTheReplicas()");
         String[] replicaPorts = {CommonUtils.MONTREAL, CommonUtils.TORONTO, CommonUtils.OTTAWA};
         for (String serverCode : replicaPorts) 
         {
@@ -181,7 +182,12 @@ public class ReplicaManager {
                 MessageData data = new MessageData();
                 data.setMethodName(CommonUtils.GET_DATA);
                 EventData eventData = sendEventDataToReplica(serverCode);
+                if(eventData!=null){
+                System.out.println("ReplicaManager.ReplicaManager.checkAndStartTheReplicas() " + eventData.getDatabase().toString());
+                System.out.println("ReplicaManager.ReplicaManager.checkAndStartTheReplicas() " + eventData.getCustomerEventsMapping().toString());
+                }
                 startTheServer(serverCode);
+                
                 try (DatagramSocket socket = new DatagramSocket()) 
                 {
                     InetAddress host = InetAddress.getByName(CommonUtils.REPLICA3_HOSTNAME); //Varies per Replica
