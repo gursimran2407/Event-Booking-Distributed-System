@@ -148,22 +148,23 @@ public class MontrealServerImpl {
     public synchronized String listEventAvailability(String eventType, String managerID) {
         //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
         String message = null;
-        StringBuilder returnMessage = new StringBuilder();
+        String returnMessage = "";
         if (managerID.substring(0, 3).equals(MONTREAL)) {
             logger.info("Requesting other server from Server: " + TORONTO_SERVER_NAME);
             String torrontoEvents = requestToOtherServers(managerID, null, null, 3, eventType, TORONTO_SERVER_PORT, null, null, null);
             logger.info("Requesting other server from Server: " + OTTAWA_SERVER_NAME);
             String ottawaEvents = requestToOtherServers(managerID, null, null, 3, eventType, OTTAWA_SERVER_PORT, null, null, null);
-            returnMessage.append(torrontoEvents).append("\n\n").append(ottawaEvents).append("\n\n");
+            returnMessage   += torrontoEvents.trim()+ottawaEvents.trim();
 
         }
+        returnMessage.trim();
         if (managerID.substring(0, 3).equals(TORONTO)) {
             logger.info("Requesting other server from Server: " + MONTREAL_SERVER_NAME);
             String montrealEvents = requestToOtherServers(managerID, null, null, 3, eventType, MONTREAL_SERVER_PORT, null, null, null);
             logger.info("Requesting other server from Server: " + OTTAWA_SERVER_NAME);
             String ottawaEvents = requestToOtherServers(managerID, null, null, 3, eventType, OTTAWA_SERVER_PORT, null, null, null);
 
-            returnMessage.append(ottawaEvents).append("\n\n").append(montrealEvents).append("\n\n");
+            returnMessage   += montrealEvents+ottawaEvents;
         }
         if (managerID.substring(0, 3).equals(OTTAWA)) {
             logger.info("Requesting other server from Server: " + MONTREAL_SERVER_NAME);
@@ -171,12 +172,12 @@ public class MontrealServerImpl {
             logger.info("Requesting other server from Server: " + TORONTO_SERVER_NAME);
             String torrontoEvents = requestToOtherServers(managerID, null, null, 3, eventType, TORONTO_SERVER_PORT, null, null, null);
 
-            returnMessage.append(torrontoEvents).append("\n\n").append(montrealEvents).append("\n\n");
+            returnMessage   += torrontoEvents+montrealEvents;
         }
 
         if (!databaseMontreal.get(eventType).isEmpty()) {
             for (Map.Entry<String, String> entry : databaseMontreal.get(eventType).entrySet()) {
-                returnMessage.append("EventID: ").append(entry.getKey()).append("| Booking Capacity ").append(entry.getValue()).append("\n");
+                returnMessage+=entry.getKey()+entry.getValue();
             }
             message = "Operation Successful, List of events retrieved for Event Type: " + eventType + " by Manager: " + managerID + "in server";
             logger.info(message);

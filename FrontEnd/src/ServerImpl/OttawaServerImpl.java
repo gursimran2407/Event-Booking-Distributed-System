@@ -143,17 +143,15 @@ public class OttawaServerImpl {
     }
 
     
-    public synchronized String listEventAvailability(String eventType, String managerID) {
-        //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
+    public synchronized String listEventAvailability(String eventType, String managerID) { //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
         String message = null;
-        StringBuilder returnMessage = new StringBuilder();
-
+        String returnMessage = "";
         if (managerID.substring(0, 3).equals(MONTREAL)) {
             logger.info("Requesting other server from Server: " + TORONTO_SERVER_NAME);
             String torrontoEvents = requestToOtherServers(managerID, null, null, 3, eventType, TORONTO_SERVER_PORT, null, null, null);
             logger.info("Requesting other server from Server: " + OTTAWA_SERVER_NAME);
             String ottawaEvents = requestToOtherServers(managerID, null, null, 3, eventType, OTTAWA_SERVER_PORT, null, null, null);
-            returnMessage.append(torrontoEvents).append("\n\n").append(ottawaEvents).append("\n\n");
+            returnMessage   += torrontoEvents.trim()+ottawaEvents.trim();
 
         }
         if (managerID.substring(0, 3).equals(TORONTO)) {
@@ -162,7 +160,7 @@ public class OttawaServerImpl {
             logger.info("Requesting other server from Server: " + OTTAWA_SERVER_NAME);
             String ottawaEvents = requestToOtherServers(managerID, null, null, 3, eventType, OTTAWA_SERVER_PORT, null, null, null);
 
-            returnMessage.append(ottawaEvents).append("\n\n").append(montrealEvents).append("\n\n");
+            returnMessage   += montrealEvents.trim()+ottawaEvents.trim();
         }
         if (managerID.substring(0, 3).equals(OTTAWA)) {
             logger.info("Requesting other server from Server: " + MONTREAL_SERVER_NAME);
@@ -170,19 +168,19 @@ public class OttawaServerImpl {
             logger.info("Requesting other server from Server: " + TORONTO_SERVER_NAME);
             String torrontoEvents = requestToOtherServers(managerID, null, null, 3, eventType, TORONTO_SERVER_PORT, null, null, null);
 
-            returnMessage.append(torrontoEvents).append("\n\n").append(montrealEvents).append("\n\n");
+            returnMessage   += torrontoEvents.trim()+montrealEvents.trim();
         }
 
         if (!databaseOttawa.get(eventType).isEmpty()) {
             for (Map.Entry<String, String> entry : databaseOttawa.get(eventType).entrySet()) {
-                returnMessage.append("EventID: " + entry.getKey() + "| Booking Capacity " + entry.getValue() + "\n");
+                returnMessage+=entry.getKey()+entry.getValue();
             }
-            message = "Operation Successful, List of events retrieved for Event Type: " + eventType + " by Manager: " + managerID + "in server" + OTTAWA_SERVER_NAME;
+            message = "Operation Successful, List of events retrieved for Event Type: " + eventType + " by Manager: " + managerID + "in server";
             logger.info(message);
 
             return returnMessage.toString().trim().replaceAll("[^a-zA-Z0-9]", " ");
         } else {
-            message = "Operation UnSuccessful, List of events not retrieved for Event Type: " + eventType + " by Manager: " + managerID + " in server " + OTTAWA_SERVER_NAME;
+            message = "Operation UnSuccessful, List of events not retrieved for Event Type: " + eventType + " by Manager: " + managerID + " in server ";
             logger.info(message);
             return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
