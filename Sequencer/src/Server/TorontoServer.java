@@ -22,7 +22,8 @@ import ServerImpl.TorontoServerImpl;
  * @author Gursimran Singh
  */
 public class TorontoServer {
-    public static boolean isFT = false;
+    static int i = 0;
+    public static boolean isFT2 = true;
     public static void main(String[] args)
     {
     	TorontoServerImpl torontoServerImpl = new TorontoServerImpl();
@@ -78,12 +79,20 @@ public class TorontoServer {
 		switch(messageData.getMethodName()) {
 
 		case CommonUtils.ADD_EVENT:
-                    if (isFT) {
-                        response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
-                    }else{
-			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    if (CommonUtils.isFT == true) {
+
+                    response = montrealLibraryImpl.addEventWrong(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                    i++;
+                    if (i >= 3) {
+
+                        CommonUtils.isFT = false;
                     }
-                        break;
+
+                } else {
+
+                    response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
+                }
+                break;
 		case CommonUtils.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
 			break;
@@ -123,9 +132,10 @@ public class TorontoServer {
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
                 case "FT":
-                       isFT = true;
-			response = "FT";
-			break; 
+                    CommonUtils.isFT = isFT2;
+                    System.out.println("Server.TorontoServer.replicaManagerImpl() CommonUtils.isFT set to::" + CommonUtils.isFT);
+                    response = "FT";
+                    break;
                         
                 case "HA":
 			response = "FT";
