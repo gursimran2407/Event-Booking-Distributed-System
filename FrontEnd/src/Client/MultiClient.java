@@ -28,7 +28,8 @@ public class MultiClient {
  
 
  FrontEnd server= FrontEndHelper.narrow(ncRef.resolve_str(CommonUtils.FRONT_END));
-        
+        server.addEvent("MTLE031219", CommonUtils.CONFERENCE, "3", "MTLM3838");
+        server.addEvent("MTLM130722", CommonUtils.CONFERENCE, "3", "MTLM3838");
          Runnable runnable1 = () ->
         {
         
