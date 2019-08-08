@@ -594,7 +594,7 @@ public class MontrealServerImpl {
             for (String eventType : databaseMontreal.keySet()) {
 //                System.out.println(eventType + ",");
                 for (String eventID : databaseMontreal.get(eventType).keySet()) {
-                    System.out.println(eventType + "," + eventType + "," + eventID + "," + databaseMontreal.get(eventType).get(eventID));
+                    System.out.println(eventType + "," + eventID + "," + databaseMontreal.get(eventType).get(eventID));
                 }
             }
             fileOut.close();
