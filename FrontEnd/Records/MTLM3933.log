@@ -1,0 +1,20 @@
+Aug 07, 2019 9:48:42 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORA999999  Booking Capacity 999   EventID  OTWA999999  Booking Capacity 999   EventID  MTLA999999  Booking Capacity 999
+Aug 07, 2019 9:48:49 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE999999  Booking Capacity 999   EventID  OTWE999999  Booking Capacity 999   EventID  MTLE999999  Booking Capacity 999
+Aug 07, 2019 9:48:54 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM121219  Booking Capacity 999   EventID  OTWM121219  Booking Capacity 999   EventID  MTLA110734  Booking Capacity 1EventID  MTLM121219  Booking Capacity 999
+Aug 07, 2019 9:49:17 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC9393 for Event Type Conferences with Event ID MTLA110734 has been booked
+Aug 07, 2019 9:49:31 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC9393
+Aug 07, 2019 9:49:31 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for MTLC9393 have been found
+Aug 07, 2019 9:49:31 PM Client.Client runBookingSchedule
+INFO: For Conference Events in Montreal   Event ID  MTLA110734 Booking for 1
+Aug 07, 2019 9:53:23 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by TORC4646
+Aug 07, 2019 9:53:23 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for TORC4646 have been found
+Aug 07, 2019 9:53:23 PM Client.Client runBookingSchedule
+INFO: For Tradeshow Events in Toronto   Event ID  TORM100456 Booking for 1

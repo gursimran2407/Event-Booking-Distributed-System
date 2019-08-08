@@ -20,3 +20,25 @@ Aug 07, 2019 5:33:05 PM Client.Client managerAddEvent
 INFO: Manager: MTLM3838 adding a new Event with Event id: MTLE120634 ,Event Type: Conferences and Booking Capacity: 2
 Aug 07, 2019 5:33:05 PM Client.Client managerAddEvent
 INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE120634 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 8:39:13 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 8:39:14 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 8:40:03 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA080619 ,Event Type: TradeShows and Booking Capacity: 3
+Aug 07, 2019 8:40:04 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080619 Event Type  TradeShows Booking Capacity  3
+Aug 07, 2019 8:43:51 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA080619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 8:43:51 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 8:44:01 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 8:44:01 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 8:56:30 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3838 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 8:56:30 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Unsuccessful   Event Not Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences because the Event ID  MTLA090619 is already added for the Event Type  Conferences  But  the Booking Capacity is updated to 2
+Aug 07, 2019 10:01:45 PM Client.Client managerListEvents
+INFO: Response of Server: Unknown Error. Please try again!

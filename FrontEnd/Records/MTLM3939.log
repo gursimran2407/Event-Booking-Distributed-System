@@ -1,0 +1,8 @@
+Aug 07, 2019 10:24:21 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORA080619  Booking Capacity 0EventID  TORM121219  Booking Capacity 999EventID  TORA090619  Booking Capacity 2   EventID  OTWE110535  Booking Capacity 3EventID  OTWM121219  Booking Capacity 999   EventID  MTLA110734  Booking Capacity 0EventID  MTLM121219  Booking Capacity 999
+Aug 07, 2019 10:24:29 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC4444
+Aug 07, 2019 10:24:29 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for MTLC4444 have been found
+Aug 07, 2019 10:24:29 PM Client.Client runBookingSchedule
+INFO: Records for MTLC4444 do not exist

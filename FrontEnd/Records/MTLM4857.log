@@ -1,0 +1,24 @@
+Aug 07, 2019 8:24:51 PM Client.Client managerAddEvent
+INFO: Manager: MTLM4857 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 3
+Aug 07, 2019 8:24:51 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  3
+Aug 07, 2019 8:25:00 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLE121219  Booking Capacity 60EventID  MTLA090619  Booking Capacity 3
+Aug 07, 2019 8:25:17 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLM121219  Booking Capacity 999EventID  MTLE121219  Booking Capacity 60
+Aug 07, 2019 8:26:43 PM Client.Client runBookEvent
+INFO: Operation Unsuccessful  Book Event Requested by MTLC4848 for Event Type Conferences with Event ID MTLA090619 cannot be booked  Event Does Not Exist
+Aug 07, 2019 8:27:06 PM Client.Client runBookEvent
+INFO: Operation Unsuccessful  Book Event Requested by MTLC3444 for Event Type Conferences with Event ID MTLA090619 cannot be booked  Event Does Not Exist
+Aug 07, 2019 8:27:16 PM Client.Client managerAddEvent
+INFO: Manager: MTLM4857 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 8:27:16 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 8:27:23 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC3434 for Event Type Conferences with Event ID MTLA090619 has been booked
+Aug 07, 2019 8:27:29 PM Client.Client runBookingSchedule
+INFO: Booking Schedule Requested by MTLC3434
+Aug 07, 2019 8:27:29 PM Client.Client runBookingSchedule
+INFO: Operation Sucessful. Records for MTLC3434 have been found
+Aug 07, 2019 8:27:29 PM Client.Client runBookingSchedule
+INFO: For Conference Events in Montreal   Event ID  MTLA090619 Booking for 1

@@ -39,7 +39,7 @@ import java.net.InetAddress;
  * @author Natheepan Ganeshamoorthy, Gursimran Singh
  */
 public class Client {
-
+    public static String demoOption = "";
     private static Logger LOGGER;
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -75,6 +75,7 @@ public class Client {
 
             itemNum = scanner.next().trim();
             
+          
             if (itemNum.matches("^[1-3]$"))
             {
                 switch (itemNum)

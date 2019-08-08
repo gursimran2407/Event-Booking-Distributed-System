@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class FrontEndImpl extends FrontEndPOA {
+     static String demoOPT = "HA";
 
 	ORB orb;
 	static private long replicaOneTimer = 0;
@@ -160,9 +161,15 @@ public class FrontEndImpl extends FrontEndPOA {
 				checkTheTimer(messageData, startTime);
 				// adding messages to the arraylist
 				dataReceived.add(messageData);
-
-				//messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
-				 messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+                             
+                                if(demoOPT.equals("FT")){
+                                    System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: FT MODE!!!");
+                                    messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
+                                }else if(!demoOPT.equals("FT")){
+                                     System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: HA MODE!!!");
+                                    messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
+                                }
+                              
 			//	System.out.println(
 			//			"FrontEnd.FrontEndImpl.waitForReplyFromReplicas(): Message to Client: " + messageToClient);
 				if (Objects.nonNull(messageToClient)) {

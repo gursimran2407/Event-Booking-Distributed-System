@@ -1,0 +1,30 @@
+Aug 07, 2019 9:10:28 PM Client.Client managerAddEvent
+INFO: Manager: OTWM4847 adding a new Event with Event id: OTWE080619 ,Event Type: Conferences and Booking Capacity: 3
+Aug 07, 2019 9:10:28 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Ottawa Server for Event ID  OTWE080619 Event Type  Conferences Booking Capacity  3
+Aug 07, 2019 9:10:39 PM Client.Client managerAddEvent
+INFO: Manager: OTWM4847 adding a new Event with Event id: OTWE110619 ,Event Type: Seminars and Booking Capacity: 3
+Aug 07, 2019 9:10:39 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Ottawa Server for Event ID  OTWE110619 Event Type  Seminars Booking Capacity  3
+Aug 07, 2019 9:11:01 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by OTWC4948 for Event Type Conferences with Event ID OTWE080619 has been booked
+Aug 07, 2019 9:11:24 PM Client.Client runBookEvent
+INFO: Operation Successful  Book Event Requested by MTLC4848 for Event Type Seminars with Event ID OTWE110619 has been booked
+Aug 07, 2019 9:12:30 PM Client.Client runBookEvent
+INFO: Operation Unsuccessful  Book Event Requested by MTLC4848 for Event Type Seminars with Event ID OTWE110619 cannot be booked  Customer already booked for this event
+Aug 07, 2019 9:14:07 PM Client.Client managerAddEvent
+INFO: Manager: OTWM4847 adding a new Event with Event id: OTWE110619 ,Event Type: Seminars and Booking Capacity: 3
+Aug 07, 2019 9:14:07 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Unsuccessful   Event Not Added in Ottawa Server for Event ID  OTWE110619 Event Type  Seminars because the Event ID  OTWE110619 is already added for the Event Type  Seminars  But  the Booking Capacity is updated to 3
+Aug 07, 2019 9:14:30 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM121219  Booking Capacity 999   EventID  MTLM121219  Booking Capacity 999   EventID  OTWM121219  Booking Capacity 999EventID  OTWE080619  Booking Capacity 2
+Aug 07, 2019 9:15:05 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE999999  Booking Capacity 999   EventID  MTLE999999  Booking Capacity 999   EventID  OTWE999999  Booking Capacity 999EventID  OTWE110619  Booking Capacity 3
+Aug 07, 2019 9:17:14 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE999999  Booking Capacity 999   EventID  MTLE999999  Booking Capacity 999   EventID  OTWE999999  Booking Capacity 999EventID  OTWE110619  Booking Capacity 3
+Aug 07, 2019 9:17:30 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM121219  Booking Capacity 999   EventID  MTLM121219  Booking Capacity 999   EventID  OTWM121219  Booking Capacity 999EventID  OTWE080619  Booking Capacity 2
+Aug 07, 2019 9:17:58 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE999999  Booking Capacity 999   EventID  MTLE999999  Booking Capacity 999   EventID  OTWE999999  Booking Capacity 999EventID  OTWE110619  Booking Capacity 3
+Aug 07, 2019 9:18:16 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORM121219  Booking Capacity 999   EventID  MTLM121219  Booking Capacity 999   EventID  OTWM121219  Booking Capacity 999EventID  OTWE080619  Booking Capacity 2

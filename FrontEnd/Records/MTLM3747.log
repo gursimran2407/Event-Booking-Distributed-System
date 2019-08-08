@@ -1,0 +1,16 @@
+Aug 07, 2019 5:36:40 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3747 adding a new Event with Event id: MTLA090619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:36:40 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA090619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:36:49 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3747 adding a new Event with Event id: MTLA080619 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:36:49 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLA080619 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:37:01 PM Client.Client managerAddEvent
+INFO: Manager: MTLM3747 adding a new Event with Event id: MTLE230719 ,Event Type: Conferences and Booking Capacity: 2
+Aug 07, 2019 5:37:01 PM Client.Client managerAddEvent
+INFO: Response of server: Operations Successful   Event Added in Montreal Server for Event ID  MTLE230719 Event Type  Conferences Booking Capacity  2
+Aug 07, 2019 5:37:17 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLE230719  Booking Capacity 2EventID  MTLM121219  Booking Capacity 999EventID  MTLA080619  Booking Capacity 2EventID  MTLE121219  Booking Capacity 60EventID  MTLA090619  Booking Capacity 2
+Aug 07, 2019 5:37:45 PM Client.Client managerListEvents
+INFO: Response of Server: EventID  TORE121219  Booking Capacity 20EventID  TORA121219  Booking Capacity 60EventID  TORM121219  Booking Capacity 999   EventID  OTWA121219  Booking Capacity 90EventID  OTWE121219  Booking Capacity 40EventID  OTWM121219  Booking Capacity 999   EventID  MTLM130722  Booking Capacity 60EventID  MTLA121219  Booking Capacity 90EventID  MTLM130720  Booking Capacity 60EventID  MTLE230719  Booking Capacity 2EventID  MTLM121219  Booking Capacity 999EventID  MTLA080619  Booking Capacity 2EventID  MTLE121219  Booking Capacity 60EventID  MTLA090619  Booking Capacity 2
