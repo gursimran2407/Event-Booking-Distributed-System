@@ -2,11 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/Client/Client.java</file>
-            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/FrontEnd/FrontEndImpl.java</file>
-            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/ReplicaManager/ReplicaManager.java</file>
-            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/FrontEndIdl/FrontEndOperations.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

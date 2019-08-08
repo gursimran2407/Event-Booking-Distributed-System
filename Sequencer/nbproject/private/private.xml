@@ -2,6 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/Sequencer/src/ServerImpl/TorontoServerImpl.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/Sequencer/src/ServerImpl/OttawaServerImpl.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/Sequencer/src/ServerImpl/MontrealServerImpl.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/Sequencer/src/Sequencer/CreateSequence.java</file>
+        </group>
     </open-files>
 </project-private>

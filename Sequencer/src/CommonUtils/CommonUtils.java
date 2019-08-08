@@ -12,9 +12,9 @@ public final class CommonUtils {
 
     public static boolean isFT = false;
     
-    public static final String FRONT_END_HOSTNAME = "VULGARE";
-    public static final String REPLICA3_HOSTNAME = "MYRIOCYSUM";
-    public static final String SEQUENCER_HOSTNAME = "CINETUM";
+    public static final String FRONT_END_HOSTNAME = "GOSHUTE";
+    public static final String REPLICA3_HOSTNAME = "SHAWNEE";
+    public static final String SEQUENCER_HOSTNAME = "MYRTLE";
 
     public static final String FRONT_END_IPADDRESS = "132.205.64.80";
     public static final String SEQUENCER_IPADDRESS = "132.205.64.60";
