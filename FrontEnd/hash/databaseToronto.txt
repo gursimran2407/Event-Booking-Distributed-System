@@ -1,6 +1,3 @@
 Seminars,TORE999999,999
-Conferences,TORA080619,0
 Conferences,TORM121219,999
-Conferences,TORA090619,2
 TradeShows,TORA999999,999
-TradeShows,TORM100456,2
