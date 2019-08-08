@@ -46,27 +46,27 @@ public class MontrealServerImpl {
     private static Logger logger;
 
     //Events Database
-//    {
-//        //item1
-//        databaseMontreal.put(CONFERENCE, new HashMap<>());
-//        databaseMontreal.get(CONFERENCE).put("MTLM121219", "999");
-//        databaseMontreal.get(CONFERENCE).put("MTLE121219", "60");
-//        databaseMontreal.get(CONFERENCE).put("MTLA121219", "90");
-//        databaseMontreal.get(CONFERENCE).put("MTLM130722", "60");
-//        databaseMontreal.get(CONFERENCE).put("MTLM130720", "60");
-//
-//        //item2
-//        databaseMontreal.put(SEMINAR, new HashMap<>());
-//        databaseMontreal.get(SEMINAR).put("MTLM310522", "20");
-//        databaseMontreal.get(SEMINAR).put("MTLE999999", "999");
-//        databaseMontreal.get(SEMINAR).put("MTLA201121", "50");
-//
-//        //item6
-//        databaseMontreal.put(TRADESHOW, new HashMap<>());
-//        databaseMontreal.get(TRADESHOW).put("MTLM190124", "50");
-//        databaseMontreal.get(TRADESHOW).put("MTLE201123", "40");
-//        databaseMontreal.get(TRADESHOW).put("MTLA999999", "999");
-//    }
+    {
+        //item1
+        databaseMontreal.put(CONFERENCE, new HashMap<>());
+        databaseMontreal.get(CONFERENCE).put("MTLM121219", "999");
+        databaseMontreal.get(CONFERENCE).put("MTLE121219", "60");
+        databaseMontreal.get(CONFERENCE).put("MTLA121219", "90");
+        databaseMontreal.get(CONFERENCE).put("MTLM130722", "60");
+        databaseMontreal.get(CONFERENCE).put("MTLM130720", "60");
+
+        //item2
+        databaseMontreal.put(SEMINAR, new HashMap<>());
+        databaseMontreal.get(SEMINAR).put("MTLM310522", "20");
+        databaseMontreal.get(SEMINAR).put("MTLE999999", "999");
+        databaseMontreal.get(SEMINAR).put("MTLA201121", "50");
+
+        //item6
+        databaseMontreal.put(TRADESHOW, new HashMap<>());
+        databaseMontreal.get(TRADESHOW).put("MTLM190124", "50");
+        databaseMontreal.get(TRADESHOW).put("MTLE201123", "40");
+        databaseMontreal.get(TRADESHOW).put("MTLA999999", "999");
+    }
 
     public MontrealServerImpl() {
         super();
@@ -592,9 +592,9 @@ public class MontrealServerImpl {
         try (PrintStream fileOut = new PrintStream("hash/" + "databaseMontreal" + ".txt")) {
             System.setOut(fileOut);
             for (String eventType : databaseMontreal.keySet()) {
-                System.out.println(eventType + ",");
+//                System.out.println(eventType + ",");
                 for (String eventID : databaseMontreal.get(eventType).keySet()) {
-                    System.out.println(eventID + "," + databaseMontreal.get(eventType).get(eventID));
+                    System.out.println(eventType + "," + eventType + "," + eventID + "," + databaseMontreal.get(eventType).get(eventID));
                 }
             }
             fileOut.close();
@@ -623,11 +623,11 @@ public class MontrealServerImpl {
             //HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
             System.setOut(fileOut);
             for (String customer : customerEventsMapping.keySet()) {
-                System.out.println(customer + ",");
+//                System.out.println(customer + ",");
                 for (String eventType : customerEventsMapping.get(customer).keySet()) {
-                    System.out.println(eventType + ",");
+//                    System.out.println(eventType + ",");
                     for (String eventID : customerEventsMapping.get(customer).get(eventType).keySet()) {
-                        System.out.println(eventID + "," + customerEventsMapping.get(customer).get(eventType).get(eventID));
+                        System.out.println(customer + "," + eventType + "," + eventID + "," + customerEventsMapping.get(customer).get(eventType).get(eventID));
                     }
                 }
             }

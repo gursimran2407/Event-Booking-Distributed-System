@@ -46,25 +46,25 @@ public class OttawaServerImpl {
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = getHashcustomerEventsMapping();
     private static Logger logger;
 
-//    {
-//        //item1
-//        databaseOttawa.put(CONFERENCE, new HashMap<>());
-//        databaseOttawa.get(CONFERENCE).put("OTWM121219", "999");
-//        databaseOttawa.get(CONFERENCE).put("OTWE121219", "40");
-//        databaseOttawa.get(CONFERENCE).put("OTWA121219", "90");
-//
-//        //item2
-//        databaseOttawa.put(SEMINAR, new HashMap<>());
-//        databaseOttawa.get(SEMINAR).put("OTWM140147", "50");
-//        databaseOttawa.get(SEMINAR).put("OTWE999999", "999");
-//        databaseOttawa.get(SEMINAR).put("OTWA260939", "90");
-//
-//        //item6
-//        databaseOttawa.put(TRADESHOW, new HashMap<>());
-//        databaseOttawa.get(TRADESHOW).put("OTWM070728", "50");
-//        databaseOttawa.get(TRADESHOW).put("OTWE210322", "40");
-//        databaseOttawa.get(TRADESHOW).put("OTWA999999", "999");
-//    }
+    {
+        //item1
+        databaseOttawa.put(CONFERENCE, new HashMap<>());
+        databaseOttawa.get(CONFERENCE).put("OTWM121219", "999");
+        databaseOttawa.get(CONFERENCE).put("OTWE121219", "40");
+        databaseOttawa.get(CONFERENCE).put("OTWA121219", "90");
+
+        //item2
+        databaseOttawa.put(SEMINAR, new HashMap<>());
+        databaseOttawa.get(SEMINAR).put("OTWM140147", "50");
+        databaseOttawa.get(SEMINAR).put("OTWE999999", "999");
+        databaseOttawa.get(SEMINAR).put("OTWA260939", "90");
+
+        //item6
+        databaseOttawa.put(TRADESHOW, new HashMap<>());
+        databaseOttawa.get(TRADESHOW).put("OTWM070728", "50");
+        databaseOttawa.get(TRADESHOW).put("OTWE210322", "40");
+        databaseOttawa.get(TRADESHOW).put("OTWA999999", "999");
+    }
 
     public OttawaServerImpl() {
         super();
@@ -589,9 +589,9 @@ public class OttawaServerImpl {
         try (PrintStream fileOut = new PrintStream("hash/" + "databaseOttawa" + ".txt")) {
             System.setOut(fileOut);
             for (String eventType : databaseOttawa.keySet()) {
-                System.out.println(eventType + ",");
+//                System.out.println(eventType + ",");
                 for (String eventID : databaseOttawa.get(eventType).keySet()) {
-                    System.out.println(eventID + "," + databaseOttawa.get(eventType).get(eventID));
+                    System.out.println(eventType + "," + eventID + "," + databaseOttawa.get(eventType).get(eventID));
                 }
             }
             fileOut.close();
@@ -620,11 +620,11 @@ public class OttawaServerImpl {
             //HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
             System.setOut(fileOut);
             for (String customer : customerEventsMapping.keySet()) {
-                System.out.println(customer + ",");
+//                System.out.println(customer + ",");
                 for (String eventType : customerEventsMapping.get(customer).keySet()) {
-                    System.out.println(eventType + ",");
+//                    System.out.println(eventType + ",");
                     for (String eventID : customerEventsMapping.get(customer).get(eventType).keySet()) {
-                        System.out.println(eventID + "," + customerEventsMapping.get(customer).get(eventType).get(eventID));
+                        System.out.println(customer + "," + eventType + "," + eventID + "," + customerEventsMapping.get(customer).get(eventType).get(eventID));
                     }
                 }
             }
