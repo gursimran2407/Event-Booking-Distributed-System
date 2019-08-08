@@ -55,9 +55,13 @@ public class MontrealServer {
 				MessageData messageData = (MessageData) inputStream.readObject();
 				inputStream.close();
 				byte[] byteArray = replicaManagerImpl(messageData, montrealLibraryImpl);
+                                 byte[] byteArray2 = new String("FT").getBytes();
+                                if (!byteArray.equals(byteArray2)) {
+
                                 DatagramPacket reply = new DatagramPacket(byteArray, byteArray.length, recievedDatagramPacket.getAddress(),
 						recievedDatagramPacket.getPort());
 				socket.send(reply);
+                            }
                             
 			}
 		} catch (IOException | ClassNotFoundException e) {
