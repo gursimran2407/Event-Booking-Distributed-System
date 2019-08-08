@@ -163,10 +163,10 @@ public class FrontEndImpl extends FrontEndPOA {
 				dataReceived.add(messageData);
                              
                                 if(demoOPT.equals("FT")){
-                                    System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: FT MODE!!!");
+                                   // System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: FT MODE!!!");
                                     messageToClient = investigateMessagefromReplicas(dataReceived, startTime);
                                 }else if(!demoOPT.equals("FT")){
-                                     System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: HA MODE!!!");
+                                   //  System.out.println("FrontEnd.FrontEndImpl.waitForReplyFromReplicas() :: HA MODE!!!");
                                     messageToClient = this.checkMessagesToSendToClient(dataReceived, startTime);
                                 }
                               
