@@ -168,7 +168,7 @@ public class TorontoServer {
 				socket.send(reply);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 		}finally {
 			if(socket != null)
 				socket.close();
@@ -186,7 +186,7 @@ public class TorontoServer {
 			inputStream.close();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 }
