@@ -1,13 +1,3 @@
 Seminars,MTLE999999,999
-Seminars,MTLA201121,50
-Seminars,MTLM310522,20
-Conferences,MTLM130722,60
-Conferences,MTLA121219,90
-Conferences,MTLM130720,60
 Conferences,MTLM121219,999
-Conferences,MTLA080619,2
-Conferences,MTLE121219,60
-Conferences,MTLA090619,2
 TradeShows,MTLA999999,999
-TradeShows,MTLM190124,50
-TradeShows,MTLE201123,40
