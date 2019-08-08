@@ -111,7 +111,7 @@ public class MontrealServerImpl {
     }
 
     public synchronized String addEventWrong(String eventID, String eventType, String bookingCapacity, String managerID) {
-        String message = "UNSUCCESSFULL ";
+        String message = "UNSUCCESSFULL ";addEvent(eventID, eventType, bookingCapacity, managerID);
         return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
 
     }

@@ -1,3 +1,8 @@
+Seminars,MTLA090645,2
 Seminars,MTLE999999,999
+Seminars,MTLM120436,4
+Conferences,MTLE230719,3
 Conferences,MTLM121219,999
+Conferences,MTLA090619,2
 TradeShows,MTLA999999,999
+TradeShows,MTLA080619,3

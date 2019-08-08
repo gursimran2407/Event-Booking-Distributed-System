@@ -1,4 +1,4 @@
-package CommonUtils;
+package Constants;
 import java.io.IOException;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
@@ -8,7 +8,7 @@ import java.util.logging.SimpleFormatter;
  *
  * @author Natheepan Ganeshamoorthy
  */
-public class CommonUtils {
+public class Constants {
 
 public static final String FRONT_END_HOSTNAME = "VULGARE";
     public static final String REPLICA3_HOSTNAME = "MYRIOCYSUM";
@@ -86,8 +86,8 @@ public static final String FRONT_END_HOSTNAME = "VULGARE";
         fileHandler.setFormatter(new SimpleFormatter());
     }
 
-    public static boolean isInputValid(String id, CommonUtils.InputType type) {
-        if (type == CommonUtils.InputType.CLIENT_ID) {
+    public static boolean isInputValid(String id, Constants.InputType type) {
+        if (type == Constants.InputType.CLIENT_ID) {
             String serverId = id.substring(0, 3);
             String clientType = id.substring(3, 4);
             String clientID = id.substring(4, 8);
@@ -97,7 +97,7 @@ public static final String FRONT_END_HOSTNAME = "VULGARE";
                     && (clientID.matches("^[0-9]+$"));
         }
 
-        if (type == CommonUtils.InputType.EVENT_ID) {
+        if (type == Constants.InputType.EVENT_ID) {
             String serverId = id.substring(0, 3);
             String eventType = id.substring(3, 4);
             String day = id.substring(4, 6);

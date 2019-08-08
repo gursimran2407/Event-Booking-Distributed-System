@@ -13,13 +13,13 @@ import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
-import CommonUtils.CommonUtils;
+import Constants.Constants;
 import Model.EventData;
 import Model.MessageData;
 import Model.ReceivedToFE;
-import Server.MontrealServer;
-import Server.OttawaServer;
-import Server.TorontoServer;
+import Server.MtlServer;
+import Server.OtwServer;
+import Server.TorServer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,8 +31,8 @@ public class ReplicaManager {
 		String responseFromServer = "";
 		InetAddress address = null;
 
-		try (MulticastSocket clientSocket = new MulticastSocket(CommonUtils.MULTICAST_PORT)){
-			address = InetAddress.getByName(CommonUtils.INET_ADDR);
+		try (MulticastSocket clientSocket = new MulticastSocket(Constants.MULTICAST_PORT)){
+			address = InetAddress.getByName(Constants.INET_ADDR);
 			clientSocket.joinGroup(address);
 			while (true) {
 
@@ -57,19 +57,19 @@ public class ReplicaManager {
 					e.printStackTrace();
 				}				
 
-				if(userID.substring(0,3).equalsIgnoreCase(CommonUtils.MONTREAL)) {
-					responseFromServer = new String(sendToServer(messageData, CommonUtils.MONTREAL));
-				}else if(userID.substring(0,3).equalsIgnoreCase(CommonUtils.TORONTO)) {
-					responseFromServer = new String(sendToServer(messageData, CommonUtils.TORONTO));
-				}else if(userID.substring(0,3).equalsIgnoreCase(CommonUtils.OTTAWA)) {
-					responseFromServer = new String(sendToServer(messageData, CommonUtils.OTTAWA));
+				if(userID.substring(0,3).equalsIgnoreCase(Constants.MONTREAL)) {
+					responseFromServer = new String(sendToServer(messageData, Constants.MONTREAL));
+				}else if(userID.substring(0,3).equalsIgnoreCase(Constants.TORONTO)) {
+					responseFromServer = new String(sendToServer(messageData, Constants.TORONTO));
+				}else if(userID.substring(0,3).equalsIgnoreCase(Constants.OTTAWA)) {
+					responseFromServer = new String(sendToServer(messageData, Constants.OTTAWA));
 				}
 				System.out.println("Response "+responseFromServer.trim());
 				if(!responseFromServer.trim().equals("Message Not received")) {
 					receievdToFE.setMessage(responseFromServer);
 					receievdToFE.setSequencerCounter(Integer.toString(messageData.getSequenceCounter()));
-					receievdToFE.setFromMessage(CommonUtils.REPLICA3_HOSTNAME);
-					int portNumber = CommonUtils.FRONT_END_PORT;
+					receievdToFE.setFromMessage(Constants.REPLICA3_HOSTNAME);
+					int portNumber = Constants.FRONT_END_PORT;
 
 					sendToFrontEnd(receievdToFE, portNumber);
 				}
@@ -86,16 +86,16 @@ public class ReplicaManager {
 
 	private static byte[] sendToServer(MessageData messageData, String serverCode) {
                 System.out.println("ReplicaManager.ReplicaManager.sendToServer()"+messageData.getMethodName());
-		String response = CommonUtils.EXCEPTION;
+		String response = Constants.EXCEPTION;
 		try(DatagramSocket socket = new DatagramSocket()) {
 			socket.setSoTimeout(1000);
-			InetAddress host = InetAddress.getByName(CommonUtils.REPLICA3_HOSTNAME);
+			InetAddress host = InetAddress.getByName(Constants.REPLICA3_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
 			objectOutput.writeObject(messageData);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, getServerPort(serverCode));
 			socket.send(sendPacket);
-                        System.out.print("Replica "+CommonUtils.REPLICA3_HOSTNAME+" sending request "+messageData.getMethodName()+" to the local server "+ serverCode);
+                        System.out.print("Replica "+Constants.REPLICA3_HOSTNAME+" sending request "+messageData.getMethodName()+" to the local server "+ serverCode);
 			byte [] buffer = new byte[1024];
 			DatagramPacket receivedDatagram = new DatagramPacket(buffer, buffer.length);
 			socket.receive(receivedDatagram);
@@ -111,13 +111,13 @@ public class ReplicaManager {
 
 	public static void sendToFrontEnd(ReceivedToFE receivedToFE,int portNumber) throws IOException {
 		try(DatagramSocket socket = new DatagramSocket()) {
-			InetAddress host = InetAddress.getByName(CommonUtils.FRONT_END_HOSTNAME);
+			InetAddress host = InetAddress.getByName(Constants.FRONT_END_HOSTNAME);
 			ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 			ObjectOutput objectOutput = new ObjectOutputStream(byteStream); 
 			objectOutput.writeObject(receivedToFE);
 			System.out.println(byteStream.toByteArray().length);
 			DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length,
-					host, CommonUtils.FRONT_END_PORT);
+					host, Constants.FRONT_END_PORT);
 			socket.send(sendPacket);
                           System.out.println("The response from the servers is sent to the FE "+"Message: "+receivedToFE.getMessage()+"From: "+receivedToFE.getFromMessage());
 		} catch (SocketException e) {
@@ -128,14 +128,14 @@ public class ReplicaManager {
 
 
 	private static void handleReplicaToReplicaCommunication() {
-		try(DatagramSocket socket = new DatagramSocket(CommonUtils.REPLICA_TO_REPLICA_PORT)) {
+		try(DatagramSocket socket = new DatagramSocket(Constants.REPLICA_TO_REPLICA_PORT)) {
 			while(true) {
 				byte [] message = new byte[3072];
 				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 				socket.receive(recievedDatagramPacket);
 				String receivedString = new String(recievedDatagramPacket.getData());
 				MessageData messageData = new MessageData();
-				messageData.setMethodName(CommonUtils.GET_DATA);
+				messageData.setMethodName(Constants.GET_DATA);
 				byte[] receivedObject = sendToServer(messageData, receivedString.trim());
 				DatagramPacket returnPacket = new DatagramPacket(receivedObject, receivedObject.length,recievedDatagramPacket.getAddress(), recievedDatagramPacket.getPort());
 				socket.send(returnPacket);
@@ -147,18 +147,18 @@ public class ReplicaManager {
 	}
 
 	private static void handleStringMessages() {
-		try(DatagramSocket socket = new DatagramSocket(CommonUtils.TO_REPLICA_STRING_PORT)) { 
+		try(DatagramSocket socket = new DatagramSocket(Constants.TO_REPLICA_STRING_PORT)) { 
 			while(true) {
 				byte [] message = new byte[1000];
 				DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 				socket.receive(recievedDatagramPacket);
 				String receivedData = new String(recievedDatagramPacket.getData());
-				if(receivedData.trim().equals(CommonUtils.RESULT_ERROR)) {
+				if(receivedData.trim().equals(Constants.RESULT_ERROR)) {
 					errorCounter++;
-				}else if(receivedData.trim().contains(CommonUtils.CRASHED)){
+				}else if(receivedData.trim().contains(Constants.CRASHED)){
 					String [] crashedReplica = receivedData.split(",");
 					String replicaName = crashedReplica[1].trim();
-					if(replicaName.equals(CommonUtils.REPLICA3_HOSTNAME)) {//change according to replica
+					if(replicaName.equals(Constants.REPLICA3_HOSTNAME)) {//change according to replica
 						checkAndStartTheReplicas();
 					}
 				}
@@ -171,16 +171,16 @@ public class ReplicaManager {
     private static void checkAndStartTheReplicas() 
     {
         System.out.println("checkAndStartTheReplicas()");
-        String[] replicaPorts = {CommonUtils.MONTREAL, CommonUtils.TORONTO, CommonUtils.OTTAWA};
+        String[] replicaPorts = {Constants.MONTREAL, Constants.TORONTO, Constants.OTTAWA};
         for (String serverCode : replicaPorts) 
         {
             MessageData messageData = new MessageData();
-            messageData.setMethodName(CommonUtils.CRASHED);
+            messageData.setMethodName(Constants.CRASHED);
             String response = new String(sendToServer(messageData, serverCode));
-            if (!response.equals(CommonUtils.ALIVE)) 
+            if (!response.equals(Constants.ALIVE)) 
             {
                 MessageData data = new MessageData();
-                data.setMethodName(CommonUtils.GET_DATA);
+                data.setMethodName(Constants.GET_DATA);
                 EventData eventData = sendEventDataToReplica(serverCode);
                 if(eventData!=null){
                 System.out.println("ReplicaManager.ReplicaManager.checkAndStartTheReplicas() " + eventData.getDatabase().toString());
@@ -190,11 +190,11 @@ public class ReplicaManager {
                 
                 try (DatagramSocket socket = new DatagramSocket()) 
                 {
-                    InetAddress host = InetAddress.getByName(CommonUtils.REPLICA3_HOSTNAME); //Varies per Replica
+                    InetAddress host = InetAddress.getByName(Constants.REPLICA3_HOSTNAME); //Varies per Replica
                     ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
                     ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
                     objectOutput.writeObject(eventData);
-                    DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, CommonUtils.RECEIVE_DATA_FROM_REPLICA_PORT);
+                    DatagramPacket sendPacket = new DatagramPacket(byteStream.toByteArray(), byteStream.toByteArray().length, host, Constants.RECEIVE_DATA_FROM_REPLICA_PORT);
                     socket.send(sendPacket);
                 } catch (IOException e) 
                 {
@@ -211,8 +211,8 @@ public class ReplicaManager {
         EventData messageData = null;
         try (DatagramSocket socket = new DatagramSocket()) 
         {
-            InetAddress host = InetAddress.getByName(CommonUtils.REPLICA3_HOSTNAME); //Varies per Replica
-            DatagramPacket sendPacket = new DatagramPacket(serverCode.getBytes(), serverCode.getBytes().length, host, CommonUtils.REPLICA_TO_REPLICA_PORT);
+            InetAddress host = InetAddress.getByName(Constants.REPLICA3_HOSTNAME); //Varies per Replica
+            DatagramPacket sendPacket = new DatagramPacket(serverCode.getBytes(), serverCode.getBytes().length, host, Constants.REPLICA_TO_REPLICA_PORT);
             socket.send(sendPacket);
             
             byte[] buffer = new byte[5000];
@@ -239,9 +239,9 @@ public class ReplicaManager {
         String[] stringArray = {"CRASH_START"};
         switch (serverCode) 
         {
-            case CommonUtils.MONTREAL: MontrealServer.main(stringArray);
-            case CommonUtils.TORONTO: TorontoServer.main(stringArray);
-            case CommonUtils.OTTAWA: OttawaServer.main(stringArray);
+            case Constants.MONTREAL: MtlServer.main(stringArray);
+            case Constants.TORONTO: TorServer.main(stringArray);
+            case Constants.OTTAWA: OtwServer.main(stringArray);
         }
     }
     
@@ -249,9 +249,9 @@ public class ReplicaManager {
     {
         switch (serverCode) 
         {
-            case CommonUtils.MONTREAL: return CommonUtils.REPLICA_MONTREAL_SERVER_PORT;
-            case CommonUtils.OTTAWA: return CommonUtils.REPLICA_OTTAWA_SERVER_PORT;
-            case CommonUtils.TORONTO: return CommonUtils.REPLICA_TORONTO_SERVER_PORT;
+            case Constants.MONTREAL: return Constants.REPLICA_MONTREAL_SERVER_PORT;
+            case Constants.OTTAWA: return Constants.REPLICA_OTTAWA_SERVER_PORT;
+            case Constants.TORONTO: return Constants.REPLICA_TORONTO_SERVER_PORT;
         }
         return 0;
     }

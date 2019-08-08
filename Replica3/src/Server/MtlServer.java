@@ -12,20 +12,20 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.util.List;
 
-import CommonUtils.CommonUtils;
+import Constants.Constants;
 import Model.EventData;
 import Model.MessageData;
-import ServerImpl.MontrealServerImpl;
+import ServerImplementation.MtlServerImpl;
 
 /**
  *
  * @author Gursimran Singh
  */
-public class MontrealServer {
+public class MtlServer {
 
     public static void main(String[] args)
     {
-    	MontrealServerImpl montrealLibraryImpl = new MontrealServerImpl();
+    	MtlServerImpl montrealLibraryImpl = new MtlServerImpl();
 
 		if(args.length > 0) {
 			Runnable dataConsistentImpl = () ->{
@@ -44,8 +44,8 @@ public class MontrealServer {
 		new Thread(replicaManagerImpl).start();
 		new Thread(libraryServerRunnable).start();
     }
-    private static void handleReplicaRequests(MontrealServerImpl montrealLibraryImpl, String[] args) {
-		try(DatagramSocket socket = new DatagramSocket(CommonUtils.REPLICA_MONTREAL_SERVER_PORT)) {
+    private static void handleReplicaRequests(MtlServerImpl montrealLibraryImpl, String[] args) {
+		try(DatagramSocket socket = new DatagramSocket(Constants.REPLICA_MONTREAL_SERVER_PORT)) {
 			System.out.println("Montreal Server started...");
 			while(true) {
 				byte [] message = new byte[1024];
@@ -64,27 +64,27 @@ public class MontrealServer {
 		}
 	}
 
-	public static byte[] replicaManagerImpl(MessageData messageData, MontrealServerImpl montrealLibraryImpl) {
+	public static byte[] replicaManagerImpl(MessageData messageData, MtlServerImpl montrealLibraryImpl) {
 		String response = "";
 
 		switch(messageData.getMethodName()) {
 
-		case CommonUtils.ADD_EVENT:
+		case Constants.ADD_EVENT:
 			response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
 			break;
-		case CommonUtils.REMOVE_EVENT:
+		case Constants.REMOVE_EVENT:
 			response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
 			break;
-		case CommonUtils.LIST_EVENT:
+		case Constants.LIST_EVENT:
 			response=montrealLibraryImpl.listEventAvailability(messageData.getEventType(), messageData.getManagerId());
 			break;
-		case CommonUtils.BOOK_EVENT:
+		case Constants.BOOK_EVENT:
 			response=montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
 			break;
-		case CommonUtils.GET_BOOKING_SCHEDULE:
+		case Constants.GET_BOOKING_SCHEDULE:
 			response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
 			break;
-		case CommonUtils.GET_DATA:
+		case Constants.GET_DATA:
 //			EventData eventData = montrealLibraryImpl.getEventData();
 //			try {
 //				ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -95,22 +95,22 @@ public class MontrealServer {
 //				e.printStackTrace();
 //			}
 				break;
-		case CommonUtils.CANCEL_EVENT:
+		case Constants.CANCEL_EVENT:
 			response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 			break;
-		case CommonUtils.NON_OriginCustomerBooking:
+		case Constants.NON_OriginCustomerBooking:
 			response=montrealLibraryImpl.nonOriginCustomerBooking(messageData.getCustomerId(), messageData.getEventId());
 			break;
-		case CommonUtils.SWAP_EVENT:
+		case Constants.SWAP_EVENT:
 			response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
 			break;
-		case CommonUtils.CRASHED:
-			response = CommonUtils.ALIVE;
+		case Constants.CRASHED:
+			response = Constants.ALIVE;
 			break;
-		case CommonUtils.eventAvailable:
+		case Constants.eventAvailable:
 			response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 			break;
-		case CommonUtils.validateBooking:
+		case Constants.validateBooking:
 			response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 		default: 
 			response="Invalid request!!!";
@@ -119,10 +119,10 @@ public class MontrealServer {
 
 	}
 
-	private static void handlesRequestFromAnotherServers(MontrealServerImpl montrealLibraryImpl){
+	private static void handlesRequestFromAnotherServers(MtlServerImpl montrealLibraryImpl){
 		DatagramSocket socket = null;
 		try {
-			socket = new DatagramSocket(CommonUtils.MONTREAL_SERVER_PORT);
+			socket = new DatagramSocket(Constants.MONTREAL_SERVER_PORT);
 			System.out.println("Montreal Server started...");
 			while(true) {
 				byte [] message = new byte[1000];
@@ -141,8 +141,8 @@ public class MontrealServer {
 		}
 	}
 
-	private static void receiveDataConsistence(MontrealServerImpl montrealLibraryImpl) {
-		try(DatagramSocket socket = new DatagramSocket(CommonUtils.RECEIVE_DATA_FROM_REPLICA_PORT)){
+	private static void receiveDataConsistence(MtlServerImpl montrealLibraryImpl) {
+		try(DatagramSocket socket = new DatagramSocket(Constants.RECEIVE_DATA_FROM_REPLICA_PORT)){
 			byte [] message = new byte[1024];
 			DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 			socket.receive(recievedDatagramPacket);

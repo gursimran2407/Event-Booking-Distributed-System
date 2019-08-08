@@ -11,20 +11,20 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import CommonUtils.CommonUtils;
+import Constants.Constants;
 import Model.EventData;
 import Model.MessageData;
-import ServerImpl.OttawaServerImpl;
+import ServerImplementation.OtwServerImpl;
 
 /**
  *
  * @author Gursimran Singh
  */
-public class OttawaServer {
+public class OtwServer {
 
 	public static void main(String[] args) {
 
-		OttawaServerImpl ottawaServerImpl = new OttawaServerImpl();
+		OtwServerImpl ottawaServerImpl = new OtwServerImpl();
 
 		if (args.length > 0) {
 			Runnable dataConsistentImpl = () -> {
@@ -45,8 +45,8 @@ public class OttawaServer {
 	}
 
 
-	private static void handleReplicaRequests(OttawaServerImpl montrealLibraryImpl, String[] args) {
-		try (DatagramSocket socket = new DatagramSocket(CommonUtils.REPLICA_OTTAWA_SERVER_PORT)) {
+	private static void handleReplicaRequests(OtwServerImpl montrealLibraryImpl, String[] args) {
+		try (DatagramSocket socket = new DatagramSocket(Constants.REPLICA_OTTAWA_SERVER_PORT)) {
 			System.out.println("Ottawa Server started...");
 			while (true) {
 				byte[] message = new byte[1024];
@@ -65,27 +65,27 @@ public class OttawaServer {
 		}
 	}
 
-	public static byte[] replicaManagerImpl(MessageData messageData, OttawaServerImpl montrealLibraryImpl) {
+	public static byte[] replicaManagerImpl(MessageData messageData, OtwServerImpl montrealLibraryImpl) {
 		String response = "";
 
 		switch (messageData.getMethodName()) {
 
-			case CommonUtils.ADD_EVENT:
+			case Constants.ADD_EVENT:
 				response = montrealLibraryImpl.addEvent(messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap(), messageData.getManagerId());
 				break;
-			case CommonUtils.REMOVE_EVENT:
+			case Constants.REMOVE_EVENT:
 				response = montrealLibraryImpl.removeEvent(messageData.getEventId(), messageData.getEventType(), messageData.getManagerId());
 				break;
-			case CommonUtils.LIST_EVENT:
+			case Constants.LIST_EVENT:
 				response = montrealLibraryImpl.listEventAvailability(messageData.getEventType(), messageData.getManagerId());
 				break;
-			case CommonUtils.BOOK_EVENT:
+			case Constants.BOOK_EVENT:
 				response = montrealLibraryImpl.bookEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType(), messageData.getBookingCap());
 				break;
-			case CommonUtils.GET_BOOKING_SCHEDULE:
+			case Constants.GET_BOOKING_SCHEDULE:
 				response=montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
 				break;
-			case CommonUtils.GET_DATA:
+			case Constants.GET_DATA:
 //				EventData eventData = montrealLibraryImpl.getEventData();
 //				try {
 //					ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -96,22 +96,22 @@ public class OttawaServer {
 //					e.printStackTrace();
 //				}
 				break;
-			case CommonUtils.CANCEL_EVENT:
+			case Constants.CANCEL_EVENT:
 				response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 				break;
-			case CommonUtils.NON_OriginCustomerBooking:
+			case Constants.NON_OriginCustomerBooking:
 				response = montrealLibraryImpl.nonOriginCustomerBooking(messageData.getCustomerId(), messageData.getEventId());
 				break;
-			case CommonUtils.SWAP_EVENT:
+			case Constants.SWAP_EVENT:
 				response = montrealLibraryImpl.swapEvent(messageData.getCustomerId(), messageData.getNewEventId(), messageData.getNewEventType(), messageData.getOld_EventID(), messageData.getOld_EventType());
 				break;
-			case CommonUtils.CRASHED:
-				response = CommonUtils.ALIVE;
+			case Constants.CRASHED:
+				response = Constants.ALIVE;
 				break;
-			case CommonUtils.eventAvailable:
+			case Constants.eventAvailable:
 				response = montrealLibraryImpl.eventAvailable(messageData.getEventId(), messageData.getEventType());
 				break;
-			case CommonUtils.validateBooking:
+			case Constants.validateBooking:
 				response = montrealLibraryImpl.validateBooking(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
 			default:
 				response = "Invalid request!!!";
@@ -120,10 +120,10 @@ public class OttawaServer {
 
 	}
 
-	private static void handlesRequestFromAnotherServers(OttawaServerImpl montrealLibraryImpl) {
+	private static void handlesRequestFromAnotherServers(OtwServerImpl montrealLibraryImpl) {
 		DatagramSocket socket = null;
 		try {
-			socket = new DatagramSocket(CommonUtils.OTTAWA_SERVER_PORT);
+			socket = new DatagramSocket(Constants.OTTAWA_SERVER_PORT);
 			System.out.println("Ottawa Server started...");
 			while (true) {
 				byte[] message = new byte[1000];
@@ -142,8 +142,8 @@ public class OttawaServer {
 		}
 	}
 
-	private static void receiveDataConsistence(OttawaServerImpl montrealLibraryImpl) {
-		try (DatagramSocket socket = new DatagramSocket(CommonUtils.RECEIVE_DATA_FROM_REPLICA_PORT)) {
+	private static void receiveDataConsistence(OtwServerImpl montrealLibraryImpl) {
+		try (DatagramSocket socket = new DatagramSocket(Constants.RECEIVE_DATA_FROM_REPLICA_PORT)) {
 			byte[] message = new byte[1024];
 			DatagramPacket recievedDatagramPacket = new DatagramPacket(message, message.length);
 			socket.receive(recievedDatagramPacket);

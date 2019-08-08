@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/G:/NetBeansWorkspace/DistributedSystemsProjectCOMP6231/FrontEnd/src/ServerImpl/MontrealServerImpl.java</file>
-            <file>file:/G:/NetBeansWorkspace/DistributedSystemsProjectCOMP6231/FrontEnd/src/Server/MontrealServer.java</file>
-            <file>file:/G:/NetBeansWorkspace/DistributedSystemsProjectCOMP6231/FrontEnd/src/FrontEnd/FrontEndImpl.java</file>
-            <file>file:/G:/NetBeansWorkspace/DistributedSystemsProjectCOMP6231/FrontEnd/src/ReplicaManager/ReplicaManager.java</file>
-            <file>file:/G:/NetBeansWorkspace/DistributedSystemsProjectCOMP6231/FrontEnd/src/CommonUtils/CommonUtils.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/Client/Client.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/FrontEnd/FrontEndImpl.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/ReplicaManager/ReplicaManager.java</file>
+            <file>file:/G:/Comp6231Project/DistributedSystemsProjectCOMP6231/FrontEnd/src/FrontEndIdl/FrontEndOperations.java</file>
         </group>
     </open-files>
 </project-private>

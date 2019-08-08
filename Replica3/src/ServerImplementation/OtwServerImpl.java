@@ -5,25 +5,26 @@
  * ASSIGNMENT 1
  * Issued: May 14, 2019 Due: Jun 3, 2019
  */
-package ServerImpl;
+package ServerImplementation;
 
 import Model.EventData;
 
-import static CommonUtils.CommonUtils.CONFERENCE;
-import static CommonUtils.CommonUtils.MONTREAL;
-import static CommonUtils.CommonUtils.MONTREAL_SERVER_NAME;
-import static CommonUtils.CommonUtils.MONTREAL_SERVER_PORT;
-import static CommonUtils.CommonUtils.OTTAWA;
-import static CommonUtils.CommonUtils.OTTAWA_SERVER_NAME;
-import static CommonUtils.CommonUtils.OTTAWA_SERVER_PORT;
-import static CommonUtils.CommonUtils.SEMINAR;
-import static CommonUtils.CommonUtils.TORONTO;
-import static CommonUtils.CommonUtils.TORONTO_SERVER_NAME;
-import static CommonUtils.CommonUtils.TORONTO_SERVER_PORT;
-import static CommonUtils.CommonUtils.TRADESHOW;
-import static CommonUtils.CommonUtils.addFileHandler;
+import static Constants.Constants.CONFERENCE;
+import static Constants.Constants.MONTREAL;
+import static Constants.Constants.MONTREAL_SERVER_NAME;
+import static Constants.Constants.MONTREAL_SERVER_PORT;
+import static Constants.Constants.OTTAWA;
+import static Constants.Constants.OTTAWA_SERVER_NAME;
+import static Constants.Constants.OTTAWA_SERVER_PORT;
+import static Constants.Constants.SEMINAR;
+import static Constants.Constants.TORONTO;
+import static Constants.Constants.TORONTO_SERVER_NAME;
+import static Constants.Constants.TORONTO_SERVER_PORT;
+import static Constants.Constants.TRADESHOW;
+import static Constants.Constants.addFileHandler;
 import java.io.File;
 
+//import ServerInterface.ServerInterface;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.DatagramPacket;
@@ -39,52 +40,49 @@ import java.util.logging.Logger;
  *
  * @author Gursimran Singh, Natheepan Ganeshamoorthy
  */
-public class MontrealServerImpl {
+public class OtwServerImpl {
 
-    private static HashMap<String, HashMap< String, String>> databaseMontreal = getHashdatabaseMontreal();
+    private static HashMap<String, HashMap< String, String>> databaseOttawa = getHashdatabaseMontreal();
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = getHashcustomerEventsMapping();
     private static Logger logger;
 
-    //Events Database
 //    {
 //        //item1
-//        databaseMontreal.put(CONFERENCE, new HashMap<>());
-//        databaseMontreal.get(CONFERENCE).put("MTLM121219", "999");
-//        databaseMontreal.get(CONFERENCE).put("MTLE121219", "60");
-//        databaseMontreal.get(CONFERENCE).put("MTLA121219", "90");
-//        databaseMontreal.get(CONFERENCE).put("MTLM130722", "60");
-//        databaseMontreal.get(CONFERENCE).put("MTLM130720", "60");
+//        databaseOttawa.put(CONFERENCE, new HashMap<>());
+//        databaseOttawa.get(CONFERENCE).put("OTWM121219", "999");
+//        databaseOttawa.get(CONFERENCE).put("OTWE121219", "40");
+//        databaseOttawa.get(CONFERENCE).put("OTWA121219", "90");
 //
 //        //item2
-//        databaseMontreal.put(SEMINAR, new HashMap<>());
-//        databaseMontreal.get(SEMINAR).put("MTLM310522", "20");
-//        databaseMontreal.get(SEMINAR).put("MTLE999999", "999");
-//        databaseMontreal.get(SEMINAR).put("MTLA201121", "50");
+//        databaseOttawa.put(SEMINAR, new HashMap<>());
+//        databaseOttawa.get(SEMINAR).put("OTWM140147", "50");
+//        databaseOttawa.get(SEMINAR).put("OTWE999999", "999");
+//        databaseOttawa.get(SEMINAR).put("OTWA260939", "90");
 //
 //        //item6
-//        databaseMontreal.put(TRADESHOW, new HashMap<>());
-//        databaseMontreal.get(TRADESHOW).put("MTLM190124", "50");
-//        databaseMontreal.get(TRADESHOW).put("MTLE201123", "40");
-//        databaseMontreal.get(TRADESHOW).put("MTLA999999", "999");
+//        databaseOttawa.put(TRADESHOW, new HashMap<>());
+//        databaseOttawa.get(TRADESHOW).put("OTWM070728", "50");
+//        databaseOttawa.get(TRADESHOW).put("OTWE210322", "40");
+//        databaseOttawa.get(TRADESHOW).put("OTWA999999", "999");
 //    }
 
-    public MontrealServerImpl() {
+    public OtwServerImpl() {
         super();
-        logger = Logger.getLogger(MontrealServerImpl.class.getName());
+        logger = Logger.getLogger(OtwServerImpl.class.getName());
         try {
-            addFileHandler(logger, "Montreal_Server");
+            addFileHandler(logger, "Ottawa_Server");
         } catch (SecurityException | IOException ex) {
-            Logger.getLogger(MontrealServerImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MtlServerImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public synchronized String addEvent(String eventID, String eventType, String bookingCapacity, String managerID) {
         String message = null;
 
-        if (!eventID.substring(0, 3).equals(MONTREAL)) {
-            message = "Operations Unsuccessful!. Event Not Added in Montreal Server "
+        if (!eventID.substring(0, 3).equals(OTTAWA)) {
+            message = "Operations Unsuccessful!. Event Not Added in Ottawa Server "
                     + "for Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID + ""
-                    + " is not of Montreal format (MTL)";
+                    + " is not of Ottawa format (OTW)";
             logger.info(message);
 
             return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
@@ -92,16 +90,17 @@ public class MontrealServerImpl {
 
         logger.info("Received request to add an event with event id " + eventID + " , Event Type" + eventType
                 + " & Booking Capacity " + bookingCapacity);
-        if (!databaseMontreal.get(eventType).containsKey(eventID)) {
-            databaseMontreal.get(eventType).put(eventID, bookingCapacity);
-            message = "Operations Successful!. Event Added in Montreal Server for Event ID: "
+        if (!databaseOttawa.get(eventType).containsKey(eventID)) {
+            databaseOttawa.get(eventType).put(eventID, bookingCapacity);
+            message = "Operations Successful!. Event Added in Ottawa Server for Event ID: "
                     + eventID + " Event Type: " + eventType + " Booking Capacity: " + bookingCapacity;
             logger.info(message);
             setHashdatabaseMontreal();
+            setHashcustomerEventsMapping();
             return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
         } else {
-            databaseMontreal.get(eventType).replace(eventID, bookingCapacity);
-            message = "Operations Unsuccessful!. Event Not Added in Montreal Server "
+            databaseOttawa.get(eventType).replace(eventID, bookingCapacity);
+            message = "Operations Unsuccessful!. Event Not Added in Ottawa Server "
                     + "for Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID + ""
                     + " is already added for the Event Type: " + eventType + ". But, the Booking Capacity is updated to " + bookingCapacity;
             logger.info(message);
@@ -111,14 +110,14 @@ public class MontrealServerImpl {
     }
 
     public synchronized String addEventWrong(String eventID, String eventType, String bookingCapacity, String managerID) {
-        String message = "UNSUCCESSFULL ";
+        String message = "UNSUCCESSFULL ";addEvent(eventID, eventType, bookingCapacity, managerID);
         return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
 
     }
 
     public synchronized String removeEvent(String eventID, String eventType, String managerID) {
         String message = null;
-        if (databaseMontreal.get(eventType).containsKey(eventID)) {
+        if (databaseOttawa.get(eventType).containsKey(eventID)) {
             if (customerEventsMapping != null) {
                 for (String customer : customerEventsMapping.keySet()) {
                     if (customerEventsMapping.get(customer).containsKey(eventType)) {
@@ -129,15 +128,16 @@ public class MontrealServerImpl {
                     }
                 }
             }
-            databaseMontreal.get(eventType).remove(eventID);
-            setHashdatabaseMontreal();
-            setHashcustomerEventsMapping();
-            message = "\nOperations Successful!. Event Removed in Montreal Server by Manager: " + managerID + " for Event ID: "
+
+            databaseOttawa.get(eventType).remove(eventID);
+            message = "Operations Successful!. Event Removed in Ottawa Server by Manager: " + managerID + " for Event ID: "
                     + eventID + " Event Type: " + eventType;
             logger.info(message);
+            setHashdatabaseMontreal();
+            setHashcustomerEventsMapping();
             return message.trim().replaceAll("[^a-zA-Z0-9]", " ");
         } else {
-            message = "Operations Unsuccessful!. Event Not Removed in Montreal Server by Manager: " + managerID + " f"
+            message = "Operations Unsuccessful!. Event Not Removed in Ottawa Server by Manager: " + managerID + " f"
                     + "or Event ID: " + eventID + " Event Type: " + eventType + " because the Event ID: " + eventID
                     + " does not exist";
             logger.info(message);
@@ -145,8 +145,7 @@ public class MontrealServerImpl {
         }
     }
 
-    public synchronized String listEventAvailability(String eventType, String managerID) {
-        //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
+    public synchronized String listEventAvailability(String eventType, String managerID) { //Eg: Seminars - MTLE130519 3, OTWA060519 6, TORM180519 0, MTLE190519 2.
         String message = null;
         String returnMessage = "";
         if (managerID.substring(0, 3).equals(MONTREAL)) {
@@ -175,8 +174,8 @@ public class MontrealServerImpl {
             returnMessage += torrontoEvents + "|||" + montrealEvents + "|||".trim();
         }
 
-        if (!databaseMontreal.get(eventType).isEmpty()) {
-            for (Map.Entry<String, String> entry : databaseMontreal.get(eventType).entrySet()) {
+        if (!databaseOttawa.get(eventType).isEmpty()) {
+            for (Map.Entry<String, String> entry : databaseOttawa.get(eventType).entrySet()) {
                 returnMessage += "EventID: " + entry.getKey() + "| Booking Capacity " + entry.getValue() + "\n".trim();
             }
             message = "Operation Successful, List of events retrieved for Event Type: " + eventType + " by Manager: " + managerID + "in server".trim();
@@ -192,10 +191,10 @@ public class MontrealServerImpl {
 
     public synchronized String bookEvent(String customerID, String eventID, String eventType, String bookingAmount) {
         String newMsg = "";
-        if (!customerID.substring(0, 3).equals(MONTREAL) && !customerID.substring(0, 3).equals(eventID.substring(0, 3))) {
+        if (!customerID.substring(0, 3).equals(OTTAWA) && !customerID.substring(0, 3).equals(eventID.substring(0, 3))) {
             int customerBookingsCurrent = Integer.parseInt(this.nonOriginCustomerBooking(customerID, eventID));
-            int customerBookingsOther = customerID.substring(0, 3).equals(OTTAWA) ? Integer.parseInt(requestToOtherServers(customerID, eventID, null, 7, null, TORONTO_SERVER_PORT, null, null, null).trim())
-                    : Integer.parseInt(requestToOtherServers(customerID, eventID, null, 7, null, OTTAWA_SERVER_PORT, null, null, null).trim());
+            int customerBookingsOther = customerID.substring(0, 3).equals(MONTREAL) ? Integer.parseInt(requestToOtherServers(customerID, eventID, null, 7, null, TORONTO_SERVER_PORT, null, null, null).trim())
+                    : Integer.parseInt(requestToOtherServers(customerID, eventID, null, 7, null, MONTREAL_SERVER_PORT, null, null, null).trim());
 
             if (customerBookingsCurrent + customerBookingsOther >= 3) {
                 logger.log(Level.INFO, "Operation Unsuccessful, Book Event Requested by {0} for Event Type {1} with Event ID {2} cannot be booked. Customer can book as many events in his/her own city, but only at most 3 events from other cities overall in a month", new Object[]{
@@ -207,11 +206,11 @@ public class MontrealServerImpl {
             }
         }
 
-        if (eventID.substring(0, 3).equals(MONTREAL)) {
+        if (eventID.substring(0, 3).equals(OTTAWA)) {
             logger.log(Level.INFO, "Book Event Requested by {0} for Event Type {1} with Event ID {2}", new Object[]{
                 customerID, eventType, eventID
             });
-            HashMap< String, String> event = databaseMontreal.get(eventType);
+            HashMap< String, String> event = databaseOttawa.get(eventType);
             if (event.containsKey(eventID)) {
                 if (customerEventsMapping.containsKey(customerID) && customerEventsMapping.get(customerID).containsKey(eventType)) {
                     if (customerEventsMapping.get(customerID).get(eventType).containsKey(eventID)) {
@@ -247,7 +246,6 @@ public class MontrealServerImpl {
                     newMsg = "Operation Unsuccessful, Book Event Requested by " + customerID + " for Event Type " + eventType + " with Event ID " + eventID + " cannot be booked. Event Capacity < Booking Capacity Requested";
                     return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
                 }
-
             } else {
                 logger.log(Level.INFO, "Operation Unsuccessful, Book Event Requested by {0} for Event Type {1} with Event ID {2} cannot be booked. Event Does Not Exist.", new Object[]{
                     customerID, eventType, eventID
@@ -260,8 +258,8 @@ public class MontrealServerImpl {
             newMsg = requestToOtherServers(customerID, eventID, bookingAmount, 4, eventType, TORONTO_SERVER_PORT, null, null, null);
             return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
-        if (eventID.substring(0, 3).equals(OTTAWA)) {
-            newMsg = requestToOtherServers(customerID, eventID, bookingAmount, 4, eventType, OTTAWA_SERVER_PORT, null, null, null);
+        if (eventID.substring(0, 3).equals(MONTREAL)) {
+            newMsg = requestToOtherServers(customerID, eventID, bookingAmount, 4, eventType, MONTREAL_SERVER_PORT, null, null, null);
             return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
         return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
@@ -279,9 +277,9 @@ public class MontrealServerImpl {
         }
         HashMap<String, HashMap< String, Integer>> customerEvents = customerEventsMapping.get(customerID);
 
-        if ((customerID.substring(0, 3).equals(MONTREAL) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(MONTREAL))) {
+        if ((customerID.substring(0, 3).equals(OTTAWA) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(OTTAWA))) {
             returnMsg += requestToOtherServers(customerID, null, null, 5, null, TORONTO_SERVER_PORT, "null", null, null).trim();
-            returnMsg += requestToOtherServers(customerID, null, null, 5, null, OTTAWA_SERVER_PORT, "null", null, null).trim();
+            returnMsg += requestToOtherServers(customerID, null, null, 5, null, MONTREAL_SERVER_PORT, "null", null, null).trim();
         }
         if (customerEvents != null && !customerEvents.isEmpty()) {
             HashMap< String, Integer> customerConferenceEventID = customerEvents.get(CONFERENCE);
@@ -289,19 +287,19 @@ public class MontrealServerImpl {
             HashMap< String, Integer> customerTradeshowEventID = customerEvents.get(TRADESHOW);
 
             if (customerConferenceEventID != null && !customerConferenceEventID.isEmpty()) {
-                returnMsg += "\nFor Conference Events in Montreal: ";
+                returnMsg += "\nFor Conference Events in Ottawa: ".trim();
                 for (String event : customerConferenceEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerConferenceEventID.get(event) + "".trim();
                 }
             }
             if (customerSeminarEventID != null && !customerSeminarEventID.isEmpty()) {
-                returnMsg += "\nFor Seminar Events in Montreal: ";
+                returnMsg += "\nFor Seminar Events in Ottawa: ";
                 for (String event : customerSeminarEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerSeminarEventID.get(event) + "".trim();
                 }
             }
             if (customerTradeshowEventID != null && !customerTradeshowEventID.isEmpty()) {
-                returnMsg += "\nFor Tradeshow Events in Montreal: ";
+                returnMsg += "\nFor Tradeshow Events in Ottawa: ";
                 for (String event : customerTradeshowEventID.keySet()) {
                     returnMsg += "\nEvent ID: " + event + " Booking for " + customerTradeshowEventID.get(event) + "".trim();
                 }
@@ -312,36 +310,35 @@ public class MontrealServerImpl {
         }
         if (returnMsg.trim().equals("")) {
             logger.log(Level.INFO, "Records for {0} do not exist.", customerID);
-            if ((customerID.substring(0, 3).equals(MONTREAL) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(MONTREAL))) {
-                returnMsg += "\nRecords for " + customerID + " do not exist.";
+            if ((customerID.substring(0, 3).equals(OTTAWA) && managerID.equals("null")) || (!managerID.equals("null") && managerID.substring(0, 3).equals(OTTAWA))) {
+                returnMsg += "\nRecords for " + customerID + " do not exist.".trim();
             }
         }
-
         return returnMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
     }
 
     public synchronized String cancelEvent(String customerID, String eventID, String eventType) {
         String newMsg = "";
         switch (eventID.substring(0, 3)) {
-            case MONTREAL:
+            case OTTAWA:
                 if (customerEventsMapping.containsKey(customerID)) {
                     if (customerEventsMapping.get(customerID).containsKey(eventType) && customerEventsMapping.get(customerID).get(eventType).containsKey(eventID)) {
                         Integer bookValue = customerEventsMapping.get(customerID).get(eventType).remove(eventID);
                         Integer currentValue = 0;
                         Integer sum = 0;
 
-                        if (databaseMontreal.get(CONFERENCE).containsKey(eventID)) {
-                            currentValue = Integer.parseInt(databaseMontreal.get(CONFERENCE).get(eventID));
+                        if (databaseOttawa.get(CONFERENCE).containsKey(eventID)) {
+                            currentValue = Integer.parseInt(databaseOttawa.get(CONFERENCE).get(eventID));
                             sum = currentValue + bookValue;
-                            databaseMontreal.get(CONFERENCE).put(eventID, sum.toString());
-                        } else if (databaseMontreal.get(SEMINAR).containsKey(eventID)) {
-                            currentValue = Integer.parseInt(databaseMontreal.get(SEMINAR).get(eventID));
+                            databaseOttawa.get(CONFERENCE).put(eventID, sum.toString());
+                        } else if (databaseOttawa.get(SEMINAR).containsKey(eventID)) {
+                            currentValue = Integer.parseInt(databaseOttawa.get(SEMINAR).get(eventID));
                             sum = currentValue + bookValue;
-                            databaseMontreal.get(SEMINAR).put(eventID, sum.toString());
-                        } else if (databaseMontreal.get(TRADESHOW).containsKey(eventID)) {
-                            currentValue = Integer.parseInt(databaseMontreal.get(TRADESHOW).get(eventID));
+                            databaseOttawa.get(SEMINAR).put(eventID, sum.toString());
+                        } else if (databaseOttawa.get(TRADESHOW).containsKey(eventID)) {
+                            currentValue = Integer.parseInt(databaseOttawa.get(TRADESHOW).get(eventID));
                             sum = currentValue + bookValue;
-                            databaseMontreal.get(TRADESHOW).put(eventID, sum.toString());
+                            databaseOttawa.get(TRADESHOW).put(eventID, sum.toString());
                         }
                         logger.log(Level.INFO, "This event has been removed from customer record.");
                         newMsg = "This event has been removed from customer record.";
@@ -358,41 +355,13 @@ public class MontrealServerImpl {
             case TORONTO:
                 newMsg = requestToOtherServers(customerID, eventID, null, 6, eventType, TORONTO_SERVER_PORT, null, null, null);
                 break;
-            case OTTAWA:
-                newMsg = requestToOtherServers(customerID, eventID, null, 6, eventType, OTTAWA_SERVER_PORT, null, null, null);
+            case MONTREAL:
+                newMsg = requestToOtherServers(customerID, eventID, null, 6, eventType, MONTREAL_SERVER_PORT, null, null, null);
                 break;
             default:
                 break;
         }
         return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
-    }
-
-    public synchronized String nonOriginCustomerBooking(String customerID, String eventID) {
-        int numberOfCustomerEvents = 0;
-        if (customerEventsMapping.containsKey(customerID) && !customerID.substring(0, 3).equals(MONTREAL)) {
-            if (customerEventsMapping.get(customerID).containsKey(CONFERENCE)) {
-                for (String currentEventID : customerEventsMapping.get(customerID).get(CONFERENCE).keySet()) {
-                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
-                        numberOfCustomerEvents++;
-                    }
-                }
-            }
-            if (customerEventsMapping.get(customerID).containsKey(SEMINAR)) {
-                for (String currentEventID : customerEventsMapping.get(customerID).get(SEMINAR).keySet()) {
-                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
-                        numberOfCustomerEvents++;
-                    }
-                }
-            }
-            if (customerEventsMapping.get(customerID).containsKey(TRADESHOW)) {
-                for (String currentEventID : customerEventsMapping.get(customerID).get(TRADESHOW).keySet()) {
-                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
-                        numberOfCustomerEvents++;
-                    }
-                }
-            }
-        }
-        return "" + numberOfCustomerEvents;
     }
 
     public synchronized String requestToOtherServers(String userID, String eventID, String bookingCapacity, int serverNumber, String eventType, int serPort, String managerId, String newEventID, String newEventType) {
@@ -431,9 +400,9 @@ public class MontrealServerImpl {
     }
 
     public synchronized String swapEvent(String customerID, String newEventID, String newEventType, String oldEventID, String oldEventType) {
-        if (!newEventID.substring(0, 3).equals(MONTREAL) && customerID.substring(0, 3).equals(MONTREAL) && oldEventID.substring(0, 3).equals(MONTREAL)) {
+        if (!newEventID.substring(0, 3).equals(OTTAWA) && customerID.substring(0, 3).equals(OTTAWA) && oldEventID.substring(0, 3).equals(OTTAWA)) {
             int customerBookings1 = Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, TORONTO_SERVER_PORT, null, null, null).trim());
-            int customerBookings2 = Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, OTTAWA_SERVER_PORT, null, null, null).trim());
+            int customerBookings2 = Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, MONTREAL_SERVER_PORT, null, null, null).trim());
             boolean maxAllowableInMonth = (customerBookings1 + customerBookings2 >= 3);
             if (maxAllowableInMonth) {
                 return "Operation Unsuccessful Max 3 bookings in a given month";
@@ -445,10 +414,10 @@ public class MontrealServerImpl {
         boolean isOldEventValid = false;
         boolean isCustomerEligibleToBook = true;
 
-        if (newEventID.substring(0, 3).equals(MONTREAL)) {
+        if (newEventID.substring(0, 3).equals(OTTAWA)) {
             isNewEventValid = eventAvailable(newEventID, newEventType).trim().equals("1");
         } else {
-            isNewEventValid = requestToOtherServers(customerID, oldEventID, null, 9, oldEventType, newEventID.substring(0, 3).equals(OTTAWA) ? OTTAWA_SERVER_PORT : TORONTO_SERVER_PORT, null, newEventID, newEventType).trim().equals("1");
+            isNewEventValid = requestToOtherServers(customerID, oldEventID, null, 9, oldEventType, newEventID.substring(0, 3).equals(MONTREAL) ? MONTREAL_SERVER_PORT : TORONTO_SERVER_PORT, null, newEventID, newEventType).trim().equals("1");
         }
 
         if (!isNewEventValid) {
@@ -461,10 +430,10 @@ public class MontrealServerImpl {
             return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
 
-        if (oldEventID.substring(0, 3).equals(MONTREAL)) {
+        if (oldEventID.substring(0, 3).equals(OTTAWA)) {
             isOldEventValid = validateBooking(customerID, oldEventID, oldEventType).trim().equals("1");
         } else {
-            isOldEventValid = requestToOtherServers(customerID, oldEventID, null, 10, oldEventType, oldEventID.substring(0, 3).equals(OTTAWA) ? OTTAWA_SERVER_PORT : TORONTO_SERVER_PORT, null, newEventID, newEventType).trim().equals("1");
+            isOldEventValid = requestToOtherServers(customerID, oldEventID, null, 10, oldEventType, oldEventID.substring(0, 3).equals(MONTREAL) ? MONTREAL_SERVER_PORT : TORONTO_SERVER_PORT, null, newEventID, newEventType).trim().equals("1");
         }
 
         if (!isOldEventValid) {
@@ -477,14 +446,14 @@ public class MontrealServerImpl {
             return newMsg.trim().replaceAll("[^a-zA-Z0-9]", " ");
         }
 
-        if (customerID.substring(0, 3).equals(MONTREAL) && newEventID.substring(0, 3).equals(MONTREAL)) {
+        if (customerID.substring(0, 3).equals(OTTAWA) && newEventID.substring(0, 3).equals(OTTAWA)) {
             isCustomerEligibleToBook = true;
-        } else if (!customerID.substring(0, 3).equals(oldEventID.substring(0, 3)) && !oldEventID.substring(0, 3).equals(MONTREAL)) {
+        } else if (!customerID.substring(0, 3).equals(oldEventID.substring(0, 3)) && !oldEventID.substring(0, 3).equals(OTTAWA)) {
             isCustomerEligibleToBook = true;
-        } else if (!customerID.substring(0, 3).equals(MONTREAL) && !customerID.substring(0, 3).equals(newEventID.substring(0, 3))) {
+        } else if (!customerID.substring(0, 3).equals(OTTAWA) && !customerID.substring(0, 3).equals(newEventID.substring(0, 3))) {
             int customerBookingsCurrent = Integer.parseInt(this.nonOriginCustomerBooking(customerID, newEventID));
-            int customerBookingsOther = customerID.substring(0, 3).equals(OTTAWA) ? Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, TORONTO_SERVER_PORT, null, null, null).trim())
-                    : Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, OTTAWA_SERVER_PORT, null, null, null).trim());
+            int customerBookingsOther = customerID.substring(0, 3).equals(MONTREAL) ? Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, TORONTO_SERVER_PORT, null, null, null).trim())
+                    : Integer.parseInt(requestToOtherServers(customerID, newEventID, null, 7, null, MONTREAL_SERVER_PORT, null, null, null).trim());
 
             if (customerBookingsCurrent + customerBookingsOther >= 3) {
                 isCustomerEligibleToBook = false;
@@ -520,12 +489,40 @@ public class MontrealServerImpl {
 
     public synchronized String eventAvailable(String eventID, String eventType) {
         eventType = eventType.substring(0, 3).equalsIgnoreCase("CON") ? CONFERENCE : eventType.substring(0, 3).equalsIgnoreCase("SEM") ? SEMINAR : TRADESHOW;
-        return (databaseMontreal.containsKey(eventType) && databaseMontreal.get(eventType).containsKey(eventID) && Integer.parseInt(databaseMontreal.get(eventType).get(eventID)) > 0) ? "1" : "0";
+        return (databaseOttawa.containsKey(eventType) && databaseOttawa.get(eventType).containsKey(eventID) && Integer.parseInt(databaseOttawa.get(eventType).get(eventID)) > 0) ? "1" : "0";
     }
 
     public synchronized String validateBooking(String customerID, String eventID, String eventType) {
         eventType = eventType.substring(0, 3).equalsIgnoreCase("CON") ? CONFERENCE : eventType.substring(0, 3).equalsIgnoreCase("SEM") ? SEMINAR : TRADESHOW;
         return (customerEventsMapping.containsKey(customerID) && customerEventsMapping.get(customerID).containsKey(eventType) && customerEventsMapping.get(customerID).get(eventType).containsKey(eventID)) ? "1" : "0";
+    }
+
+    public synchronized String nonOriginCustomerBooking(String customerID, String eventID) {
+        int numberOfCustomerEvents = 0;
+        if (customerEventsMapping.containsKey(customerID) && !customerID.substring(0, 3).equals(OTTAWA)) {
+            if (customerEventsMapping.get(customerID).containsKey(CONFERENCE)) {
+                for (String currentEventID : customerEventsMapping.get(customerID).get(CONFERENCE).keySet()) {
+                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
+                        numberOfCustomerEvents++;
+                    }
+                }
+            }
+            if (customerEventsMapping.get(customerID).containsKey(SEMINAR)) {
+                for (String currentEventID : customerEventsMapping.get(customerID).get(SEMINAR).keySet()) {
+                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
+                        numberOfCustomerEvents++;
+                    }
+                }
+            }
+            if (customerEventsMapping.get(customerID).containsKey(TRADESHOW)) {
+                for (String currentEventID : customerEventsMapping.get(customerID).get(TRADESHOW).keySet()) {
+                    if (eventID.substring(6).equals(currentEventID.substring(6))) {
+                        numberOfCustomerEvents++;
+                    }
+                }
+            }
+        }
+        return "" + numberOfCustomerEvents;
     }
 
     public String handleRequestFromOtherServer(String dataFromAnotherServer) throws SecurityException, IOException {
@@ -567,17 +564,17 @@ public class MontrealServerImpl {
     }
 
     public void parseEventnfo2(EventData eventData) {
-        databaseMontreal = eventData.getDatabase();
+        databaseOttawa = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 
     public EventData getEventData2() {
-        EventData eventData = new EventData(databaseMontreal, customerEventsMapping);
+        EventData eventData = new EventData(databaseOttawa, customerEventsMapping);
         return eventData;
     }
 
     private void setHashdatabaseMontreal() {
-        File f = new File("hash/" + "databaseMontreal" + ".txt");
+        File f = new File("hash/" + "databaseOttawa" + ".txt");
         if (f.exists()) {
             f.delete();
             try {
@@ -589,12 +586,12 @@ public class MontrealServerImpl {
 
         PrintStream printOut = System.out;
 
-        try (PrintStream fileOut = new PrintStream("hash/" + "databaseMontreal" + ".txt")) {
+        try (PrintStream fileOut = new PrintStream("hash/" + "databaseOttawa" + ".txt")) {
             System.setOut(fileOut);
-            for (String eventType : databaseMontreal.keySet()) {
+            for (String eventType : databaseOttawa.keySet()) {
 //                System.out.println(eventType + ",");
-                for (String eventID : databaseMontreal.get(eventType).keySet()) {
-                    System.out.println(eventType + "," + eventID + "," + databaseMontreal.get(eventType).get(eventID));
+                for (String eventID : databaseOttawa.get(eventType).keySet()) {
+                    System.out.println(eventType + "," + eventID + "," + databaseOttawa.get(eventType).get(eventID));
                 }
             }
             fileOut.close();
@@ -607,7 +604,7 @@ public class MontrealServerImpl {
     }
 
     private void setHashcustomerEventsMapping() {
-        File f = new File("hash/" + "customerEventsMappingMontreal" + ".txt");
+        File f = new File("hash/" + "customerEventsMappingOttawa" + ".txt");
         if (f.exists()) {
             f.delete();
             try {
@@ -619,7 +616,7 @@ public class MontrealServerImpl {
 
         PrintStream printOut = System.out;
 
-        try (PrintStream fileOut = new PrintStream("hash/" + "customerEventsMappingMontreal" + ".txt")) {
+        try (PrintStream fileOut = new PrintStream("hash/" + "customerEventsMappingOttawa" + ".txt")) {
             //HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
             System.setOut(fileOut);
             for (String customer : customerEventsMapping.keySet()) {
@@ -643,7 +640,7 @@ public class MontrealServerImpl {
     private static HashMap<String, HashMap< String, String>> getHashdatabaseMontreal() {
         HashMap<String, HashMap< String, String>> databaseMontreal = new HashMap<>();
         PrintStream printOut = System.out;
-        String gameFile = "hash/" + "databaseMontreal" + ".txt";
+        String gameFile = "hash/" + "databaseOttawa" + ".txt";
         String text = "";
         try (Scanner inputGame = new Scanner(new File(gameFile))) {
             if (inputGame.hasNext()) {
@@ -672,7 +669,7 @@ public class MontrealServerImpl {
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> getHashcustomerEventsMapping() {
         HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = new HashMap<>();
         PrintStream printOut = System.out;
-        String gameFile = "hash/" + "customerEventsMappingMontreal" + ".txt";
+        String gameFile = "hash/" + "customerEventsMappingOttawa" + ".txt";
         String text = "";
         try (Scanner inputGame = new Scanner(new File(gameFile))) {
             if (inputGame.hasNext()) {
@@ -699,6 +696,6 @@ public class MontrealServerImpl {
             return customerEventsMapping;
         }
     }
-
-
 }
+
+// MTLA090619 TORE050619 TORC1234
