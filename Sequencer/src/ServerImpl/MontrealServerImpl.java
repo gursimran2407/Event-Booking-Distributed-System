@@ -46,27 +46,27 @@ public class MontrealServerImpl {
     private static Logger logger;
 
     //Events Database
-    {
-        //item1
-        databaseMontreal.put(CONFERENCE, new HashMap<>());
-        databaseMontreal.get(CONFERENCE).put("MTLM121219", "999");
-        databaseMontreal.get(CONFERENCE).put("MTLE121219", "60");
-        databaseMontreal.get(CONFERENCE).put("MTLA121219", "90");
-        databaseMontreal.get(CONFERENCE).put("MTLM130722", "60");
-        databaseMontreal.get(CONFERENCE).put("MTLM130720", "60");
-
-        //item2
-        databaseMontreal.put(SEMINAR, new HashMap<>());
-        databaseMontreal.get(SEMINAR).put("MTLM310522", "20");
-        databaseMontreal.get(SEMINAR).put("MTLE999999", "999");
-        databaseMontreal.get(SEMINAR).put("MTLA201121", "50");
-
-        //item6
-        databaseMontreal.put(TRADESHOW, new HashMap<>());
-        databaseMontreal.get(TRADESHOW).put("MTLM190124", "50");
-        databaseMontreal.get(TRADESHOW).put("MTLE201123", "40");
-        databaseMontreal.get(TRADESHOW).put("MTLA999999", "999");
-    }
+//    {
+//        //item1
+//        databaseMontreal.put(CONFERENCE, new HashMap<>());
+//        databaseMontreal.get(CONFERENCE).put("MTLM121219", "999");
+//        databaseMontreal.get(CONFERENCE).put("MTLE121219", "60");
+//        databaseMontreal.get(CONFERENCE).put("MTLA121219", "90");
+//        databaseMontreal.get(CONFERENCE).put("MTLM130722", "60");
+//        databaseMontreal.get(CONFERENCE).put("MTLM130720", "60");
+//
+//        //item2
+//        databaseMontreal.put(SEMINAR, new HashMap<>());
+//        databaseMontreal.get(SEMINAR).put("MTLM310522", "20");
+//        databaseMontreal.get(SEMINAR).put("MTLE999999", "999");
+//        databaseMontreal.get(SEMINAR).put("MTLA201121", "50");
+//
+//        //item6
+//        databaseMontreal.put(TRADESHOW, new HashMap<>());
+//        databaseMontreal.get(TRADESHOW).put("MTLM190124", "50");
+//        databaseMontreal.get(TRADESHOW).put("MTLE201123", "40");
+//        databaseMontreal.get(TRADESHOW).put("MTLA999999", "999");
+//    }
 
     public MontrealServerImpl() {
         super();
@@ -566,12 +566,12 @@ public class MontrealServerImpl {
         return "Unknown request";
     }
 
-    public void parseEventnfo(EventData eventData) {
+    public void parseEventnfo2(EventData eventData) {
         databaseMontreal = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 
-    public EventData getEventData() {
+    public EventData getEventData2() {
         EventData eventData = new EventData(databaseMontreal, customerEventsMapping);
         return eventData;
     }

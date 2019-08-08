@@ -6,3 +6,15 @@ Aug 07, 2019 5:40:37 PM ServerImpl.OttawaServerImpl listEventAvailability
 INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
 Aug 07, 2019 5:42:54 PM ServerImpl.OttawaServerImpl listEventAvailability
 INFO: Operation Successful, List of events retrieved for Event Type: Seminars by Manager: Defaultin server
+Aug 07, 2019 8:18:23 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: TradeShows by Manager: Defaultin server
+Aug 07, 2019 8:18:44 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
+Aug 07, 2019 8:20:44 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Seminars by Manager: Defaultin server
+Aug 07, 2019 8:25:17 PM ServerImpl.OttawaServerImpl listEventAvailability
+INFO: Operation Successful, List of events retrieved for Event Type: Conferences by Manager: Defaultin server
+Aug 07, 2019 8:27:29 PM ServerImpl.OttawaServerImpl getBookingSchedule
+INFO: Booking Schedule Requested by MTLC3434
+Aug 07, 2019 8:27:29 PM ServerImpl.OttawaServerImpl getBookingSchedule
+INFO: Records for MTLC3434 do not exist.

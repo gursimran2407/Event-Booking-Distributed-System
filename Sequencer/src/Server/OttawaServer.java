@@ -105,15 +105,15 @@ public class OttawaServer {
                 response = montrealLibraryImpl.getBookingSchedule(messageData.getCustomerId(), messageData.getManagerId());
                 break;
             case CommonUtils.GET_DATA:
-                EventData eventData = montrealLibraryImpl.getEventData();
-                try {
-                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                    ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
-                    objectOutput.writeObject(eventData);
-                    return byteStream.toByteArray();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+//                EventData eventData = montrealLibraryImpl.getEventData();
+//                try {
+//                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+//                    ObjectOutput objectOutput = new ObjectOutputStream(byteStream);
+//                    objectOutput.writeObject(eventData);
+//                    return byteStream.toByteArray();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
                 break;
             case CommonUtils.CANCEL_EVENT:
                 response = montrealLibraryImpl.cancelEvent(messageData.getCustomerId(), messageData.getEventId(), messageData.getEventType());
@@ -182,7 +182,7 @@ public class OttawaServer {
             socket.receive(recievedDatagramPacket);
             ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(recievedDatagramPacket.getData()));
             EventData eventData = (EventData) inputStream.readObject();
-            montrealLibraryImpl.parseEventnfo(eventData);
+//            montrealLibraryImpl.parseEventnfo(eventData);
             inputStream.close();
         } catch (IOException | ClassNotFoundException e) {
             // TODO Auto-generated catch block

@@ -46,25 +46,25 @@ public class OttawaServerImpl {
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = getHashcustomerEventsMapping();
     private static Logger logger;
 
-    {
-        //item1
-        databaseOttawa.put(CONFERENCE, new HashMap<>());
-        databaseOttawa.get(CONFERENCE).put("OTWM121219", "999");
-        databaseOttawa.get(CONFERENCE).put("OTWE121219", "40");
-        databaseOttawa.get(CONFERENCE).put("OTWA121219", "90");
-
-        //item2
-        databaseOttawa.put(SEMINAR, new HashMap<>());
-        databaseOttawa.get(SEMINAR).put("OTWM140147", "50");
-        databaseOttawa.get(SEMINAR).put("OTWE999999", "999");
-        databaseOttawa.get(SEMINAR).put("OTWA260939", "90");
-
-        //item6
-        databaseOttawa.put(TRADESHOW, new HashMap<>());
-        databaseOttawa.get(TRADESHOW).put("OTWM070728", "50");
-        databaseOttawa.get(TRADESHOW).put("OTWE210322", "40");
-        databaseOttawa.get(TRADESHOW).put("OTWA999999", "999");
-    }
+//    {
+//        //item1
+//        databaseOttawa.put(CONFERENCE, new HashMap<>());
+//        databaseOttawa.get(CONFERENCE).put("OTWM121219", "999");
+//        databaseOttawa.get(CONFERENCE).put("OTWE121219", "40");
+//        databaseOttawa.get(CONFERENCE).put("OTWA121219", "90");
+//
+//        //item2
+//        databaseOttawa.put(SEMINAR, new HashMap<>());
+//        databaseOttawa.get(SEMINAR).put("OTWM140147", "50");
+//        databaseOttawa.get(SEMINAR).put("OTWE999999", "999");
+//        databaseOttawa.get(SEMINAR).put("OTWA260939", "90");
+//
+//        //item6
+//        databaseOttawa.put(TRADESHOW, new HashMap<>());
+//        databaseOttawa.get(TRADESHOW).put("OTWM070728", "50");
+//        databaseOttawa.get(TRADESHOW).put("OTWE210322", "40");
+//        databaseOttawa.get(TRADESHOW).put("OTWA999999", "999");
+//    }
 
     public OttawaServerImpl() {
         super();
@@ -563,12 +563,12 @@ public class OttawaServerImpl {
         return "Unknown request";
     }
 
-    public void parseEventnfo(EventData eventData) {
+    public void parseEventnfo2(EventData eventData) {
         databaseOttawa = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 
-    public EventData getEventData() {
+    public EventData getEventData2() {
         EventData eventData = new EventData(databaseOttawa, customerEventsMapping);
         return eventData;
     }

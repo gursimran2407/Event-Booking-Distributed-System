@@ -46,27 +46,27 @@ public class TorontoServerImpl {
     private static HashMap<String, HashMap<String, HashMap< String, Integer>>> customerEventsMapping = getHashcustomerEventsMapping();
     private static Logger logger;
 
-    {
-        //item1
-        databaseToronto.put(CONFERENCE, new HashMap<>());
-        databaseToronto.get(CONFERENCE).put("TORM121219", "999");
-        databaseToronto.get(CONFERENCE).put("TORE121219", "20");
-        databaseToronto.get(CONFERENCE).put("TORA121219", "60");
-
-        //item2
-        databaseToronto.put(SEMINAR, new HashMap<>());
-        databaseToronto.get(SEMINAR).put("TORM051020", "70");
-        databaseToronto.get(SEMINAR).put("TORM051021", "70");
-        databaseToronto.get(SEMINAR).put("TORM051022", "70");
-        databaseToronto.get(SEMINAR).put("TORE999999", "999");
-        databaseToronto.get(SEMINAR).put("TORA070724", "80");
-
-        //item6
-        databaseToronto.put(TRADESHOW, new HashMap<>());
-        databaseToronto.get(TRADESHOW).put("TORM241026", "60");
-        databaseToronto.get(TRADESHOW).put("TORE061123", "90");
-        databaseToronto.get(TRADESHOW).put("TORA999999", "999");
-    }
+//    {
+//        //item1
+//        databaseToronto.put(CONFERENCE, new HashMap<>());
+//        databaseToronto.get(CONFERENCE).put("TORM121219", "999");
+//        databaseToronto.get(CONFERENCE).put("TORE121219", "20");
+//        databaseToronto.get(CONFERENCE).put("TORA121219", "60");
+//
+//        //item2
+//        databaseToronto.put(SEMINAR, new HashMap<>());
+//        databaseToronto.get(SEMINAR).put("TORM051020", "70");
+//        databaseToronto.get(SEMINAR).put("TORM051021", "70");
+//        databaseToronto.get(SEMINAR).put("TORM051022", "70");
+//        databaseToronto.get(SEMINAR).put("TORE999999", "999");
+//        databaseToronto.get(SEMINAR).put("TORA070724", "80");
+//
+//        //item6
+//        databaseToronto.put(TRADESHOW, new HashMap<>());
+//        databaseToronto.get(TRADESHOW).put("TORM241026", "60");
+//        databaseToronto.get(TRADESHOW).put("TORE061123", "90");
+//        databaseToronto.get(TRADESHOW).put("TORA999999", "999");
+//    }
 
     public TorontoServerImpl() {
         super();
@@ -564,12 +564,12 @@ public class TorontoServerImpl {
         return "Unknown request";
     }
 
-    public void parseEventnfo(EventData eventData) {
+    public void parseEventnfo2(EventData eventData) {
         databaseToronto = eventData.getDatabase();
         customerEventsMapping = eventData.getCustomerEventsMapping();
     }
 
-    public EventData getEventData() {
+    public EventData getEventData2() {
         EventData eventData = new EventData(databaseToronto, customerEventsMapping);
         return eventData;
     }
