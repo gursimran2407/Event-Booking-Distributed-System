@@ -1,5 +1,3 @@
 Seminars,TORE999999,999
-Seminars,TORE100467,2
 Conferences,TORM121219,999
-Conferences,TORE050619,1
 TradeShows,TORA999999,999
